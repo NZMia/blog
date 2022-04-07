@@ -1,8 +1,11 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin =
+    require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-module.exports ={
+const env = process.env.NODE_ENV === 'development';
+
+module.exports = {
     mode: 'development',
     entry: {
         bundle: path.resolve(__dirname, 'src/index.js'),
@@ -11,7 +14,7 @@ module.exports ={
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].[contenthash].js',
         assetModuleFilename: '[name][ext]',
-        clean: true
+        clean: true,
     },
     devtool: 'source-map',
     devServer: {
@@ -28,11 +31,7 @@ module.exports ={
         rules: [
             {
                 test: /\.scss$/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'sass-loader',
-                ]
+                use: ['style-loader', 'css-loader', 'sass-loader'],
             },
             {
                 test: /\.js$/,
@@ -40,23 +39,22 @@ module.exports ={
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env']
-                    }
-                }
+                        presets: ['@babel/preset-env'],
+                    },
+                },
             },
             {
                 test: /\.(png|svg|jpeg|jpg)$/i,
-                type: 'asset/resource'
-            }
-        ]
+                type: 'asset/resource',
+            },
+        ],
     },
     plugins: [
         new HtmlWebpackPlugin({
-                title: 'blog',
-                filename: 'index.html',
-                template: 'src/index.html'
-            }
-        ),
-        new BundleAnalyzerPlugin()
-    ]
-}
+            title: 'blog',
+            filename: 'index.html',
+            template: 'src/index.html',
+        }),
+        new BundleAnalyzerPlugin(),
+    ],
+};
