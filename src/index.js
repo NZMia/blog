@@ -1,5 +1,11 @@
-import './styles/main.scss'
-import cloth from './assets/1.jpeg'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.scss';
 
-const img = document.getElementById('cloth');
-img.src = cloth
+import reportWebVitals from './reportWebVitals';
+
+import App from './App';
+
+ReactDOM.render(<App />, document.getElementById('root'));
+
+reportWebVitals();
