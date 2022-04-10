@@ -13,7 +13,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[contenthash].js',
-    assetModuleFilename: '[name][ext]',
+    assetModuleFilename: 'assets/[name][ext]',
     clean: true,
   },
   devtool: 'source-map',
@@ -55,6 +55,6 @@ module.exports = {
       filename: 'index.html',
       template: 'src/index.html',
     }),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ],
 };
