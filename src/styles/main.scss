@@ -1,3 +1,10 @@
+@charset 'utf-8';
+
+@import 'colors';
+@import 'utility';
+
+@import 'header';
+
 body {
-    background-color: yellow;
+    background-color: $cream;
 }
