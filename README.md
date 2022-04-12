@@ -15,6 +15,8 @@ Express or Koa,
 nodejs 
 
 #### development: http://localhost:5050/  
+#### env.REACT__APP__API: http://localhost:5051/  
+
 
 #### production: hold on  
 
