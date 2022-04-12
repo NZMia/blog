@@ -21,3 +21,11 @@ nodejs
 #### test: jest (in design)  
 #### temporaryAPI: using json server to mock currently
 
+Current working on Account book as small personal project. (feat branch)  
+
+ [x] react  
+ [x] redux-toolkit  
+ [x] axios
+ [x] json-server
+ 
+
