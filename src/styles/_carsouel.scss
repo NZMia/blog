@@ -1,0 +1,20 @@
+.carsouel {
+    height: auto;
+    overflow: hidden;
+    max-width: 20rem;
+    
+    &__container {
+      overflow: scroll;
+      transition: transform .3s ease;
+
+      &::-webkit-scrollbar {
+          display: none;
+      }
+    }
+    &__img {
+      display: block;
+      height: auot;
+      float: left;
+
+    }
+}

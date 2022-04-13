@@ -1,0 +1,26 @@
+{
+  "accountBook": [
+    {
+      "title": "shopping",
+      "price": 200,
+      "date": "22-10-2022",
+      "category": {
+        "id": 1,
+        "name": "shopping",
+        "type": "outcome"
+      },
+      "id": 1
+    },
+    {
+      "title": "buy snack",
+      "price": 20,
+      "date": "23-10-2022",
+      "category": {
+        "id": 1,
+        "name": "shopping",
+        "type": "outcome"
+      },
+      "id": 2
+    }
+  ]
+}

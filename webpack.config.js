@@ -1,9 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { EnvironmentPlugin } = require('webpack');
+
 const BundleAnalyzerPlugin =
   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
-const env = process.env.NODE_ENV === 'development';
 
 module.exports = {
   mode: 'development',
@@ -46,6 +46,11 @@ module.exports = {
       {
         test: /\.(png|svg|jpeg|jpg)$/i,
         type: 'asset/resource',
+        parser: {
+          dataUrlCondition: {
+            maxSize: 8192,
+          },
+        },
       },
     ],
   },
@@ -54,6 +59,9 @@ module.exports = {
       title: 'blog',
       filename: 'index.html',
       template: 'src/index.html',
+    }),
+    new EnvironmentPlugin({
+      NODE_ENV: 'development',
     }),
     // new BundleAnalyzerPlugin(),
   ],
