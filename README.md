@@ -3,7 +3,8 @@
 [![code commit rule: commitlint](https://img.shields.io/badge/code_commite-commitlint-ff69b4.svg?style=plastic)](https://github.com/conventional-changelog/commitlint)  
 
 # Portfolio  
-![development: working](https://img.shields.io/badge/development-working-informational.svg?style=plastic)
+![development: working](https://img.shields.io/badge/development-working-informational.svg?style=plastic)  
+
 ### Front-end:  
 
 ### Installation  
@@ -20,12 +21,22 @@ npm i
 Next you need to create your `.env` file.
 
 ```
-
 REACT_APP_API_URL = 'http://localhost:5051/'  
 
 Coming soon ....
 ```
 ----
+
+#### Project 1 : Account book ( branch of feature)
+![development: working](https://img.shields.io/badge/development-working-informational.svg?style=plastic)  
+
+```
+ [x] react  
+ [x] redux-toolkit  
+ [x] axios
+ [x] json-server
+
+```
 [x] Webpack5  
 [x]React  
 [x]Redux-toolkit  
@@ -34,26 +45,14 @@ Coming soon ....
 [x]jest && enzyme
 []Figma (in process)  
 
-### Back-end:  (todo)
+### Back-end:(todo)  
+
+![development: not yet](https://img.shields.io/badge/development-HOLD-inactive.svg?style=plastic)
+
 ----
 Mongo, 
 Express or Koa, 
 nodejs 
 
-#### development: http://localhost:5050/  
-#### env.REACT__APP__API: http://localhost:5051/  
-
-
-#### production: hold on  
-
-#### test: jest (in design)  
-#### temporaryAPI: using json server to mock currently
-
-Current working on Account book as small personal project. (feat branch)  
-
- [x] react  
- [x] redux-toolkit  
- [x] axios
- [x] json-server
  
 
