@@ -1,0 +1,18 @@
+.banner {
+    display: flex;
+    justify-content: space-between;
+
+    &__text,
+    &__img {
+        width: 50%;
+        display: flex;
+        align-self: center;
+    }
+    &__text__container {
+        // flex-direction: column;
+    }
+    img {
+        width: 100%;
+    }
+
+}

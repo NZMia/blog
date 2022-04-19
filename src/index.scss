@@ -2,10 +2,11 @@
 
 body {
     margin: 0;
-    font-family:"MaisonNeue,HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif";
+    font-family: 'Maitree', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     max-width: $global-max-width;
+    background-color: $lotion;
 }
 
 

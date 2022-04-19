@@ -9,7 +9,7 @@ import AccountBookLayout from './layout/AccountBookLayout';
 export const App = () => {
   return (
     <Provider store={store}>
-      <AccountBookLayout />
+      <MainLayout />
     </Provider>
   );
 };

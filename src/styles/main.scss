@@ -5,7 +5,31 @@
 
 @import 'header';
 @import 'carsouel';
+@import 'nav';
+@import 'button';
+@import 'banner';
 
-body {
-    background-color: $lotion;
+#root {
+  background-color: $flashWhite;
+}
+
+.bg--grey {
+  background-color: $flashWhite;
+}
+
+.bg--white {
+  background-color: $lotion;
+}
+
+.bg--white, 
+.bg--grey {
+	padding: $global-padding;
+	color: $gunmetal;
+}
+
+a {
+	color: $gunmetal;
+	&:hover, &:active {
+		color: $lightTaupe;
+	}
 }

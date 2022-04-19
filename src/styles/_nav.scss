@@ -1,0 +1,11 @@
+.nav {
+	width: 50%;
+	display: inline-flex;
+	justify-content: space-evenly;
+	
+	&__item {
+		display: inline-flex;
+		align-self: center;
+		text-decoration: none;
+	}
+}

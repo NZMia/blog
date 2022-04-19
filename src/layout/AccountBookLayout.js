@@ -6,7 +6,6 @@ import AccountBook from '../components/accountBook/AccountBook';
 import { fetchAllItemFormAccountBook } from '../stores/accoutBookSlice';
 
 export const AccountBookLayout = () => {
-  const { accountBookItems } = useSelector((state) => state.accoutBook);
   const dispatch = useDispatch();
 
   useEffect(() => {

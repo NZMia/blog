@@ -1,39 +1,24 @@
-.header__hero {
-	background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("assets/bc1.jpg");
-  height: 50%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
-}
+
+$width: 10%;
 
 .header {
-	position: relative;
-	&__left, &__right {
-		width: 50%;
-		display: flex;
-		justify-content: center;
+	display: flex;
+	box-shadow: $flashWhite 0px 2px 4px;
+
+	&__icon,
+	&__button {
+		width: $width;
+	}
+	
+	&__nav {
+    display: flex;
+    justify-content: end;
+		width: calc(100% - $width * 2);
 	}
 
-	&__content {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-
-	&__left__content {
-    height: 100%;
-		max-width: 15rem;
-    margin: 0 auto;
-		font-weight: 200;
-		font-size: 1.36rem;
-		color: $lotion;
-	}
-
-	&__right--img {
-		// max-height: 150px;
-		// max-width: 150px;
+	@include respond(ipad) {
+		&__nav {
+			display: none;
+		}
 	}
 }
-
-	
