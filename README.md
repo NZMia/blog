@@ -34,16 +34,11 @@ Home page ( branch of feature : TDD)
  [x] react  
  [x] redux-toolkit  
  [x] axios
- [x] json-server
+ [x] json-server + postman (will replaced while back end done)  
+ [x] Figma (done)  
+ [x] test library (later bcz of react 18)
 
 ```
-[x] Webpack5  
-[x]React  
-[x]Redux-toolkit  
-[x]scss  
-[x]axios 
-[x]jest && enzyme
-[]Figma (in process)  
 
 ### Back-end:(todo)  
 
