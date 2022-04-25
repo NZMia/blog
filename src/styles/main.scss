@@ -1,6 +1,7 @@
 @charset 'utf-8';
 
 @import 'colors';
+@import 'variables';
 @import 'typograhpy';
 @import 'utility';
 @import 'layout';
@@ -11,9 +12,10 @@
 @import 'button';
 @import 'banner';
 @import 'category';
+@import 'card';
 
 #root {
-	max-width: $global-max-width;
+max-width: $global-max-width;
   background-color: $flashWhite;
 }
 .mainLayout {

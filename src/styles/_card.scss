@@ -1,0 +1,15 @@
+.card--noImg {
+	width: calc(25% - #{$global-margin * 2});
+	padding: $global-padding * 3  $global-padding;
+	border-radius: .5rem;
+	margin: 0 1rem;
+	background-color: $lotion;
+	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+	// box-shadow: $gunmetal 0px 1px 4px;
+	.card__body {
+		img {
+			width: $global-icon-size * 4;
+			height: $global-icon-size * 4;
+		}
+	}
+}

@@ -10,4 +10,46 @@
 	&--grey {
 		color: $spanishGrey;
 	}
+
+	&__arrow, 
+	&__dash {
+		@extend .spaceBetween;
+		align-items: center;
+	}
+
+	&__dash {
+		&::after {
+			content: "—";
+			display: block;
+			margin-left: 0.25rem;
+			height: $global-icon-size;
+			width: $global-icon-size;
+			color: $gunmetal;
+		}
+	}
+
+	&__arrow {
+		cursor: pointer;
+		&::after {
+			content:'';
+			display: block;
+			background-image: url('assets/right-arrow.svg');
+			height: $global-icon-size;
+			width: $global-icon-size;
+			margin-left: 0.25rem;
+			-webkit-transition: transform 0.3s ease-out;
+			-moz-transition: transform 0.3s ease-out;
+			-ms-transition: transform 0.3s ease-out;
+			-o-transition: transform 0.3s ease-out;
+			transition: transform 0.3s ease-out;
+		}
+		&:hover::after,
+		&:active::after {
+			-webkit-transform: translateX(.25rem);
+			-moz-transform: translateX(.25rem);
+			-ms-transform: translateX(.25rem);
+			-o-transform: translateX(.25rem);
+			transform: translateX(.25rem);
+		}
+	}
 }

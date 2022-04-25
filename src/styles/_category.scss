@@ -1,5 +1,18 @@
 .category {
+	padding-bottom: $global-padding * 2;
+	
 	&__header {
 		@extend .spaceBetween;
+	}
+	&__cards {
+		@extend .spaceBetween;
+		overflow: scroll;
+		scroll-behavior: smooth;
+		
+		&::-webkit-scrollbar { 
+			display: none; 
+		}
+		-ms-overflow-style: none; 
+    scrollbar-width: none; 
 	}
 }

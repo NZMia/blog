@@ -5,11 +5,11 @@ export const Card = ({ hasCardImg, cardItems }) => {
     cardItems &&
     cardItems.map((cardItem) => {
       return (
-        <div className="card">
+        <div className={'card' + `${!!hasCardImg}` && 'card--noImg'}>
           {hasCardImg && <div className="card__image"></div>}
           <div className="card__body">
-            <p>{cardItem.title}</p>
-            <p>{cardItem.icon}</p>
+            <img src={cardItem.icon} alt={cardItem.title} />
+            <h3 className="font">{cardItem.title}</h3>
           </div>
         </div>
       );
