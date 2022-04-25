@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import accountBookSlice from './accoutBookSlice';
 import loadingSlice from './loadingSlice';
+import categorySlice from './categorySlice';
 
 export default configureStore({
   reducer: {
-    accoutBook: accountBookSlice,
+    category: categorySlice,
     loading: loadingSlice,
   },
 });

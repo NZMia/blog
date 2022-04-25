@@ -1,6 +1,6 @@
+
 .banner {
-    display: flex;
-    justify-content: space-between;
+    @extend .spaceBetween;
 
     &__text,
     &__img {
@@ -9,7 +9,7 @@
         align-self: center;
     }
     &__text__container {
-        // flex-direction: column;
+        width: 75%;
     }
     img {
         width: 100%;

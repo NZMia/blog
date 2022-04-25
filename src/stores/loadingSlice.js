@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchAllItemFormAccountBook } from './accoutBookSlice';
+import { fetchAllCategory } from './categorySlice';
 
 const isLoadingReducer = (state) => {
   state.loadingState = true;
@@ -16,9 +16,9 @@ export const loadingSlice = createSlice({
   },
 
   extraReducers: {
-    [fetchAllItemFormAccountBook.pending]: isLoadingReducer,
-    [fetchAllItemFormAccountBook.fulfilled]: noneLoadingReducer,
-    [fetchAllItemFormAccountBook.rejected]: noneLoadingReducer,
+    [fetchAllCategory.pending]: isLoadingReducer,
+    [fetchAllCategory.fulfilled]: noneLoadingReducer,
+    [fetchAllCategory.rejected]: noneLoadingReducer,
   },
 });
 

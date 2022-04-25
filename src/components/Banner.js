@@ -10,8 +10,8 @@ export const Banner = () => {
     <div className="banner bg--grey">
       <div className="banner__text">
         <div className="banner__text__container">
-          <h1>{MAIN__CONTENT}</h1>
-          <p>{SUB__CONTENT}</p>
+          <h1 className="font font--big">{MAIN__CONTENT}</h1>
+          <p className="font font--grey">{SUB__CONTENT}</p>
           <form>
             <input
               type="email"
@@ -20,7 +20,7 @@ export const Banner = () => {
               placeholder="Enter your email address"
               autoComplete="off"
             />
-            <button type="button">Subscribe</button>
+            <Button content="Subscribe" />
           </form>
         </div>
       </div>

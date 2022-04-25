@@ -1,16 +1,27 @@
 @charset 'utf-8';
 
 @import 'colors';
+@import 'typograhpy';
 @import 'utility';
+@import 'layout';
 
 @import 'header';
 @import 'carsouel';
 @import 'nav';
 @import 'button';
 @import 'banner';
+@import 'category';
 
 #root {
+	max-width: $global-max-width;
   background-color: $flashWhite;
+}
+.mainLayout {
+	padding: 0 calc(($global-max-width - $xlarge) / 4);;
+	
+	@include respond(tablet) {
+		padding: 0 $global-padding * 2.5;
+	}
 }
 
 .bg--grey {
@@ -23,7 +34,6 @@
 
 .bg--white, 
 .bg--grey {
-	padding: $global-padding;
 	color: $gunmetal;
 }
 

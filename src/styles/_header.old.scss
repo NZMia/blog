@@ -16,8 +16,7 @@
 	}
 
 	&__content {
-		display: flex;
-		justify-content: space-between;
+        @extend .spaceBetween;
 		align-items: center;
 	}
 
