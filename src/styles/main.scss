@@ -12,31 +12,30 @@
 @import 'button';
 @import 'banner';
 @import 'category';
+@import 'articles';
 @import 'card';
 
 #root {
-max-width: $global-max-width;
-  background-color: $flashWhite;
-}
-.mainLayout {
-	padding: 0 calc(($global-max-width - $xlarge) / 4);;
-	
-	@include respond(tablet) {
-		padding: 0 $global-padding * 2.5;
-	}
+    max-width: $global-max-width;
+
 }
 
 .bg--grey {
-  background-color: $flashWhite;
+    background-color: $flashWhite;
 }
 
 .bg--white {
-  background-color: $lotion;
+    background-color: $lotion;
 }
 
 .bg--white, 
 .bg--grey {
-	color: $gunmetal;
+    color: $gunmetal;
+    padding: calc(($global-max-width - $xlarge) / 4);;
+
+    @include respond(tablet) {
+        padding: $global-padding * 2.5;
+    }
 }
 
 a {

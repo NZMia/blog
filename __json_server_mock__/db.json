@@ -30,5 +30,27 @@
       "icon": "https://testing-library.com/img/octopus-64x64.png",
       "id": 6
     }
+  ],
+  "articles": [
+    {
+      "title": "Flexbox CSS: Tips",
+      "author": "Mia",
+      "img": "https://blog.logrocket.com/wp-content/uploads/2018/06/5-things-not-do-building-react-applications.png",
+      "createdBy": "nzmiazhang@gmail.com",
+      "createdFrom": "Jan 10 2022",
+      "content": "xxxxxxx",
+      "categoryId": 1,
+      "id": 1
+    },
+    {
+      "title": "Array In Javascript",
+      "author": "Mia",
+      "img": "https://blog.logrocket.com/wp-content/uploads/2018/06/5-things-not-do-building-react-applications.png",
+      "createdBy": "nzmiazhang@gmail.com",
+      "createdFrom": "Jan 10 2022",
+      "content": "xxxxxxx",
+      "categoryId": 2,
+      "id": 2
+    }
   ]
 }
