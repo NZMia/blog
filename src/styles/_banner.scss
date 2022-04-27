@@ -1,0 +1,18 @@
+
+.banner {
+    @extend .spaceBetween;
+
+    &__text,
+    &__img {
+        width: 50%;
+        display: flex;
+        align-self: center;
+    }
+    &__text__container {
+        width: 75%;
+    }
+    img {
+        width: 100%;
+    }
+
+}

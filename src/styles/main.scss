@@ -1,11 +1,46 @@
 @charset 'utf-8';
 
 @import 'colors';
+@import 'variables';
+@import 'typograhpy';
 @import 'utility';
+@import 'layout';
 
 @import 'header';
 @import 'carsouel';
+@import 'nav';
+@import 'button';
+@import 'banner';
+@import 'category';
+@import 'articles';
+@import 'card';
 
-body {
+#root {
+    max-width: $global-max-width;
+
+}
+
+.bg--grey {
+    background-color: $flashWhite;
+}
+
+.bg--white {
     background-color: $lotion;
+}
+
+.bg--white, 
+.bg--grey {
+    color: $gunmetal;
+    padding: calc(($global-max-width - $xlarge) / 4);;
+
+    @include respond(tablet) {
+        padding: $global-padding * 2.5;
+    }
+}
+
+a {
+	color: $gunmetal;
+	&:hover, &:active {
+		color: $lightTaupe;
+	}
 }

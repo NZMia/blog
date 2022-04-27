@@ -1,8 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import accountBookSlice from './accoutBookSlice';
+import loadingSlice from './loadingSlice';
+import categorySlice from './categorySlice';
+import articlesSlice from './articlesSlice';
 
 export default configureStore({
   reducer: {
-    accoutBook: accountBookSlice,
+    category: categorySlice,
+    articles: articlesSlice,
+    loading: loadingSlice,
   },
 });
