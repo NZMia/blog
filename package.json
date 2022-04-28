@@ -6,8 +6,7 @@
   "scripts": {
     "build": "webpack",
     "dev": "webpack serve",
-    "api": "json-server __json_server_mock__/db.json --watch --port 5051",
-    "test": "jest",
+    "api": "json-server __json_server_mock__/db.json --watch --port 5051 --middlewares ./__json_server_mock__/middleware.js",
     "prepare": "husky install"
   },
   "author": "Mia",

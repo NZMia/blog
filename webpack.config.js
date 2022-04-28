@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { EnvironmentPlugin } = require('webpack');
+const { EnvironmentPlugin, DefinePlugin } = require('webpack');
 
 const BundleAnalyzerPlugin =
   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -62,6 +62,9 @@ module.exports = {
     }),
     new EnvironmentPlugin({
       NODE_ENV: 'development',
+    }),
+    new DefinePlugin({
+      process: { env: {} },
     }),
     // new BundleAnalyzerPlugin(),
   ],
