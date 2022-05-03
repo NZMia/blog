@@ -1,5 +1,6 @@
+
 # dependencies
-/node_modules
+*/node_modules/
 /.pnp
 
 # misc
@@ -10,3 +11,4 @@
 # .env.production.local
 
 npm-debug.log*
+node_modules
