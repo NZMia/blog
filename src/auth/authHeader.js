@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getToken } from './authProvider';
+import { getToken } from './authService';
 
 // Todo: debugger API_URL is underfined
 // const API_URL = process.env.REACT_APP_API_URL;
@@ -10,7 +10,7 @@ import { getToken } from './authProvider';
 
 export const authHeader = axios.create({
   baseURL: 'http://localhost:5051/',
-  withCredentials: false,
+  withCredentials: true,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',

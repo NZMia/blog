@@ -8,7 +8,8 @@ import Articles from '../components/Articles';
 
 import { fetchAllCategory } from '../stores/categorySlice';
 import { fetchAllArticles } from '../stores/articlesSlice';
-export const MainLayout = () => {
+
+export const UnauthenticatedApp = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,4 +27,4 @@ export const MainLayout = () => {
   );
 };
 
-export default MainLayout;
+export default UnauthenticatedApp;

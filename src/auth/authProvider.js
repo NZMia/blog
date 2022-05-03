@@ -1,30 +1,23 @@
-import { authHeader } from './authHeader';
+import React, { useState, createContext, useContext } from 'react';
+import * as auth from './authService';
 
-const localStorageKey = '__auth_provider_token__';
+const AuthContext = createContext(null);
 
-export const getToken = () => window.localStorage.getItem(localStorageKey);
+export const AuthProvider = ({}) => {
+  const [auth, setAuth] = useState();
 
-export const handleUserResponse = ({ user }) => {
-  window.localStorage.setItem(localStorageKey, user.token || '');
-  return user;
+  // const register = () => auth.register().then(setUser)
+  // const login = (user) => auth.login({username:"nzmiazhang@gmail.com", password: "1234"}).then(setUser);
+  // const logout = () => auth.logout().then(setUser);
+
+  return <AuthContext.Provider value={{ auth, setAuth }} />;
 };
 
-const register = async ({ username, password }) => {
-  const res = await authHeader.post(`register`, { username, password });
-  return handleUserResponse(await res.data.json);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+
+  return context;
 };
-
-const login = async ({ username, password }) => {
-  const res = await authHeader.post(`login`, { username, password });
-  return handleUserResponse(await res.data.json);
-};
-
-const logout = () => window.localStorage.removeItem(localStorageKey);
-
-const authService = {
-  register,
-  login,
-  logout,
-};
-
-export default authService;

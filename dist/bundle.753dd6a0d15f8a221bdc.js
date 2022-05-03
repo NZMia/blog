@@ -3972,8 +3972,8 @@
               /*! ../adapters/xhr */ './node_modules/axios/lib/adapters/xhr.js'
             );
           } else if (
-            typeof process !== 'undefined' &&
-            Object.prototype.toString.call(process) === '[object process]'
+            true &&
+            Object.prototype.toString.call({ env: {} }) === '[object process]'
           ) {
             // For node use HTTP adapter
             adapter = __webpack_require__(
@@ -5125,9 +5125,9 @@
           __webpack_require__(
             /*! ./layout/MainLayout */ './src/layout/MainLayout.js'
           );
-        /* harmony import */ var _layout_AccountBookLayout__WEBPACK_IMPORTED_MODULE_4__ =
+        /* harmony import */ var _layout_AdminLayout__WEBPACK_IMPORTED_MODULE_4__ =
           __webpack_require__(
-            /*! ./layout/AccountBookLayout */ './src/layout/AccountBookLayout.js'
+            /*! ./layout/AdminLayout */ './src/layout/AdminLayout.js'
           );
 
         var App = function App() {
@@ -5137,12 +5137,280 @@
               store: _stores_index__WEBPACK_IMPORTED_MODULE_2__['default'],
             },
             /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
-              _layout_MainLayout__WEBPACK_IMPORTED_MODULE_3__['default'],
+              _layout_AdminLayout__WEBPACK_IMPORTED_MODULE_4__['default'],
               null
             )
           );
         };
         /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = App;
+
+        /***/
+      },
+
+    /***/ './src/auth/authHeader.js':
+      /*!********************************!*\
+  !*** ./src/auth/authHeader.js ***!
+  \********************************/
+      /***/ (
+        __unused_webpack_module,
+        __webpack_exports__,
+        __webpack_require__
+      ) => {
+        'use strict';
+        __webpack_require__.r(__webpack_exports__);
+        /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+          /* harmony export */ authHeader: () => /* binding */ authHeader,
+          /* harmony export */
+        });
+        /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ =
+          __webpack_require__(/*! axios */ './node_modules/axios/index.js');
+        /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default =
+          /*#__PURE__*/ __webpack_require__.n(
+            axios__WEBPACK_IMPORTED_MODULE_0__
+          );
+        /* harmony import */ var _authProvider__WEBPACK_IMPORTED_MODULE_1__ =
+          __webpack_require__(
+            /*! ./authProvider */ './src/auth/authProvider.js'
+          );
+        /* harmony import */ var _authProvider__WEBPACK_IMPORTED_MODULE_1___default =
+          /*#__PURE__*/ __webpack_require__.n(
+            _authProvider__WEBPACK_IMPORTED_MODULE_1__
+          );
+
+        // Todo: debugger API_URL is underfined
+        // const API_URL = process.env.REACT_APP_API_URL;
+        // console.info('API_URL', process.env);
+        // Todo: jwt_waiting backend updates
+        // const authorization = getToken ?  'Bearer' + getToken : '';
+
+        var authHeader = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
+          baseURL: 'http://localhost:5051/',
+          withCredentials: false,
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json', // 'Authorization': authorization
+          },
+        });
+
+        /***/
+      },
+
+    /***/ './src/auth/authProvider.js':
+      /*!**********************************!*\
+  !*** ./src/auth/authProvider.js ***!
+  \**********************************/
+      /***/ () => {
+        /***/
+      },
+
+    /***/ './src/auth/authService.js':
+      /*!*********************************!*\
+  !*** ./src/auth/authService.js ***!
+  \*********************************/
+      /***/ (
+        __unused_webpack_module,
+        __webpack_exports__,
+        __webpack_require__
+      ) => {
+        'use strict';
+        __webpack_require__.r(__webpack_exports__);
+        /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+          /* harmony export */ default: () => __WEBPACK_DEFAULT_EXPORT__,
+          /* harmony export */ getToken: () => /* binding */ getToken,
+          /* harmony export */ handleUserResponse: () =>
+            /* binding */ handleUserResponse,
+          /* harmony export */
+        });
+        /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ =
+          __webpack_require__(
+            /*! @babel/runtime/helpers/asyncToGenerator */ './node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js'
+          );
+        /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ =
+          __webpack_require__(
+            /*! @babel/runtime/regenerator */ './node_modules/@babel/runtime/regenerator/index.js'
+          );
+        /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default =
+          /*#__PURE__*/ __webpack_require__.n(
+            _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__
+          );
+        /* harmony import */ var _authHeader__WEBPACK_IMPORTED_MODULE_2__ =
+          __webpack_require__(/*! ./authHeader */ './src/auth/authHeader.js');
+
+        var localStorageKey = '__auth_provider_token__';
+        var getToken = function getToken() {
+          return window.localStorage.getItem(localStorageKey);
+        };
+        var handleUserResponse = function handleUserResponse(_ref) {
+          var user = _ref.user;
+          console.info('user', user);
+          window.localStorage.setItem(localStorageKey, user.token || '');
+          return user;
+        };
+
+        var register = /*#__PURE__*/ (function () {
+          var _ref3 = (0,
+          _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__[
+            'default'
+          ])(
+            /*#__PURE__*/ _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(
+              function _callee(_ref2) {
+                var username, password, res;
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(
+                  function _callee$(_context) {
+                    while (1) {
+                      switch ((_context.prev = _context.next)) {
+                        case 0:
+                          (username = _ref2.username),
+                            (password = _ref2.password);
+                          _context.next = 3;
+                          return _authHeader__WEBPACK_IMPORTED_MODULE_2__.authHeader.post(
+                            'register',
+                            {
+                              username: username,
+                              password: password,
+                            }
+                          );
+
+                        case 3:
+                          res = _context.sent;
+
+                          if (!(res.status === 200)) {
+                            _context.next = 12;
+                            break;
+                          }
+
+                          _context.t0 = handleUserResponse;
+                          _context.next = 8;
+                          return res.data;
+
+                        case 8:
+                          _context.t1 = _context.sent;
+                          return _context.abrupt(
+                            'return',
+                            (0, _context.t0)(_context.t1)
+                          );
+
+                        case 12:
+                          throw Error(err.message);
+
+                        case 13:
+                        case 'end':
+                          return _context.stop();
+                      }
+                    }
+                  },
+                  _callee
+                );
+              }
+            )
+          );
+
+          return function register(_x) {
+            return _ref3.apply(this, arguments);
+          };
+        })();
+
+        var login = /*#__PURE__*/ (function () {
+          var _ref5 = (0,
+          _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__[
+            'default'
+          ])(
+            /*#__PURE__*/ _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(
+              function _callee2(_ref4) {
+                var username, password, res;
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(
+                  function _callee2$(_context2) {
+                    while (1) {
+                      switch ((_context2.prev = _context2.next)) {
+                        case 0:
+                          (username = _ref4.username),
+                            (password = _ref4.password);
+                          _context2.next = 3;
+                          return _authHeader__WEBPACK_IMPORTED_MODULE_2__.authHeader.post(
+                            'login',
+                            {
+                              username: username,
+                              password: password,
+                            }
+                          );
+
+                        case 3:
+                          res = _context2.sent;
+
+                          if (!(res.status === 200)) {
+                            _context2.next = 10;
+                            break;
+                          }
+
+                          _context2.t0 = handleUserResponse;
+                          _context2.next = 8;
+                          return res.data;
+
+                        case 8:
+                          _context2.t1 = _context2.sent;
+                          return _context2.abrupt(
+                            'return',
+                            (0, _context2.t0)(_context2.t1)
+                          );
+
+                        case 10:
+                        case 'end':
+                          return _context2.stop();
+                      }
+                    }
+                  },
+                  _callee2
+                );
+              }
+            )
+          );
+
+          return function login(_x2) {
+            return _ref5.apply(this, arguments);
+          };
+        })();
+
+        var logout = /*#__PURE__*/ (function () {
+          var _ref6 = (0,
+          _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__[
+            'default'
+          ])(
+            /*#__PURE__*/ _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(
+              function _callee3() {
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(
+                  function _callee3$(_context3) {
+                    while (1) {
+                      switch ((_context3.prev = _context3.next)) {
+                        case 0:
+                          return _context3.abrupt(
+                            'return',
+                            window.localStorage.removeItem(localStorageKey)
+                          );
+
+                        case 1:
+                        case 'end':
+                          return _context3.stop();
+                      }
+                    }
+                  },
+                  _callee3
+                );
+              }
+            )
+          );
+
+          return function logout() {
+            return _ref6.apply(this, arguments);
+          };
+        })();
+
+        var authService = {
+          register: register,
+          login: login,
+          logout: logout,
+        };
+        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ =
+          authService;
 
         /***/
       },
@@ -5168,7 +5436,6 @@
           /*#__PURE__*/ __webpack_require__.n(
             axios__WEBPACK_IMPORTED_MODULE_0__
           );
-        // const API_URL = process.env.REACT_APP_API_URL;
 
         var api = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
           baseURL: 'http://localhost:5051/',
@@ -5178,6 +5445,98 @@
             'Content-Type': 'application/json',
           },
         });
+
+        /***/
+      },
+
+    /***/ './src/components/Articles.js':
+      /*!************************************!*\
+  !*** ./src/components/Articles.js ***!
+  \************************************/
+      /***/ (
+        __unused_webpack_module,
+        __webpack_exports__,
+        __webpack_require__
+      ) => {
+        'use strict';
+        __webpack_require__.r(__webpack_exports__);
+        /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+          /* harmony export */ Articles: () => /* binding */ Articles,
+          /* harmony export */ default: () => __WEBPACK_DEFAULT_EXPORT__,
+          /* harmony export */
+        });
+        /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ =
+          __webpack_require__(/*! react */ './node_modules/react/index.js');
+        /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default =
+          /*#__PURE__*/ __webpack_require__.n(
+            react__WEBPACK_IMPORTED_MODULE_0__
+          );
+        /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ =
+          __webpack_require__(
+            /*! react-redux */ './node_modules/react-redux/es/index.js'
+          );
+        /* harmony import */ var _Card__WEBPACK_IMPORTED_MODULE_2__ =
+          __webpack_require__(/*! ./Card */ './src/components/Card.js');
+        /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ =
+          __webpack_require__(/*! ../constants */ './src/constants/index.js');
+
+        var Articles = function Articles() {
+          var FEATUREED =
+              _constants__WEBPACK_IMPORTED_MODULE_3__.COMMON__CONTENT.FEATUREED,
+            SEE__ALL__ARTICLE =
+              _constants__WEBPACK_IMPORTED_MODULE_3__.COMMON__CONTENT
+                .SEE__ALL__ARTICLE;
+
+          var _useSelector = (0,
+            react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (
+              state
+            ) {
+              return state.articles;
+            }),
+            articlesItem = _useSelector.articlesItem;
+
+          return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+            'div',
+            {
+              className: 'articles bg--white',
+            },
+            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+              'div',
+              {
+                className: 'articles__header',
+              },
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                'h3',
+                {
+                  className: 'font font__dash',
+                },
+                FEATUREED
+              ),
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                'h3',
+                {
+                  className: 'font font__arrow',
+                },
+                SEE__ALL__ARTICLE
+              )
+            ),
+            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+              'div',
+              {
+                className: 'articles__cards',
+              },
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                _Card__WEBPACK_IMPORTED_MODULE_2__['default'],
+                {
+                  hasCardImg: true,
+                  cardItems: articlesItem,
+                }
+              )
+            )
+          );
+        };
+        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ =
+          Articles;
 
         /***/
       },
@@ -5204,12 +5563,22 @@
           /*#__PURE__*/ __webpack_require__.n(
             react__WEBPACK_IMPORTED_MODULE_0__
           );
-        /* harmony import */ var _assets_person_png__WEBPACK_IMPORTED_MODULE_1__ =
+        /* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_1__ =
+          __webpack_require__(/*! ./Button */ './src/components/Button.js');
+        /* harmony import */ var _assets_person_png__WEBPACK_IMPORTED_MODULE_2__ =
           __webpack_require__(
             /*! ../assets/person.png */ './src/assets/person.png'
           );
+        /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ =
+          __webpack_require__(/*! ../constants */ './src/constants/index.js');
 
         var Banner = function Banner() {
+          var MAIN__CONTENT =
+              _constants__WEBPACK_IMPORTED_MODULE_3__.BANNER__CONTENT
+                .MAIN__CONTENT,
+            SUB__CONTENT =
+              _constants__WEBPACK_IMPORTED_MODULE_3__.BANNER__CONTENT
+                .SUB__CONTENT;
           return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
             'div',
             {
@@ -5220,7 +5589,46 @@
               {
                 className: 'banner__text',
               },
-              'text'
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                'div',
+                {
+                  className: 'banner__text__container',
+                },
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                  'h1',
+                  {
+                    className: 'font font--big',
+                  },
+                  MAIN__CONTENT
+                ),
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                  'p',
+                  {
+                    className: 'font font--grey',
+                  },
+                  SUB__CONTENT
+                ),
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                  'form',
+                  null,
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                    'input',
+                    {
+                      type: 'email',
+                      name: 'email',
+                      id: 'email',
+                      placeholder: 'Enter your email address',
+                      autoComplete: 'off',
+                    }
+                  ),
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                    _Button__WEBPACK_IMPORTED_MODULE_1__['default'],
+                    {
+                      content: 'Subscribe',
+                    }
+                  )
+                )
+              )
             ),
             /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
               'div',
@@ -5230,7 +5638,7 @@
               /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
                 'img',
                 {
-                  src: img,
+                  src: _assets_person_png__WEBPACK_IMPORTED_MODULE_2__,
                   alt: 'img',
                 }
               )
@@ -5276,6 +5684,172 @@
           );
         };
         /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = Button;
+
+        /***/
+      },
+
+    /***/ './src/components/Card.js':
+      /*!********************************!*\
+  !*** ./src/components/Card.js ***!
+  \********************************/
+      /***/ (
+        __unused_webpack_module,
+        __webpack_exports__,
+        __webpack_require__
+      ) => {
+        'use strict';
+        __webpack_require__.r(__webpack_exports__);
+        /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+          /* harmony export */ Card: () => /* binding */ Card,
+          /* harmony export */ default: () => __WEBPACK_DEFAULT_EXPORT__,
+          /* harmony export */
+        });
+        /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ =
+          __webpack_require__(/*! react */ './node_modules/react/index.js');
+        /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default =
+          /*#__PURE__*/ __webpack_require__.n(
+            react__WEBPACK_IMPORTED_MODULE_0__
+          );
+
+        var Card = function Card(_ref) {
+          var hasCardImg = _ref.hasCardImg,
+            cardItems = _ref.cardItems;
+          console.info('cardItems', cardItems);
+          return (
+            cardItems &&
+            cardItems.map(function (cardItem, index) {
+              return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                'div',
+                {
+                  className: ''.concat(hasCardImg ? 'card' : 'card--noImg'),
+                  key: index,
+                },
+                hasCardImg &&
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                    'img',
+                    {
+                      className: 'card__image',
+                      src: cardItem.img,
+                      alt: cardItem.title,
+                    }
+                  ),
+                /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                  'div',
+                  {
+                    className: 'card__body',
+                  },
+                  cardItem.icon &&
+                    /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                      'img',
+                      {
+                        src: cardItem.icon,
+                        alt: cardItem.title,
+                      }
+                    ),
+                  /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                    'h3',
+                    {
+                      className: 'font',
+                    },
+                    cardItem.title
+                  )
+                )
+              );
+            })
+          );
+        };
+        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = Card;
+
+        /***/
+      },
+
+    /***/ './src/components/Category.js':
+      /*!************************************!*\
+  !*** ./src/components/Category.js ***!
+  \************************************/
+      /***/ (
+        __unused_webpack_module,
+        __webpack_exports__,
+        __webpack_require__
+      ) => {
+        'use strict';
+        __webpack_require__.r(__webpack_exports__);
+        /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+          /* harmony export */ Category: () => /* binding */ Category,
+          /* harmony export */ default: () => __WEBPACK_DEFAULT_EXPORT__,
+          /* harmony export */
+        });
+        /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ =
+          __webpack_require__(/*! react */ './node_modules/react/index.js');
+        /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default =
+          /*#__PURE__*/ __webpack_require__.n(
+            react__WEBPACK_IMPORTED_MODULE_0__
+          );
+        /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ =
+          __webpack_require__(
+            /*! react-redux */ './node_modules/react-redux/es/index.js'
+          );
+        /* harmony import */ var _Card__WEBPACK_IMPORTED_MODULE_2__ =
+          __webpack_require__(/*! ./Card */ './src/components/Card.js');
+        /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ =
+          __webpack_require__(/*! ../constants */ './src/constants/index.js');
+
+        var Category = function Category() {
+          var _useSelector = (0,
+            react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (
+              state
+            ) {
+              return state.category;
+            }),
+            categoryItems = _useSelector.categoryItems;
+
+          var BROWSE =
+              _constants__WEBPACK_IMPORTED_MODULE_3__.COMMON__CONTENT.BROWSE,
+            SEE__ALL__CATEGORY =
+              _constants__WEBPACK_IMPORTED_MODULE_3__.COMMON__CONTENT
+                .SEE__ALL__CATEGORY;
+          return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+            'div',
+            {
+              className: 'category bg--grey',
+            },
+            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+              'div',
+              {
+                className: 'category__header',
+              },
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                'h3',
+                {
+                  className: 'font font__dash',
+                },
+                BROWSE
+              ),
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                'h3',
+                {
+                  className: 'font font__arrow',
+                },
+                SEE__ALL__CATEGORY
+              )
+            ),
+            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+              'div',
+              {
+                className: 'category__cards',
+              },
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                _Card__WEBPACK_IMPORTED_MODULE_2__['default'],
+                {
+                  hasCardImg: false,
+                  cardItems: categoryItems,
+                }
+              )
+            )
+          );
+        };
+        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ =
+          Category;
 
         /***/
       },
@@ -5348,6 +5922,113 @@
         /***/
       },
 
+    /***/ './src/components/Login.js':
+      /*!*********************************!*\
+  !*** ./src/components/Login.js ***!
+  \*********************************/
+      /***/ (
+        __unused_webpack_module,
+        __webpack_exports__,
+        __webpack_require__
+      ) => {
+        'use strict';
+        __webpack_require__.r(__webpack_exports__);
+        /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+          /* harmony export */ Login: () => /* binding */ Login,
+          /* harmony export */ default: () => __WEBPACK_DEFAULT_EXPORT__,
+          /* harmony export */
+        });
+        /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ =
+          __webpack_require__(/*! react */ './node_modules/react/index.js');
+        /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default =
+          /*#__PURE__*/ __webpack_require__.n(
+            react__WEBPACK_IMPORTED_MODULE_0__
+          );
+        /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ =
+          __webpack_require__(
+            /*! react-redux */ './node_modules/react-redux/es/index.js'
+          );
+        /* harmony import */ var _stores_authSlice__WEBPACK_IMPORTED_MODULE_2__ =
+          __webpack_require__(
+            /*! ../stores/authSlice */ './src/stores/authSlice.js'
+          );
+
+        var Login = function Login() {
+          var dispatch = (0,
+          react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
+
+          var handleSubmit = function handleSubmit(e) {
+            e.preventDefault();
+            var username = e.target[0].value;
+            var password = e.target[1].value;
+            dispatch(
+              (0, _stores_authSlice__WEBPACK_IMPORTED_MODULE_2__.register)({
+                username: username,
+                password: password,
+              })
+            );
+          };
+
+          return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+            'form',
+            {
+              className: 'login',
+              onSubmit: handleSubmit,
+            },
+            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+              'div',
+              {
+                className: 'login__userName',
+              },
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                'label',
+                {
+                  htmlFor: 'username',
+                },
+                'User Name'
+              ),
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                'input',
+                {
+                  type: 'text',
+                  id: 'username',
+                }
+              )
+            ),
+            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+              'div',
+              {
+                className: 'login__password',
+              },
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                'label',
+                {
+                  htmlFor: 'username',
+                },
+                'Password'
+              ),
+              /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                'input',
+                {
+                  type: 'password',
+                  id: 'password',
+                }
+              )
+            ),
+            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+              'button',
+              {
+                type: 'submit',
+              },
+              'Submit'
+            )
+          );
+        };
+        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = Login;
+
+        /***/
+      },
+
     /***/ './src/components/Nav.js':
       /*!*******************************!*\
   !*** ./src/components/Nav.js ***!
@@ -5403,10 +6084,10 @@
         /***/
       },
 
-    /***/ './src/components/accountBook/AccountBook.js':
-      /*!***************************************************!*\
-  !*** ./src/components/accountBook/AccountBook.js ***!
-  \***************************************************/
+    /***/ './src/constants/banner__cons.js':
+      /*!***************************************!*\
+  !*** ./src/constants/banner__cons.js ***!
+  \***************************************/
       /***/ (
         __unused_webpack_module,
         __webpack_exports__,
@@ -5415,88 +6096,14 @@
         'use strict';
         __webpack_require__.r(__webpack_exports__);
         /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-          /* harmony export */ AccountBook: () => /* binding */ AccountBook,
-          /* harmony export */ default: () => __WEBPACK_DEFAULT_EXPORT__,
+          /* harmony export */ BANNER__CONTENT: () =>
+            /* binding */ BANNER__CONTENT,
           /* harmony export */
         });
-        /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ =
-          __webpack_require__(/*! react */ './node_modules/react/index.js');
-        /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default =
-          /*#__PURE__*/ __webpack_require__.n(
-            react__WEBPACK_IMPORTED_MODULE_0__
-          );
-        /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ =
-          __webpack_require__(
-            /*! react-redux */ './node_modules/react-redux/es/index.js'
-          );
-        /* harmony import */ var _PriceLists__WEBPACK_IMPORTED_MODULE_2__ =
-          __webpack_require__(
-            /*! ./PriceLists */ './src/components/accountBook/PriceLists.js'
-          );
-
-        var AccountBook = function AccountBook() {
-          var _useSelector = (0,
-            react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (
-              state
-            ) {
-              return state.accoutBook;
-            }),
-            accountBookItems = _useSelector.accountBookItems;
-
-          return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
-            'div',
-            {
-              className: 'accountBook__container',
-            },
-            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
-              _PriceLists__WEBPACK_IMPORTED_MODULE_2__['default'],
-              {
-                items: accountBookItems,
-              }
-            )
-          );
+        var BANNER__CONTENT = {
+          MAIN__CONTENT: 'Hi, I am Mia \n Front End Developer',
+          SUB__CONTENT: 'On this blog I share tips and tricks,',
         };
-        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ =
-          AccountBook;
-
-        /***/
-      },
-
-    /***/ './src/components/accountBook/PriceLists.js':
-      /*!**************************************************!*\
-  !*** ./src/components/accountBook/PriceLists.js ***!
-  \**************************************************/
-      /***/ (
-        __unused_webpack_module,
-        __webpack_exports__,
-        __webpack_require__
-      ) => {
-        'use strict';
-        __webpack_require__.r(__webpack_exports__);
-        /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-          /* harmony export */ PriceLists: () => /* binding */ PriceLists,
-          /* harmony export */ default: () => __WEBPACK_DEFAULT_EXPORT__,
-          /* harmony export */
-        });
-        /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ =
-          __webpack_require__(/*! react */ './node_modules/react/index.js');
-        /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default =
-          /*#__PURE__*/ __webpack_require__.n(
-            react__WEBPACK_IMPORTED_MODULE_0__
-          );
-
-        var PriceLists = function PriceLists(_ref) {
-          var items = _ref.items;
-          // console.info('items', items);
-          return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
-            'ul',
-            {
-              className: '',
-            }
-          );
-        };
-        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ =
-          PriceLists;
 
         /***/
       },
@@ -5525,6 +6132,32 @@
         /***/
       },
 
+    /***/ './src/constants/common__cons.js':
+      /*!***************************************!*\
+  !*** ./src/constants/common__cons.js ***!
+  \***************************************/
+      /***/ (
+        __unused_webpack_module,
+        __webpack_exports__,
+        __webpack_require__
+      ) => {
+        'use strict';
+        __webpack_require__.r(__webpack_exports__);
+        /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+          /* harmony export */ COMMON__CONTENT: () =>
+            /* binding */ COMMON__CONTENT,
+          /* harmony export */
+        });
+        var COMMON__CONTENT = {
+          BROWSE: 'Browse The Category',
+          FEATUREED: 'Featured Article',
+          SEE__ALL__CATEGORY: 'See All Category',
+          SEE__ALL__ARTICLE: 'See All Article',
+        };
+
+        /***/
+      },
+
     /***/ './src/constants/header__cons.js':
       /*!***************************************!*\
   !*** ./src/constants/header__cons.js ***!
@@ -5545,7 +6178,7 @@
           HEADER__CONTENT__NAV__ONE: 'Home',
           HEADER__CONTENT__NAV__THREE: 'Blog',
           HEADER__CONTENT__NAV__TWO: 'About me',
-          HEADER__CONTENT__NAV__FOUR: 'Contac me',
+          HEADER__CONTENT__NAV__FOUR: 'Contact me',
         };
 
         /***/
@@ -5563,8 +6196,12 @@
         'use strict';
         __webpack_require__.r(__webpack_exports__);
         /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+          /* harmony export */ BANNER__CONTENT: () =>
+            /* reexport safe */ _banner_cons__WEBPACK_IMPORTED_MODULE_2__.BANNER__CONTENT,
           /* harmony export */ CARSOUEL__TYPE: () =>
             /* reexport safe */ _carousel_cons__WEBPACK_IMPORTED_MODULE_1__.CARSOUEL__TYPE,
+          /* harmony export */ COMMON__CONTENT: () =>
+            /* reexport safe */ _common_cons__WEBPACK_IMPORTED_MODULE_3__.COMMON__CONTENT,
           /* harmony export */ HEADER__CONTENT: () =>
             /* reexport safe */ _header_cons__WEBPACK_IMPORTED_MODULE_0__.HEADER__CONTENT,
           /* harmony export */
@@ -5577,14 +6214,22 @@
           __webpack_require__(
             /*! ./carousel__cons */ './src/constants/carousel__cons.js'
           );
+        /* harmony import */ var _banner_cons__WEBPACK_IMPORTED_MODULE_2__ =
+          __webpack_require__(
+            /*! ./banner__cons */ './src/constants/banner__cons.js'
+          );
+        /* harmony import */ var _common_cons__WEBPACK_IMPORTED_MODULE_3__ =
+          __webpack_require__(
+            /*! ./common__cons */ './src/constants/common__cons.js'
+          );
 
         /***/
       },
 
-    /***/ './src/layout/AccountBookLayout.js':
-      /*!*****************************************!*\
-  !*** ./src/layout/AccountBookLayout.js ***!
-  \*****************************************/
+    /***/ './src/layout/AdminLayout.js':
+      /*!***********************************!*\
+  !*** ./src/layout/AdminLayout.js ***!
+  \***********************************/
       /***/ (
         __unused_webpack_module,
         __webpack_exports__,
@@ -5593,8 +6238,7 @@
         'use strict';
         __webpack_require__.r(__webpack_exports__);
         /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-          /* harmony export */ AccountBookLayout: () =>
-            /* binding */ AccountBookLayout,
+          /* harmony export */ AdminLayout: () => /* binding */ AdminLayout,
           /* harmony export */ default: () => __WEBPACK_DEFAULT_EXPORT__,
           /* harmony export */
         });
@@ -5604,54 +6248,25 @@
           /*#__PURE__*/ __webpack_require__.n(
             react__WEBPACK_IMPORTED_MODULE_0__
           );
-        /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ =
+        /* harmony import */ var _components_Login__WEBPACK_IMPORTED_MODULE_1__ =
           __webpack_require__(
-            /*! react-redux */ './node_modules/react-redux/es/index.js'
-          );
-        /* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_2__ =
-          __webpack_require__(
-            /*! ../components/Header */ './src/components/Header.js'
-          );
-        /* harmony import */ var _components_accountBook_AccountBook__WEBPACK_IMPORTED_MODULE_3__ =
-          __webpack_require__(
-            /*! ../components/accountBook/AccountBook */ './src/components/accountBook/AccountBook.js'
-          );
-        /* harmony import */ var _stores_accoutBookSlice__WEBPACK_IMPORTED_MODULE_4__ =
-          __webpack_require__(
-            /*! ../stores/accoutBookSlice */ './src/stores/accoutBookSlice.js'
+            /*! ../components/Login */ './src/components/Login.js'
           );
 
-        var AccountBookLayout = function AccountBookLayout() {
-          var dispatch = (0,
-          react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
-          (0, react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(
-            function () {
-              dispatch(
-                (0,
-                _stores_accoutBookSlice__WEBPACK_IMPORTED_MODULE_4__.fetchAllItemFormAccountBook)()
-              );
-            },
-            [dispatch]
-          );
+        var AdminLayout = function AdminLayout() {
           return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
             'div',
             {
-              className: 'accountBookLayout',
+              className: 'adminLayout',
             },
             /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
-              _components_Header__WEBPACK_IMPORTED_MODULE_2__['default'],
-              null
-            ),
-            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
-              _components_accountBook_AccountBook__WEBPACK_IMPORTED_MODULE_3__[
-                'default'
-              ],
+              _components_Login__WEBPACK_IMPORTED_MODULE_1__['default'],
               null
             )
           );
         };
         /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ =
-          AccountBookLayout;
+          AdminLayout;
 
         /***/
       },
@@ -5678,27 +6293,70 @@
           /*#__PURE__*/ __webpack_require__.n(
             react__WEBPACK_IMPORTED_MODULE_0__
           );
-        /* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_1__ =
+        /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ =
+          __webpack_require__(
+            /*! react-redux */ './node_modules/react-redux/es/index.js'
+          );
+        /* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_2__ =
           __webpack_require__(
             /*! ../components/Header */ './src/components/Header.js'
           );
-        /* harmony import */ var _components_Banner__WEBPACK_IMPORTED_MODULE_2__ =
+        /* harmony import */ var _components_Banner__WEBPACK_IMPORTED_MODULE_3__ =
           __webpack_require__(
             /*! ../components/Banner */ './src/components/Banner.js'
           );
+        /* harmony import */ var _components_Category__WEBPACK_IMPORTED_MODULE_4__ =
+          __webpack_require__(
+            /*! ../components/Category */ './src/components/Category.js'
+          );
+        /* harmony import */ var _components_Articles__WEBPACK_IMPORTED_MODULE_5__ =
+          __webpack_require__(
+            /*! ../components/Articles */ './src/components/Articles.js'
+          );
+        /* harmony import */ var _stores_categorySlice__WEBPACK_IMPORTED_MODULE_6__ =
+          __webpack_require__(
+            /*! ../stores/categorySlice */ './src/stores/categorySlice.js'
+          );
+        /* harmony import */ var _stores_articlesSlice__WEBPACK_IMPORTED_MODULE_7__ =
+          __webpack_require__(
+            /*! ../stores/articlesSlice */ './src/stores/articlesSlice.js'
+          );
 
         var MainLayout = function MainLayout() {
+          var dispatch = (0,
+          react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
+          (0, react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(
+            function () {
+              dispatch(
+                (0,
+                _stores_categorySlice__WEBPACK_IMPORTED_MODULE_6__.fetchAllCategory)()
+              );
+              dispatch(
+                (0,
+                _stores_articlesSlice__WEBPACK_IMPORTED_MODULE_7__.fetchAllArticles)()
+              );
+            },
+            [dispatch]
+          );
           return /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
             'div',
             {
               className: 'mainLayout',
             },
             /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
-              _components_Header__WEBPACK_IMPORTED_MODULE_1__['default'],
+              _components_Header__WEBPACK_IMPORTED_MODULE_2__['default'],
               null
             ),
             /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
-              _components_Banner__WEBPACK_IMPORTED_MODULE_2__['default'],
+              _components_Banner__WEBPACK_IMPORTED_MODULE_3__['default'],
+              null
+            ),
+            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+              _components_Category__WEBPACK_IMPORTED_MODULE_4__['default'],
+              null
+            ),
+            /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+              _components_Articles__WEBPACK_IMPORTED_MODULE_5__['default'],
               null
             )
           );
@@ -5755,10 +6413,10 @@
         /***/
       },
 
-    /***/ './src/stores/accoutBookSlice.js':
-      /*!***************************************!*\
-  !*** ./src/stores/accoutBookSlice.js ***!
-  \***************************************/
+    /***/ './src/stores/articlesSlice.js':
+      /*!*************************************!*\
+  !*** ./src/stores/articlesSlice.js ***!
+  \*************************************/
       /***/ (
         __unused_webpack_module,
         __webpack_exports__,
@@ -5767,13 +6425,10 @@
         'use strict';
         __webpack_require__.r(__webpack_exports__);
         /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-          /* harmony export */ accountBookSlice: () =>
-            /* binding */ accountBookSlice,
+          /* harmony export */ articlesSlice: () => /* binding */ articlesSlice,
           /* harmony export */ default: () => __WEBPACK_DEFAULT_EXPORT__,
-          /* harmony export */ fetchAllItemFormAccountBook: () =>
-            /* binding */ fetchAllItemFormAccountBook,
-          /* harmony export */ getAccountBook: () =>
-            /* binding */ getAccountBook,
+          /* harmony export */ fetchAllArticles: () =>
+            /* binding */ fetchAllArticles,
           /* harmony export */
         });
         /* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ =
@@ -5799,9 +6454,9 @@
         /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_3__ =
           __webpack_require__(/*! ../common */ './src/common.js');
 
-        var fetchAllItemFormAccountBook = (0,
+        var fetchAllArticles = (0,
         _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_4__.createAsyncThunk)(
-          'accountBook/fetchAll',
+          'article/fetchAll',
           /*#__PURE__*/ (0,
           _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__[
             'default'
@@ -5817,7 +6472,7 @@
                           _context.prev = 0;
                           _context.next = 3;
                           return _common__WEBPACK_IMPORTED_MODULE_3__.api.get(
-                            '/accountBook'
+                            '/articles'
                           );
 
                         case 3:
@@ -5843,31 +6498,290 @@
             )
           )
         );
-        var accountBookSlice = (0,
+        var articlesSlice = (0,
         _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_4__.createSlice)({
-          name: 'accountBook',
+          name: 'articles',
           initialState: {
-            accountBookItems: [],
-          },
-          reducers: {
-            getAccountBook: function getAccountBook(state, payload) {},
+            articlesItem: [],
           },
           extraReducers: (0,
           _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__[
             'default'
-          ])(
-            {},
-            fetchAllItemFormAccountBook.fulfilled,
-            function (state, _ref2) {
-              var payload = _ref2.payload;
-              state.accountBookItems = payload;
-            }
-          ),
+          ])({}, fetchAllArticles.fulfilled, function (state, _ref2) {
+            var payload = _ref2.payload;
+            state.articlesItem = payload;
+          }),
         });
-        var getAccountBook = accountBookSlice.actions.getAccountBook;
-
         /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ =
-          accountBookSlice.reducer;
+          articlesSlice.reducer;
+
+        /***/
+      },
+
+    /***/ './src/stores/authSlice.js':
+      /*!*********************************!*\
+  !*** ./src/stores/authSlice.js ***!
+  \*********************************/
+      /***/ (
+        __unused_webpack_module,
+        __webpack_exports__,
+        __webpack_require__
+      ) => {
+        'use strict';
+        __webpack_require__.r(__webpack_exports__);
+        /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+          /* harmony export */ authSlice: () => /* binding */ authSlice,
+          /* harmony export */ default: () => __WEBPACK_DEFAULT_EXPORT__,
+          /* harmony export */ register: () => /* binding */ register,
+          /* harmony export */
+        });
+        /* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ =
+          __webpack_require__(
+            /*! @babel/runtime/helpers/defineProperty */ './node_modules/@babel/runtime/helpers/esm/defineProperty.js'
+          );
+        /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ =
+          __webpack_require__(
+            /*! @babel/runtime/helpers/asyncToGenerator */ './node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js'
+          );
+        /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ =
+          __webpack_require__(
+            /*! @babel/runtime/regenerator */ './node_modules/@babel/runtime/regenerator/index.js'
+          );
+        /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default =
+          /*#__PURE__*/ __webpack_require__.n(
+            _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__
+          );
+        /* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_4__ =
+          __webpack_require__(
+            /*! @reduxjs/toolkit */ './node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js'
+          );
+        /* harmony import */ var _auth_authService__WEBPACK_IMPORTED_MODULE_3__ =
+          __webpack_require__(
+            /*! ../auth/authService */ './src/auth/authService.js'
+          );
+
+        var _extraReducers;
+
+        var register = (0,
+        _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_4__.createAsyncThunk)(
+          'auth/register',
+          /*#__PURE__*/ (function () {
+            var _ref2 = (0,
+            _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__[
+              'default'
+            ])(
+              /*#__PURE__*/ _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(
+                function _callee(_ref) {
+                  var username, password, res;
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(
+                    function _callee$(_context) {
+                      while (1) {
+                        switch ((_context.prev = _context.next)) {
+                          case 0:
+                            (username = _ref.username),
+                              (password = _ref.password);
+                            _context.prev = 1;
+                            _context.next = 4;
+                            return _auth_authService__WEBPACK_IMPORTED_MODULE_3__[
+                              'default'
+                            ].register({
+                              username: username,
+                              password: password,
+                            });
+
+                          case 4:
+                            res = _context.sent;
+                            return _context.abrupt('return', res.data);
+
+                          case 8:
+                            _context.prev = 8;
+                            _context.t0 = _context['catch'](1);
+                            throw Error(_context.t0.message);
+
+                          case 11:
+                          case 'end':
+                            return _context.stop();
+                        }
+                      }
+                    },
+                    _callee,
+                    null,
+                    [[1, 8]]
+                  );
+                }
+              )
+            );
+
+            return function (_x) {
+              return _ref2.apply(this, arguments);
+            };
+          })()
+        );
+        var authSlice = (0,
+        _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_4__.createSlice)({
+          name: 'auth',
+          initialState: {
+            isLoggedIn: false,
+            user: {},
+          },
+          extraReducers:
+            ((_extraReducers = {}),
+            (0,
+            _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__[
+              'default'
+            ])(_extraReducers, register.fulfilled, function (state, _ref3) {
+              var payload = _ref3.payload;
+              state.isLoggedIn = true;
+              state.user = payload;
+            }),
+            (0,
+            _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__[
+              'default'
+            ])(_extraReducers, register.rejected, function (state, _ref4) {
+              var payload = _ref4.payload;
+              state.isLoggedIn = false;
+              state.user = null;
+            }),
+            _extraReducers),
+        });
+        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ =
+          authSlice.reducer;
+
+        /***/
+      },
+
+    /***/ './src/stores/categorySlice.js':
+      /*!*************************************!*\
+  !*** ./src/stores/categorySlice.js ***!
+  \*************************************/
+      /***/ (
+        __unused_webpack_module,
+        __webpack_exports__,
+        __webpack_require__
+      ) => {
+        'use strict';
+        __webpack_require__.r(__webpack_exports__);
+        /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+          /* harmony export */ categorySlice: () => /* binding */ categorySlice,
+          /* harmony export */ default: () => __WEBPACK_DEFAULT_EXPORT__,
+          /* harmony export */ fetchAllCategory: () =>
+            /* binding */ fetchAllCategory,
+          /* harmony export */
+        });
+        /* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ =
+          __webpack_require__(
+            /*! @babel/runtime/helpers/defineProperty */ './node_modules/@babel/runtime/helpers/esm/defineProperty.js'
+          );
+        /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ =
+          __webpack_require__(
+            /*! @babel/runtime/helpers/asyncToGenerator */ './node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js'
+          );
+        /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ =
+          __webpack_require__(
+            /*! @babel/runtime/regenerator */ './node_modules/@babel/runtime/regenerator/index.js'
+          );
+        /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default =
+          /*#__PURE__*/ __webpack_require__.n(
+            _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__
+          );
+        /* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_4__ =
+          __webpack_require__(
+            /*! @reduxjs/toolkit */ './node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js'
+          );
+        /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_3__ =
+          __webpack_require__(/*! ../common */ './src/common.js');
+
+        var fetchAllCategory = (0,
+        _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_4__.createAsyncThunk)(
+          'category/fetchAll',
+          /*#__PURE__*/ (0,
+          _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__[
+            'default'
+          ])(
+            /*#__PURE__*/ _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(
+              function _callee() {
+                var res;
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(
+                  function _callee$(_context) {
+                    while (1) {
+                      switch ((_context.prev = _context.next)) {
+                        case 0:
+                          _context.prev = 0;
+                          _context.next = 3;
+                          return _common__WEBPACK_IMPORTED_MODULE_3__.api.get(
+                            '/category'
+                          );
+
+                        case 3:
+                          res = _context.sent;
+                          return _context.abrupt('return', res.data);
+
+                        case 7:
+                          _context.prev = 7;
+                          _context.t0 = _context['catch'](0);
+                          throw Error(_context.t0.message);
+
+                        case 10:
+                        case 'end':
+                          return _context.stop();
+                      }
+                    }
+                  },
+                  _callee,
+                  null,
+                  [[0, 7]]
+                );
+              }
+            )
+          )
+        );
+        var categorySlice = (0,
+        _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_4__.createSlice)({
+          name: 'category',
+          initialState: {
+            categoryItems: [
+              {
+                title: 'CSS',
+                icon: 'https://sass-lang.com/assets/img/logos/logo-b6e1ef6e.svg',
+                id: 1,
+              },
+              {
+                title: 'JavaScript',
+                icon: 'https://icon-library.com/images/javascript-icon-png/javascript-icon-png-23.jpg',
+                id: 2,
+              },
+              {
+                title: 'React JS',
+                icon: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+                id: 3,
+              },
+              {
+                title: 'Webpack',
+                icon: 'https://raw.githubusercontent.com/webpack/media/master/logo/icon.png',
+                id: 4,
+              },
+              {
+                title: 'Redux Toolkit',
+                icon: 'https://d33wubrfki0l68.cloudfront.net/0834d0215db51e91525a25acf97433051f280f2f/c30f5/img/redux.svg',
+                id: 5,
+              },
+              {
+                title: 'Test Library',
+                icon: 'https://testing-library.com/img/octopus-64x64.png',
+                id: 6,
+              },
+            ],
+          },
+          extraReducers: (0,
+          _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__[
+            'default'
+          ])({}, fetchAllCategory.fulfilled, function (state, _ref2) {
+            var payload = _ref2.payload;
+            state.categoryItems = payload;
+          }),
+        });
+        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ =
+          categorySlice.reducer;
 
         /***/
       },
@@ -5887,25 +6801,32 @@
           /* harmony export */ default: () => __WEBPACK_DEFAULT_EXPORT__,
           /* harmony export */
         });
-        /* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_2__ =
+        /* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_4__ =
           __webpack_require__(
             /*! @reduxjs/toolkit */ './node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js'
           );
-        /* harmony import */ var _accoutBookSlice__WEBPACK_IMPORTED_MODULE_0__ =
-          __webpack_require__(
-            /*! ./accoutBookSlice */ './src/stores/accoutBookSlice.js'
-          );
-        /* harmony import */ var _loadingSlice__WEBPACK_IMPORTED_MODULE_1__ =
+        /* harmony import */ var _loadingSlice__WEBPACK_IMPORTED_MODULE_0__ =
           __webpack_require__(
             /*! ./loadingSlice */ './src/stores/loadingSlice.js'
           );
+        /* harmony import */ var _categorySlice__WEBPACK_IMPORTED_MODULE_1__ =
+          __webpack_require__(
+            /*! ./categorySlice */ './src/stores/categorySlice.js'
+          );
+        /* harmony import */ var _articlesSlice__WEBPACK_IMPORTED_MODULE_2__ =
+          __webpack_require__(
+            /*! ./articlesSlice */ './src/stores/articlesSlice.js'
+          );
+        /* harmony import */ var _authSlice__WEBPACK_IMPORTED_MODULE_3__ =
+          __webpack_require__(/*! ./authSlice */ './src/stores/authSlice.js');
 
         /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (0,
-        _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_2__.configureStore)({
+        _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_4__.configureStore)({
           reducer: {
-            accoutBook:
-              _accoutBookSlice__WEBPACK_IMPORTED_MODULE_0__['default'],
-            loading: _loadingSlice__WEBPACK_IMPORTED_MODULE_1__['default'],
+            category: _categorySlice__WEBPACK_IMPORTED_MODULE_1__['default'],
+            articles: _articlesSlice__WEBPACK_IMPORTED_MODULE_2__['default'],
+            loading: _loadingSlice__WEBPACK_IMPORTED_MODULE_0__['default'],
+            auth: _authSlice__WEBPACK_IMPORTED_MODULE_3__['default'],
           },
         });
 
@@ -5936,9 +6857,9 @@
           __webpack_require__(
             /*! @reduxjs/toolkit */ './node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js'
           );
-        /* harmony import */ var _accoutBookSlice__WEBPACK_IMPORTED_MODULE_1__ =
+        /* harmony import */ var _categorySlice__WEBPACK_IMPORTED_MODULE_1__ =
           __webpack_require__(
-            /*! ./accoutBookSlice */ './src/stores/accoutBookSlice.js'
+            /*! ./categorySlice */ './src/stores/categorySlice.js'
           );
 
         var _extraReducers;
@@ -5964,8 +6885,8 @@
               'default'
             ])(
               _extraReducers,
-              _accoutBookSlice__WEBPACK_IMPORTED_MODULE_1__
-                .fetchAllItemFormAccountBook.pending,
+              _categorySlice__WEBPACK_IMPORTED_MODULE_1__.fetchAllCategory
+                .pending,
               isLoadingReducer
             ),
             (0,
@@ -5973,8 +6894,8 @@
               'default'
             ])(
               _extraReducers,
-              _accoutBookSlice__WEBPACK_IMPORTED_MODULE_1__
-                .fetchAllItemFormAccountBook.fulfilled,
+              _categorySlice__WEBPACK_IMPORTED_MODULE_1__.fetchAllCategory
+                .fulfilled,
               noneLoadingReducer
             ),
             (0,
@@ -5982,8 +6903,8 @@
               'default'
             ])(
               _extraReducers,
-              _accoutBookSlice__WEBPACK_IMPORTED_MODULE_1__
-                .fetchAllItemFormAccountBook.rejected,
+              _categorySlice__WEBPACK_IMPORTED_MODULE_1__.fetchAllCategory
+                .rejected,
               noneLoadingReducer
             ),
             _extraReducers),
@@ -6021,43 +6942,73 @@
           /*#__PURE__*/ __webpack_require__.n(
             _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__
           );
+        /* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ =
+          __webpack_require__(
+            /*! ../node_modules/css-loader/dist/runtime/getUrl.js */ './node_modules/css-loader/dist/runtime/getUrl.js'
+          );
+        /* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default =
+          /*#__PURE__*/ __webpack_require__.n(
+            _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__
+          );
         // Imports
 
+        var ___CSS_LOADER_URL_IMPORT_0___ = new URL(
+          /* asset import */ __webpack_require__(
+            /*! assets/right-arrow.svg */ './src/assets/right-arrow.svg'
+          ),
+          __webpack_require__.b
+        );
         var ___CSS_LOADER_EXPORT___ =
           _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(
             _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()
           );
+        var ___CSS_LOADER_URL_REPLACEMENT_0___ =
+          _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(
+            ___CSS_LOADER_URL_IMPORT_0___
+          );
         // Module
         ___CSS_LOADER_EXPORT___.push([
           module.id,
-          '.header {\n  display: flex;\n  box-shadow: #EFF0F3 0px 2px 4px;\n}\n.header__icon, .header__button {\n  width: 10%;\n}\n.header__nav {\n  display: flex;\n  justify-content: end;\n  width: 80%;\n}\n@media only screen and (max-width: 769px) {\n  .header__nav {\n    display: none;\n  }\n}\n\n.carsouel {\n  height: auto;\n  overflow: hidden;\n  max-width: 20rem;\n}\n.carsouel__container {\n  overflow: scroll;\n  transition: transform 0.3s ease;\n}\n.carsouel__container::-webkit-scrollbar {\n  display: none;\n}\n.carsouel__img {\n  display: block;\n  height: auot;\n  float: left;\n}\n\n.nav {\n  width: 50%;\n  display: inline-flex;\n  justify-content: space-evenly;\n}\n.nav__item {\n  display: inline-flex;\n  align-self: center;\n  text-decoration: none;\n}\n\n.button {\n  width: 5rem;\n  padding: 10px 17px;\n  border-radius: 4px;\n  border: none;\n  background: #B18C67;\n  color: #FAFAFA;\n  font-weight: bold;\n}\n\n#root {\n  background-color: #EFF0F3;\n}\n\n.bg--grey {\n  background-color: #EFF0F3;\n}\n\n.bg--white {\n  background-color: #FAFAFA;\n}\n\n.bg--white,\n.bg--grey {\n  padding: 1rem;\n  color: #2b2c34;\n}\n\na {\n  color: #2b2c34;\n}\na:hover, a:active {\n  color: #B18C67;\n}\n\nbody {\n  margin: 0;\n  font-family: "Maitree", sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  max-width: 120rem;\n  background-color: #FAFAFA;\n}\n\ncode {\n  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;\n}',
+          '@charset "UTF-8";\n.font {\n  font-size: 1rem;\n}\n.font--big {\n  font-size: 3rem;\n}\n.font--small {\n  font-size: 0.8rem;\n}\n.font--grey {\n  color: #949A9A;\n}\n.font__arrow, .font__dash {\n  align-items: center;\n}\n.font__dash::after {\n  content: "—";\n  display: block;\n  margin-left: 0.25rem;\n  height: 1rem;\n  width: 1rem;\n  color: #2b2c34;\n}\n.font__arrow {\n  cursor: pointer;\n}\n.font__arrow::after {\n  content: "";\n  display: block;\n  background-image: url(' +
+            ___CSS_LOADER_URL_REPLACEMENT_0___ +
+            ');\n  height: 1rem;\n  width: 1rem;\n  margin-left: 0.25rem;\n  -webkit-transition: transform 0.3s ease-out;\n  -moz-transition: transform 0.3s ease-out;\n  -ms-transition: transform 0.3s ease-out;\n  -o-transition: transform 0.3s ease-out;\n  transition: transform 0.3s ease-out;\n}\n.font__arrow:hover::after, .font__arrow:active::after {\n  -webkit-transform: translateX(0.25rem);\n  -moz-transform: translateX(0.25rem);\n  -ms-transform: translateX(0.25rem);\n  -o-transform: translateX(0.25rem);\n  transform: translateX(0.25rem);\n}\n\n.spaceBetween, .articles__header, .category__cards, .category__header, .banner, form, .font__arrow, .font__dash {\n  display: flex;\n  justify-content: space-between;\n}\n\n.header {\n  display: flex;\n  box-shadow: #EFF0F3 0px 2px 4px;\n}\n.header__icon, .header__button {\n  width: 10%;\n}\n.header__nav {\n  display: flex;\n  justify-content: end;\n  width: 80%;\n}\n@media only screen and (max-width: 769px) {\n  .header__nav {\n    display: none;\n  }\n}\n\nform input {\n  padding: 10px;\n  border: none;\n  border-radius: 4px;\n  flex-grow: 2;\n  flex-shrink: 2;\n}\n\n.carsouel {\n  height: auto;\n  overflow: hidden;\n  max-width: 20rem;\n}\n.carsouel__container {\n  overflow: scroll;\n  transition: transform 0.3s ease;\n}\n.carsouel__container::-webkit-scrollbar {\n  display: none;\n}\n.carsouel__img {\n  display: block;\n  height: auot;\n  float: left;\n}\n\n.nav {\n  width: 50%;\n  display: inline-flex;\n  justify-content: space-evenly;\n}\n.nav__item {\n  display: inline-flex;\n  align-self: center;\n  text-decoration: none;\n}\n\n.button {\n  min-width: 5rem;\n  padding: 10px 17px;\n  border-radius: 4px;\n  border: none;\n  background: #B18C67;\n  color: #FAFAFA;\n  font-weight: bold;\n}\n\n.banner__text, .banner__img {\n  width: 50%;\n  display: flex;\n  align-self: center;\n}\n.banner__text__container {\n  width: 75%;\n}\n.banner img {\n  width: 100%;\n}\n\n.category {\n  padding-bottom: 2rem;\n}\n.category__cards {\n  overflow: scroll;\n  scroll-behavior: smooth;\n  -ms-overflow-style: none;\n  scrollbar-width: none;\n}\n.category__cards::-webkit-scrollbar {\n  display: none;\n}\n\n.card,\n.card--noImg {\n  width: calc(25% - 2rem);\n  padding: 3rem 1rem;\n  border-radius: 0.5rem;\n  margin: 0 1rem;\n  background-color: #FAFAFA;\n  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;\n}\n.card .card__image,\n.card--noImg .card__image {\n  width: 100%;\n}\n.card .card__body img,\n.card--noImg .card__body img {\n  width: 4rem;\n  height: 4rem;\n}\n\n#root {\n  max-width: 120rem;\n}\n\n.bg--grey {\n  background-color: #EFF0F3;\n}\n\n.bg--white {\n  background-color: #FAFAFA;\n}\n\n.bg--white,\n.bg--grey {\n  color: #2b2c34;\n  padding: calc((120rem - 1440px) / 4);\n}\n@media only screen and (max-width: 1440px) {\n  .bg--white,\n.bg--grey {\n    padding: 2.5rem;\n  }\n}\n\na {\n  color: #2b2c34;\n}\na:hover, a:active {\n  color: #B18C67;\n}\n\nbody {\n  margin: 0;\n  font-family: "Maitree", sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  max-width: 120rem;\n  background-color: #FAFAFA;\n}\n\ncode {\n  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;\n}',
           '',
           {
             version: 3,
             sources: [
-              'webpack://./src/styles/_header.scss',
               'webpack://./src/index.scss',
+              'webpack://./src/styles/_typograhpy.scss',
+              'webpack://./src/styles/_colors.scss',
+              'webpack://./src/styles/_variables.scss',
+              'webpack://./src/styles/_layout.scss',
+              'webpack://./src/styles/_header.scss',
               'webpack://./src/styles/_utility.scss',
               'webpack://./src/styles/_carsouel.scss',
               'webpack://./src/styles/_nav.scss',
               'webpack://./src/styles/_button.scss',
-              'webpack://./src/styles/_colors.scss',
+              'webpack://./src/styles/_banner.scss',
+              'webpack://./src/styles/_category.scss',
+              'webpack://./src/styles/_card.scss',
               'webpack://./src/styles/main.scss',
-              'webpack://./src/styles/_variables.scss',
             ],
             names: [],
             mappings:
-              'AAGA;EACC,aAAA;EACA,+BAAA;ACFD;ADIC;EAEC,UARM;ACKR;ADMC;EACG,aAAA;EACA,oBAAA;EACF,UAAA;ACJF;ACNQ;EFcN;IACC,aAAA;ECLD;AACF;;AEhBA;EACI,YAAA;EACA,gBAAA;EACA,gBAAA;AFmBJ;AEjBI;EACE,gBAAA;EACA,+BAAA;AFmBN;AEjBM;EACI,aAAA;AFmBV;AEhBI;EACE,cAAA;EACA,YAAA;EACA,WAAA;AFkBN;;AGlCA;EACC,UAAA;EACA,oBAAA;EACA,6BAAA;AHqCD;AGnCC;EACC,oBAAA;EACA,kBAAA;EACA,qBAAA;AHqCF;;AI7CA;EACI,WAAA;EACA,kBAAA;EACA,kBAAA;EACA,YAAA;EACA,mBCOS;EDNT,cCHK;EDIL,iBAAA;AJgDJ;;AM7CA;EACE,yBDNW;ALsDb;;AM7CA;EACE,yBDVW;AL0Db;;AM7CA;EACE,yBDhBO;ALgET;;AM7CA;;EAEC,aCrBgB;EDsBhB,cDhBU;ALgEX;;AM7CA;EACC,cDpBU;ALoEX;AM/CC;EACC,cDnBW;ALoEb;;AA9EA;EACI,SAAA;EACA,kCAAA;EACA,mCAAA;EACA,kCAAA;EACA,iBONe;EPOf,yBKLK;ALsFT;;AA7EA;EACI,+EAAA;AAgFJ',
+              'AAAA,gBAAgB;ACAhB;EACC,eAAA;ADED;ACAC;EACC,eAAA;ADEF;ACAC;EACC,iBAAA;ADEF;ACAC;EACC,cCHY;AFKd;ACCC;EAGC,mBAAA;ADDF;ACKE;EACC,YAAA;EACA,cAAA;EACA,oBAAA;EACA,YEpBgB;EFqBhB,WErBgB;EFsBhB,cChBQ;AFaX;ACOC;EACC,eAAA;ADLF;ACME;EACC,WAAA;EACA,cAAA;EACA,yDAAA;EACA,YEhCgB;EFiChB,WEjCgB;EFkChB,oBAAA;EACA,2CAAA;EACA,wCAAA;EACA,uCAAA;EACA,sCAAA;EACA,mCAAA;ADJH;ACME;EAEC,sCAAA;EACA,mCAAA;EACA,kCAAA;EACA,iCAAA;EACA,8BAAA;ADLH;;AI9CA;EACC,aAAA;EACA,8BAAA;AJiDD;;AKhDA;EACC,aAAA;EACA,+BAAA;ALmDD;AKjDC;EAEC,UARM;AL0DR;AK/CC;EACG,aAAA;EACA,oBAAA;EACF,UAAA;ALiDF;AM3DQ;EDcN;IACC,aAAA;ELgDD;AACF;;AK1CC;EACC,aAAA;EACA,YAAA;EACA,kBAAA;EACA,YAAA;EACA,cAAA;AL6CF;;AO7EA;EACI,YAAA;EACA,gBAAA;EACA,gBAAA;APgFJ;AO9EI;EACE,gBAAA;EACA,+BAAA;APgFN;AO9EM;EACI,aAAA;APgFV;AO7EI;EACE,cAAA;EACA,YAAA;EACA,WAAA;AP+EN;;AQ/FA;EACC,UAAA;EACA,oBAAA;EACA,6BAAA;ARkGD;AQhGC;EACC,oBAAA;EACA,kBAAA;EACA,qBAAA;ARkGF;;AS1GA;EACI,eAAA;EACA,kBAAA;EACA,kBAAA;EACA,YAAA;EACA,mBPQS;EOPT,cPHK;EOIL,iBAAA;AT6GJ;;AUhHI;EAEI,UAAA;EACA,aAAA;EACA,kBAAA;AVkHR;AUhHI;EACI,UAAA;AVkHR;AUhHI;EACI,WAAA;AVkHR;;AWhIA;EACC,oBAAA;AXmID;AW9HC;EAEC,gBAAA;EACA,uBAAA;EAKA,wBAAA;EACM,qBAAA;AX2HR;AW/HE;EACC,aAAA;AXiIH;;AY7IA;;EAEC,uBAAA;EACA,kBAAA;EACA,qBAAA;EACA,cAAA;EACA,yBVHQ;EUIR,iDAAA;AZgJD;AY/II;;EACI,WAAA;AZkJR;AY/IE;;EACC,WAAA;EACA,YAAA;AZkJH;;Aa/IA;EACI,iBVjBe;AHmKnB;;Aa9IA;EACI,yBXlBS;AFmKb;;Aa9IA;EACI,yBXxBK;AFyKT;;Aa9IA;;EAEI,cXtBO;EWuBP,oCAAA;AbiJJ;AMvKQ;EOmBR;;IAMQ,eAAA;EbmJN;AACF;;AahJA;EACC,cX/BU;AFkLX;AalJC;EACC,cX9BW;AFkLb;;AA7LA;EACI,SAAA;EACA,kCAAA;EACA,mCAAA;EACA,kCAAA;EACA,iBGNe;EHOf,yBELK;AFqMT;;AA5LA;EACI,+EAAA;AA+LJ',
             sourcesContent: [
-              '\n$width: 10%;\n\n.header {\n\tdisplay: flex;\n\tbox-shadow: $flashWhite 0px 2px 4px;\n\n\t&__icon,\n\t&__button {\n\t\twidth: $width;\n\t}\n\t\n\t&__nav {\n    display: flex;\n    justify-content: end;\n\t\twidth: calc(100% - $width * 2);\n\t}\n\n\t@include respond(ipad) {\n\t\t&__nav {\n\t\t\tdisplay: none;\n\t\t}\n\t}\n}\n',
               "@import './styles/main.scss';\n\nbody {\n    margin: 0;\n    font-family: 'Maitree', sans-serif;\n    -webkit-font-smoothing: antialiased;\n    -moz-osx-font-smoothing: grayscale;\n    max-width: $global-max-width;\n    background-color: $lotion;\n}\n\n\ncode {\n    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;\n}\n",
+              ".font{\n\tfont-size: 1rem;\n    \n\t&--big {\n\t\tfont-size: 3rem;\t\n\t}\n\t&--small {\n\t\tfont-size: .8rem;\n\t}\n\t&--grey {\n\t\tcolor: $spanishGrey;\n\t}\n\n\t&__arrow, \n\t&__dash {\n\t\t@extend .spaceBetween;\n\t\talign-items: center;\n\t}\n\n\t&__dash {\n\t\t&::after {\n\t\t\tcontent: \"—\";\n\t\t\tdisplay: block;\n\t\t\tmargin-left: 0.25rem;\n\t\t\theight: $global-icon-size;\n\t\t\twidth: $global-icon-size;\n\t\t\tcolor: $gunmetal;\n\t\t}\n\t}\n\n\t&__arrow {\n\t\tcursor: pointer;\n\t\t&::after {\n\t\t\tcontent:'';\n\t\t\tdisplay: block;\n\t\t\tbackground-image: url('assets/right-arrow.svg');\n\t\t\theight: $global-icon-size;\n\t\t\twidth: $global-icon-size;\n\t\t\tmargin-left: 0.25rem;\n\t\t\t-webkit-transition: transform 0.3s ease-out;\n\t\t\t-moz-transition: transform 0.3s ease-out;\n\t\t\t-ms-transition: transform 0.3s ease-out;\n\t\t\t-o-transition: transform 0.3s ease-out;\n\t\t\ttransition: transform 0.3s ease-out;\n\t\t}\n\t\t&:hover::after,\n\t\t&:active::after {\n\t\t\t-webkit-transform: translateX(.25rem);\n\t\t\t-moz-transform: translateX(.25rem);\n\t\t\t-ms-transform: translateX(.25rem);\n\t\t\t-o-transform: translateX(.25rem);\n\t\t\ttransform: translateX(.25rem);\n\t\t}\n\t}\n}\n",
+              '// colors name: https://www.color-name.com/\n\n\n$lotion: #FAFAFA !default;\n$pearl:#F8F8EC !default;\n$flashWhite: #EFF0F3 !default;\n$platinum: #E4E5E9 !default;\n$spanishGrey: #949A9A !default;\n\n// Text Color: \n$gunmetal: #2b2c34 !default;\n\n// Highlight Color:\n$lightTaupe: #B18C67 !default;\n',
+              '\n$global-max-width: 120rem;\n$global-margin: 1rem;\n$global-padding: 1rem;\n$global-icon-size: 1rem;\n\n// $breakpoints\n$xlphone: 420px;\n$medium: 769px;\n$large: 1025px;\n$xlarge: 1440px;\n\n',
+              '.spaceBetween {\n\tdisplay: flex;\n\tjustify-content: space-between;\n}\n',
+              '\n$width: 10%;\n\n.header {\n\tdisplay: flex;\n\tbox-shadow: $flashWhite 0px 2px 4px;\n\n\t&__icon,\n\t&__button {\n\t\twidth: $width;\n\t}\n\t\n\t&__nav {\n    display: flex;\n    justify-content: end;\n\t\twidth: calc(100% - $width * 2);\n\t}\n\n\t@include respond(ipad) {\n\t\t&__nav {\n\t\t\tdisplay: none;\n\t\t}\n\t}\n}\n// TODO: MOVE TO FORM COMPONENT LATER\nform {\n    @extend .spaceBetween;\n\tinput {\n\t\tpadding: 10px;\n\t\tborder: none;\n\t\tborder-radius: 4px;\n\t\tflex-grow: 2;\n\t\tflex-shrink: 2;\n\t}\n}\n',
               "@import 'variables';\n\n@mixin respond ($breakpoints) {\n    \n    @if $breakpoints == ipad {\n        @media only screen and (max-width: $medium) {\n            @content;\n        }\n    }\n\n    @if $breakpoints == tablet {\n        @media only screen and (max-width: $xlarge) {\n            @content;\n        }\n    }\n}\n",
               '.carsouel {\n    height: auto;\n    overflow: hidden;\n    max-width: 20rem;\n    \n    &__container {\n      overflow: scroll;\n      transition: transform .3s ease;\n\n      &::-webkit-scrollbar {\n          display: none;\n      }\n    }\n    &__img {\n      display: block;\n      height: auot;\n      float: left;\n\n    }\n}\n',
               '.nav {\n\twidth: 50%;\n\tdisplay: inline-flex;\n\tjustify-content: space-evenly;\n\t\n\t&__item {\n\t\tdisplay: inline-flex;\n\t\talign-self: center;\n\t\ttext-decoration: none;\n\t}\n}\n',
-              '.button {\n    width: 5rem;\n    padding: 10px 17px;\n    border-radius: 4px;\n    border: none;\n    background: $lightTaupe;\n    color: $lotion;\n    font-weight: bold;\n}\n',
-              '// colors name: https://www.color-name.com/\n\n\n$lotion: #FAFAFA !default;\n$pearl:#F8F8EC !default;\n$flashWhite: #EFF0F3 !default;\n$platinum: #E4E5E9 !default;\n\n// Text Color: \n$gunmetal: #2b2c34 !default;\n\n// Highlight Color:\n$lightTaupe: #B18C67 !default;\n',
-              "@charset 'utf-8';\n\n@import 'colors';\n@import 'utility';\n\n@import 'header';\n@import 'carsouel';\n@import 'nav';\n@import 'button';\n\n#root {\n  background-color: $flashWhite;\n}\n\n.bg--grey {\n  background-color: $flashWhite;\n}\n\n.bg--white {\n  background-color: $lotion;\n}\n\n.bg--white, \n.bg--grey {\n\tpadding: $global-padding;\n\tcolor: $gunmetal;\n}\n\na {\n\tcolor: $gunmetal;\n\t&:hover, &:active {\n\t\tcolor: $lightTaupe;\n\t}\n}\n",
-              '\n$global-max-width: 120rem;\n$global-margin: 1rem;\n$global-padding: 1rem;\n\n// $breakpoints\n$xlphone: 420px;\n$medium: 769px;\n$large: 1025px;\n$xlarge: 1440px;\n\n',
+              '.button {\n    min-width: 5rem;\n    padding: 10px 17px;\n    border-radius: 4px;\n    border: none;\n    background: $lightTaupe;\n    color: $lotion;\n    font-weight: bold;\n}\n',
+              '\n.banner {\n    @extend .spaceBetween;\n\n    &__text,\n    &__img {\n        width: 50%;\n        display: flex;\n        align-self: center;\n    }\n    &__text__container {\n        width: 75%;\n    }\n    img {\n        width: 100%;\n    }\n\n}\n',
+              '.category {\n\tpadding-bottom: $global-padding * 2;\n\t\n\t&__header {\n\t\t@extend .spaceBetween;\n\t}\n\t&__cards {\n\t\t@extend .spaceBetween;\n\t\toverflow: scroll;\n\t\tscroll-behavior: smooth;\n\t\t\n\t\t&::-webkit-scrollbar { \n\t\t\tdisplay: none; \n\t\t}\n\t\t-ms-overflow-style: none; \n        scrollbar-width: none; \n\t}\n}\n',
+              '.card,\n.card--noImg {\n\twidth: calc(25% - #{$global-margin * 2});\n\tpadding: $global-padding * 3  $global-padding;\n\tborder-radius: .5rem;\n\tmargin: 0 1rem;\n\tbackground-color: $lotion;\n\tbox-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;\n    .card__image {\n        width: 100%;\n    }\n\t.card__body {\n\t\timg {\n\t\t\twidth: $global-icon-size * 4;\n\t\t\theight: $global-icon-size * 4;\n\t\t}\n\t}\n}\n',
+              "@charset 'utf-8';\n\n@import 'colors';\n@import 'variables';\n@import 'typograhpy';\n@import 'utility';\n@import 'layout';\n\n@import 'header';\n@import 'carsouel';\n@import 'nav';\n@import 'button';\n@import 'banner';\n@import 'category';\n@import 'articles';\n@import 'card';\n\n#root {\n    max-width: $global-max-width;\n\n}\n\n.bg--grey {\n    background-color: $flashWhite;\n}\n\n.bg--white {\n    background-color: $lotion;\n}\n\n.bg--white, \n.bg--grey {\n    color: $gunmetal;\n    padding: calc(($global-max-width - $xlarge) / 4);;\n\n    @include respond(tablet) {\n        padding: $global-padding * 2.5;\n    }\n}\n\na {\n\tcolor: $gunmetal;\n\t&:hover, &:active {\n\t\tcolor: $lightTaupe;\n\t}\n}\n",
             ],
             sourceRoot: '',
           },
@@ -6183,6 +7134,46 @@
           };
 
           return list;
+        };
+
+        /***/
+      },
+
+    /***/ './node_modules/css-loader/dist/runtime/getUrl.js':
+      /*!********************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/getUrl.js ***!
+  \********************************************************/
+      /***/ (module) => {
+        'use strict';
+
+        module.exports = function (url, options) {
+          if (!options) {
+            options = {};
+          }
+
+          if (!url) {
+            return url;
+          }
+
+          url = String(url.__esModule ? url.default : url); // If url is already wrapped in quotes, remove them
+
+          if (/^['"].*['"]$/.test(url)) {
+            url = url.slice(1, -1);
+          }
+
+          if (options.hash) {
+            url += options.hash;
+          } // Should url be wrapped?
+          // See https://drafts.csswg.org/css-values-3/#urls
+
+          if (/["'() \t\n]|(%20)/.test(url) || options.needQuotes) {
+            return '"'.concat(
+              url.replace(/"/g, '\\"').replace(/\n/g, '\\n'),
+              '"'
+            );
+          }
+
+          return url;
         };
 
         /***/
@@ -9554,7 +10545,8 @@ object-assign
             var TracingMarkerComponent = 25;
 
             // -----------------------------------------------------------------------------
-            var enableClientRenderFallbackOnTextMismatch = true; // Recoil still uses useMutableSource in www, need to delete
+
+            var enableClientRenderFallbackOnTextMismatch = true; // TODO: Need to review this code one more time before landing
             // the react-reconciler package.
 
             var enableNewReconciler = false; // Support legacy Primer support on internal FB www
@@ -10612,9 +11604,7 @@ object-assign
             }
 
             // ATTENTION
-            // When adding new symbols to this file,
-            // Please consider also adding to 'react-devtools-shared/src/backend/ReactSymbols'
-            // The Symbol used to tag the ReactElement-like types.
+
             var REACT_ELEMENT_TYPE = Symbol.for('react.element');
             var REACT_PORTAL_TYPE = Symbol.for('react.portal');
             var REACT_FRAGMENT_TYPE = Symbol.for('react.fragment');
@@ -11324,9 +12314,14 @@ object-assign
             function setCurrentFiber(fiber) {
               {
                 ReactDebugCurrentFrame.getCurrentStack =
-                  getCurrentFiberStackInDev;
+                  fiber === null ? null : getCurrentFiberStackInDev;
                 current = fiber;
                 isRendering = false;
+              }
+            }
+            function getCurrentFiber() {
+              {
+                return current;
               }
             }
             function setIsRendering(rendering) {
@@ -14910,9 +15905,6 @@ object-assign
             var Update =
               /*                       */
               4;
-            var PlacementAndUpdate =
-              /*           */
-              Placement | Update;
             var ChildDeletion =
               /*                */
               16;
@@ -14940,9 +15932,6 @@ object-assign
             var Hydrating =
               /*                    */
               4096;
-            var HydratingAndUpdate =
-              /*           */
-              Hydrating | Update;
             var Visibility =
               /*                   */
               8192;
@@ -15926,13 +16915,13 @@ object-assign
               /*    */
               2;
             var InputContinuousLane =
-              /*            */
+              /*             */
               4;
             var DefaultHydrationLane =
               /*            */
               8;
             var DefaultLane =
-              /*                    */
+              /*                     */
               16;
             var TransitionHydrationLane =
               /*                */
@@ -16011,13 +17000,13 @@ object-assign
               /*          */
               134217728;
             var NonIdleLanes =
-              /*                                 */
+              /*                          */
               268435455;
             var IdleHydrationLane =
               /*               */
               268435456;
             var IdleLane =
-              /*                       */
+              /*                        */
               536870912;
             var OffscreenLane =
               /*                   */
@@ -16417,6 +17406,10 @@ object-assign
             function includesOnlyRetries(lanes) {
               return (lanes & RetryLanes) === lanes;
             }
+            function includesOnlyNonUrgentLanes(lanes) {
+              var UrgentLanes = SyncLane | InputContinuousLane | DefaultLane;
+              return (lanes & UrgentLanes) === NoLanes;
+            }
             function includesOnlyTransitions(lanes) {
               return (lanes & TransitionLanes) === lanes;
             }
@@ -16434,7 +17427,7 @@ object-assign
               return (lanes & root.expiredLanes) !== NoLanes;
             }
             function isTransitionLane(lane) {
-              return (lane & TransitionLanes) !== 0;
+              return (lane & TransitionLanes) !== NoLanes;
             }
             function claimNextTransitionLane() {
               // Cycle through the lanes, assigning each new transition to the next lane.
@@ -16443,7 +17436,7 @@ object-assign
               var lane = nextTransitionLane;
               nextTransitionLane <<= 1;
 
-              if ((nextTransitionLane & TransitionLanes) === 0) {
+              if ((nextTransitionLane & TransitionLanes) === NoLanes) {
                 nextTransitionLane = TransitionLane1;
               }
 
@@ -16453,7 +17446,7 @@ object-assign
               var lane = nextRetryLane;
               nextRetryLane <<= 1;
 
-              if ((nextRetryLane & RetryLanes) === 0) {
+              if ((nextRetryLane & RetryLanes) === NoLanes) {
                 nextRetryLane = RetryLane1;
               }
 
@@ -16559,8 +17552,8 @@ object-assign
               var noLongerPendingLanes = root.pendingLanes & ~remainingLanes;
               root.pendingLanes = remainingLanes; // Let's try everything again
 
-              root.suspendedLanes = 0;
-              root.pingedLanes = 0;
+              root.suspendedLanes = NoLanes;
+              root.pingedLanes = NoLanes;
               root.expiredLanes &= remainingLanes;
               root.mutableReadLanes &= remainingLanes;
               root.entangledLanes &= remainingLanes;
@@ -16712,6 +17705,11 @@ object-assign
                 lanes &= ~lane;
               }
             }
+            function getTransitionsForLanes(root, lanes) {
+              {
+                return null;
+              }
+            }
 
             var DiscreteEventPriority = SyncLane;
             var ContinuousEventPriority = InputContinuousLane;
@@ -16808,7 +17806,7 @@ object-assign
             var queuedPointerCaptures = new Map(); // We could consider replaying selectionchange and touchmoves too.
 
             var queuedExplicitHydrationTargets = [];
-            var synchronouslyHydratedEvents = [
+            var discreteReplayableEvents = [
               'mousedown',
               'mouseup',
               'touchcancel',
@@ -16839,7 +17837,7 @@ object-assign
               'submit',
             ];
             function isDiscreteEventThatRequiresHydration(eventType) {
-              return synchronouslyHydratedEvents.indexOf(eventType) > -1;
+              return discreteReplayableEvents.indexOf(eventType) > -1;
             }
 
             function createQueuedReplayableEvent(
@@ -16856,7 +17854,7 @@ object-assign
                 nativeEvent: nativeEvent,
                 targetContainers: [targetContainer],
               };
-            } // Resets the replaying for this type of continuous event to no event.
+            }
 
             function clearIfContinuousEvent(domEventName, nativeEvent) {
               switch (domEventName) {
@@ -16912,11 +17910,11 @@ object-assign
                 );
 
                 if (blockedOn !== null) {
-                  var _fiber = getInstanceFromNode(blockedOn);
+                  var _fiber2 = getInstanceFromNode(blockedOn);
 
-                  if (_fiber !== null) {
+                  if (_fiber2 !== null) {
                     // Attempt to increase the priority of this target.
-                    attemptContinuousHydration(_fiber);
+                    attemptContinuousHydration(_fiber2);
                   }
                 }
 
@@ -17075,35 +18073,33 @@ object-assign
             }
 
             function queueExplicitHydrationTarget(target) {
-              {
-                // TODO: This will read the priority if it's dispatched by the React
-                // event system but not native events. Should read window.event.type, like
-                // we do for updates (getCurrentEventPriority).
-                var updatePriority = getCurrentUpdatePriority$1();
-                var queuedTarget = {
-                  blockedOn: null,
-                  target: target,
-                  priority: updatePriority,
-                };
-                var i = 0;
+              // TODO: This will read the priority if it's dispatched by the React
+              // event system but not native events. Should read window.event.type, like
+              // we do for updates (getCurrentEventPriority).
+              var updatePriority = getCurrentUpdatePriority$1();
+              var queuedTarget = {
+                blockedOn: null,
+                target: target,
+                priority: updatePriority,
+              };
+              var i = 0;
 
-                for (; i < queuedExplicitHydrationTargets.length; i++) {
-                  // Stop once we hit the first target with lower priority than
-                  if (
-                    !isHigherEventPriority(
-                      updatePriority,
-                      queuedExplicitHydrationTargets[i].priority
-                    )
-                  ) {
-                    break;
-                  }
+              for (; i < queuedExplicitHydrationTargets.length; i++) {
+                // Stop once we hit the first target with lower priority than
+                if (
+                  !isHigherEventPriority(
+                    updatePriority,
+                    queuedExplicitHydrationTargets[i].priority
+                  )
+                ) {
+                  break;
                 }
+              }
 
-                queuedExplicitHydrationTargets.splice(i, 0, queuedTarget);
+              queuedExplicitHydrationTargets.splice(i, 0, queuedTarget);
 
-                if (i === 0) {
-                  attemptExplicitHydrationTarget(queuedTarget);
-                }
+              if (i === 0) {
+                attemptExplicitHydrationTarget(queuedTarget);
               }
             }
 
@@ -17124,20 +18120,22 @@ object-assign
                 );
 
                 if (nextBlockedOn === null) {
-                  var nativeEvent = queuedEvent.nativeEvent;
-                  var nativeEventClone = new nativeEvent.constructor(
-                    nativeEvent.type,
-                    nativeEvent
-                  );
-                  setReplayingEvent(nativeEventClone);
-                  nativeEvent.target.dispatchEvent(nativeEventClone);
-                  resetReplayingEvent();
+                  {
+                    var nativeEvent = queuedEvent.nativeEvent;
+                    var nativeEventClone = new nativeEvent.constructor(
+                      nativeEvent.type,
+                      nativeEvent
+                    );
+                    setReplayingEvent(nativeEventClone);
+                    nativeEvent.target.dispatchEvent(nativeEventClone);
+                    resetReplayingEvent();
+                  }
                 } else {
                   // We're still blocked. Try again later.
-                  var _fiber2 = getInstanceFromNode(nextBlockedOn);
+                  var _fiber3 = getInstanceFromNode(nextBlockedOn);
 
-                  if (_fiber2 !== null) {
-                    attemptContinuousHydration(_fiber2);
+                  if (_fiber3 !== null) {
+                    attemptContinuousHydration(_fiber3);
                   }
 
                   queuedEvent.blockedOn = nextBlockedOn;
@@ -17161,7 +18159,7 @@ object-assign
             }
 
             function replayUnblockedEvents() {
-              hasScheduledReplayAttempt = false; // Next replay any continuous events.
+              hasScheduledReplayAttempt = false;
 
               if (
                 queuedFocus !== null &&
@@ -17274,6 +18272,16 @@ object-assign
 
             var ReactCurrentBatchConfig =
               ReactSharedInternals.ReactCurrentBatchConfig; // TODO: can we stop exporting these?
+
+            var _enabled = true; // This is exported in FB builds for use by legacy FB layer infra.
+            // We'd like to remove this but it's not clear if this is safe.
+
+            function setEnabled(enabled) {
+              _enabled = !!enabled;
+            }
+            function isEnabled() {
+              return _enabled;
+            }
             function createEventListenerWrapperWithPriority(
               targetContainer,
               domEventName,
@@ -17354,6 +18362,26 @@ object-assign
             }
 
             function dispatchEvent(
+              domEventName,
+              eventSystemFlags,
+              targetContainer,
+              nativeEvent
+            ) {
+              if (!_enabled) {
+                return;
+              }
+
+              {
+                dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay(
+                  domEventName,
+                  eventSystemFlags,
+                  targetContainer,
+                  nativeEvent
+                );
+              }
+            }
+
+            function dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay(
               domEventName,
               eventSystemFlags,
               targetContainer,
@@ -21103,7 +22131,6 @@ object-assign
             var STYLE = 'style';
             var HTML$1 = '__html';
             var warnedUnknownTags;
-            var suppressHydrationWarning;
             var validatePropertiesInDevelopment;
             var warnForPropDifference;
             var warnForExtraAttributes;
@@ -21948,8 +22975,6 @@ object-assign
               var extraAttributeNames;
 
               {
-                suppressHydrationWarning =
-                  rawProps[SUPPRESS_HYDRATION_WARNING] === true;
                 isCustomComponentTag = isCustomComponent(tag, rawProps);
                 validatePropertiesInDevelopment(tag, rawProps);
               } // TODO: Make sure that we check isMounted before firing any of these events.
@@ -22075,7 +23100,7 @@ object-assign
                   // TODO: Should we use domElement.firstChild.nodeValue to compare?
                   if (typeof nextProp === 'string') {
                     if (domElement.textContent !== nextProp) {
-                      if (!suppressHydrationWarning) {
+                      if (rawProps[SUPPRESS_HYDRATION_WARNING] !== true) {
                         checkForUnmatchedText(
                           domElement.textContent,
                           nextProp,
@@ -22088,7 +23113,7 @@ object-assign
                     }
                   } else if (typeof nextProp === 'number') {
                     if (domElement.textContent !== '' + nextProp) {
-                      if (!suppressHydrationWarning) {
+                      if (rawProps[SUPPRESS_HYDRATION_WARNING] !== true) {
                         checkForUnmatchedText(
                           domElement.textContent,
                           nextProp,
@@ -22124,7 +23149,7 @@ object-assign
                       ? null
                       : getPropertyInfo(propKey);
 
-                  if (suppressHydrationWarning);
+                  if (rawProps[SUPPRESS_HYDRATION_WARNING] === true);
                   else if (
                     propKey === SUPPRESS_CONTENT_EDITABLE_WARNING ||
                     propKey === SUPPRESS_HYDRATION_WARNING || // Controlled attributes are not validated
@@ -22254,10 +23279,10 @@ object-assign
 
               {
                 if (shouldWarnDev) {
-                  // $FlowFixMe - Should be inferred as not undefined.
                   if (
+                    // $FlowFixMe - Should be inferred as not undefined.
                     extraAttributeNames.size > 0 &&
-                    !suppressHydrationWarning
+                    rawProps[SUPPRESS_HYDRATION_WARNING] !== true
                   ) {
                     // $FlowFixMe - Should be inferred as not undefined.
                     warnForExtraAttributes(extraAttributeNames);
@@ -22882,17 +23907,13 @@ object-assign
               };
             }
 
-            var SUPPRESS_HYDRATION_WARNING$1;
-
-            {
-              SUPPRESS_HYDRATION_WARNING$1 = 'suppressHydrationWarning';
-            }
-
+            var SUPPRESS_HYDRATION_WARNING$1 = 'suppressHydrationWarning';
             var SUSPENSE_START_DATA = '$';
             var SUSPENSE_END_DATA = '/$';
             var SUSPENSE_PENDING_START_DATA = '$?';
             var SUSPENSE_FALLBACK_START_DATA = '$!';
             var STYLE$1 = 'style';
+            var eventsEnabled = null;
             var selectionInformation = null;
             function getRootHostContext(rootContainerInstance) {
               var type;
@@ -22956,12 +23977,17 @@ object-assign
               return instance;
             }
             function prepareForCommit(containerInfo) {
+              eventsEnabled = isEnabled();
               selectionInformation = getSelectionInformation();
               var activeInstance = null;
+
+              setEnabled(false);
               return activeInstance;
             }
             function resetAfterCommit(containerInfo) {
               restoreSelection(selectionInformation);
+              setEnabled(eventsEnabled);
+              eventsEnabled = null;
               selectionInformation = null;
             }
             function createInstance(
@@ -23369,21 +24395,19 @@ object-assign
                   break;
                 }
 
-                {
-                  if (nodeType === COMMENT_NODE) {
-                    var nodeData = node.data;
+                if (nodeType === COMMENT_NODE) {
+                  var nodeData = node.data;
 
-                    if (
-                      nodeData === SUSPENSE_START_DATA ||
-                      nodeData === SUSPENSE_FALLBACK_START_DATA ||
-                      nodeData === SUSPENSE_PENDING_START_DATA
-                    ) {
-                      break;
-                    }
+                  if (
+                    nodeData === SUSPENSE_START_DATA ||
+                    nodeData === SUSPENSE_FALLBACK_START_DATA ||
+                    nodeData === SUSPENSE_PENDING_START_DATA
+                  ) {
+                    break;
+                  }
 
-                    if (nodeData === SUSPENSE_END_DATA) {
-                      return null;
-                    }
+                  if (nodeData === SUSPENSE_END_DATA) {
+                    return null;
                   }
                 }
               }
@@ -23602,14 +24626,20 @@ object-assign
               parentType,
               parentProps,
               parentInstance,
-              instance
+              instance,
+              isConcurrentMode
             ) {
-              if (parentProps[SUPPRESS_HYDRATION_WARNING$1] !== true) {
-                if (instance.nodeType === ELEMENT_NODE) {
-                  warnForDeletedHydratableElement(parentInstance, instance);
-                } else if (instance.nodeType === COMMENT_NODE);
-                else {
-                  warnForDeletedHydratableText(parentInstance, instance);
+              {
+                if (
+                  isConcurrentMode ||
+                  parentProps[SUPPRESS_HYDRATION_WARNING$1] !== true
+                ) {
+                  if (instance.nodeType === ELEMENT_NODE) {
+                    warnForDeletedHydratableElement(parentInstance, instance);
+                  } else if (instance.nodeType === COMMENT_NODE);
+                  else {
+                    warnForDeletedHydratableText(parentInstance, instance);
+                  }
                 }
               }
             }
@@ -23658,28 +24688,33 @@ object-assign
               parentProps,
               parentInstance,
               type,
-              props
+              props,
+              isConcurrentMode
             ) {
-              if (parentProps[SUPPRESS_HYDRATION_WARNING$1] !== true) {
-                warnForInsertedHydratedElement(parentInstance, type);
+              {
+                if (
+                  isConcurrentMode ||
+                  parentProps[SUPPRESS_HYDRATION_WARNING$1] !== true
+                ) {
+                  warnForInsertedHydratedElement(parentInstance, type);
+                }
               }
             }
             function didNotFindHydratableTextInstance(
               parentType,
               parentProps,
               parentInstance,
-              text
+              text,
+              isConcurrentMode
             ) {
-              if (parentProps[SUPPRESS_HYDRATION_WARNING$1] !== true) {
-                warnForInsertedHydratedText(parentInstance, text);
+              {
+                if (
+                  isConcurrentMode ||
+                  parentProps[SUPPRESS_HYDRATION_WARNING$1] !== true
+                ) {
+                  warnForInsertedHydratedText(parentInstance, text);
+                }
               }
-            }
-            function didNotFindHydratableSuspenseInstance(
-              parentType,
-              parentProps,
-              parentInstance
-            ) {
-              if (parentProps[SUPPRESS_HYDRATION_WARNING$1] !== true);
             }
             function errorHydratingContainer(parentContainer) {
               {
@@ -25163,6 +26198,9 @@ object-assign
               } else {
                 interleavedQueues.push(queue);
               }
+            }
+            function hasInterleavedUpdates() {
+              return interleavedQueues !== null;
             }
             function enqueueInterleavedUpdates() {
               // Transfer the interleaved updates onto the main queue. Each queue has a
@@ -27222,8 +28260,10 @@ object-assign
 
             var hydrationParentFiber = null;
             var nextHydratableInstance = null;
-            var isHydrating = false;
-            var didSuspend = false; // Hydration errors that were thrown inside this boundary
+            var isHydrating = false; // This flag allows for warning supression when we expect there to be mismatches
+            // due to earlier mismatches or a suspended fiber.
+
+            var didSuspendOrErrorDEV = false; // Hydration errors that were thrown inside this boundary
 
             var hydrationErrors = null;
 
@@ -27237,9 +28277,9 @@ object-assign
               }
             }
 
-            function markDidSuspendWhileHydratingDEV() {
+            function markDidThrowWhileHydratingDEV() {
               {
-                didSuspend = true;
+                didSuspendOrErrorDEV = true;
               }
             }
 
@@ -27250,7 +28290,7 @@ object-assign
               hydrationParentFiber = fiber;
               isHydrating = true;
               hydrationErrors = null;
-              didSuspend = false;
+              didSuspendOrErrorDEV = false;
               return true;
             }
 
@@ -27264,7 +28304,7 @@ object-assign
               hydrationParentFiber = fiber;
               isHydrating = true;
               hydrationErrors = null;
-              didSuspend = false;
+              didSuspendOrErrorDEV = false;
 
               if (treeContext !== null) {
                 restoreSuspendedTreeContext(fiber, treeContext);
@@ -27276,23 +28316,28 @@ object-assign
             function warnUnhydratedInstance(returnFiber, instance) {
               {
                 switch (returnFiber.tag) {
-                  case HostRoot:
+                  case HostRoot: {
                     didNotHydrateInstanceWithinContainer(
                       returnFiber.stateNode.containerInfo,
                       instance
                     );
                     break;
+                  }
 
-                  case HostComponent:
+                  case HostComponent: {
+                    var isConcurrentMode =
+                      (returnFiber.mode & ConcurrentMode) !== NoMode;
                     didNotHydrateInstance(
                       returnFiber.type,
                       returnFiber.memoizedProps,
                       returnFiber.stateNode,
-                      instance
+                      instance, // TODO: Delete this argument when we remove the legacy root API.
+                      isConcurrentMode
                     );
                     break;
+                  }
 
-                  case SuspenseComponent:
+                  case SuspenseComponent: {
                     var suspenseState = returnFiber.memoizedState;
                     if (suspenseState.dehydrated !== null)
                       didNotHydrateInstanceWithinSuspenseInstance(
@@ -27300,6 +28345,7 @@ object-assign
                         instance
                       );
                     break;
+                  }
                 }
               }
             }
@@ -27321,7 +28367,7 @@ object-assign
 
             function warnNonhydratedInstance(returnFiber, fiber) {
               {
-                if (didSuspend) {
+                if (didSuspendOrErrorDEV) {
                   // Inside a boundary that already suspended. We're currently rendering the
                   // siblings of a suspended node. The mismatch may be due to the missing
                   // data, so it's probably a false positive.
@@ -27360,33 +28406,37 @@ object-assign
                     var parentInstance = returnFiber.stateNode;
 
                     switch (fiber.tag) {
-                      case HostComponent:
+                      case HostComponent: {
                         var _type = fiber.type;
                         var _props = fiber.pendingProps;
+                        var isConcurrentMode =
+                          (returnFiber.mode & ConcurrentMode) !== NoMode;
                         didNotFindHydratableInstance(
                           parentType,
                           parentProps,
                           parentInstance,
-                          _type
+                          _type,
+                          _props, // TODO: Delete this argument when we remove the legacy root API.
+                          isConcurrentMode
                         );
                         break;
+                      }
 
-                      case HostText:
+                      case HostText: {
                         var _text = fiber.pendingProps;
+
+                        var _isConcurrentMode =
+                          (returnFiber.mode & ConcurrentMode) !== NoMode;
+
                         didNotFindHydratableTextInstance(
                           parentType,
                           parentProps,
                           parentInstance,
-                          _text
+                          _text, // TODO: Delete this argument when we remove the legacy root API.
+                          _isConcurrentMode
                         );
                         break;
-
-                      case SuspenseComponent:
-                        didNotFindHydratableSuspenseInstance(
-                          parentType,
-                          parentProps
-                        );
-                        break;
+                      }
                     }
 
                     break;
@@ -27461,31 +28511,29 @@ object-assign
                 }
 
                 case SuspenseComponent: {
-                  {
-                    var suspenseInstance =
-                      canHydrateSuspenseInstance(nextInstance);
+                  var suspenseInstance =
+                    canHydrateSuspenseInstance(nextInstance);
 
-                    if (suspenseInstance !== null) {
-                      var suspenseState = {
-                        dehydrated: suspenseInstance,
-                        treeContext: getSuspendedTreeContext(),
-                        retryLane: OffscreenLane,
-                      };
-                      fiber.memoizedState = suspenseState; // Store the dehydrated fragment as a child fiber.
-                      // This simplifies the code for getHostSibling and deleting nodes,
-                      // since it doesn't have to consider all Suspense boundaries and
-                      // check if they're dehydrated ones or not.
+                  if (suspenseInstance !== null) {
+                    var suspenseState = {
+                      dehydrated: suspenseInstance,
+                      treeContext: getSuspendedTreeContext(),
+                      retryLane: OffscreenLane,
+                    };
+                    fiber.memoizedState = suspenseState; // Store the dehydrated fragment as a child fiber.
+                    // This simplifies the code for getHostSibling and deleting nodes,
+                    // since it doesn't have to consider all Suspense boundaries and
+                    // check if they're dehydrated ones or not.
 
-                      var dehydratedFragment =
-                        createFiberFromDehydratedFragment(suspenseInstance);
-                      dehydratedFragment.return = fiber;
-                      fiber.child = dehydratedFragment;
-                      hydrationParentFiber = fiber; // While a Suspense Instance does have children, we won't step into
-                      // it during the first pass. Instead, we'll reenter it later.
+                    var dehydratedFragment =
+                      createFiberFromDehydratedFragment(suspenseInstance);
+                    dehydratedFragment.return = fiber;
+                    fiber.child = dehydratedFragment;
+                    hydrationParentFiber = fiber; // While a Suspense Instance does have children, we won't step into
+                    // it during the first pass. Instead, we'll reenter it later.
 
-                      nextHydratableInstance = null;
-                      return true;
-                    }
+                    nextHydratableInstance = null;
+                    return true;
                   }
 
                   return false;
@@ -27566,7 +28614,7 @@ object-assign
               hostContext
             ) {
               var instance = fiber.stateNode;
-              var shouldWarnIfMismatchDev = !didSuspend;
+              var shouldWarnIfMismatchDev = !didSuspendOrErrorDEV;
               var updatePayload = hydrateInstance(
                 instance,
                 fiber.type,
@@ -27602,12 +28650,11 @@ object-assign
                 var returnFiber = hydrationParentFiber;
 
                 if (returnFiber !== null) {
-                  var isConcurrentMode =
-                    (returnFiber.mode & ConcurrentMode) !== NoMode;
-
                   switch (returnFiber.tag) {
                     case HostRoot: {
                       var parentContainer = returnFiber.stateNode.containerInfo;
+                      var isConcurrentMode =
+                        (returnFiber.mode & ConcurrentMode) !== NoMode;
                       didNotMatchHydratedContainerTextInstance(
                         parentContainer,
                         textInstance,
@@ -27621,13 +28668,17 @@ object-assign
                       var parentType = returnFiber.type;
                       var parentProps = returnFiber.memoizedProps;
                       var parentInstance = returnFiber.stateNode;
+
+                      var _isConcurrentMode2 =
+                        (returnFiber.mode & ConcurrentMode) !== NoMode;
+
                       didNotMatchHydratedTextInstance(
                         parentType,
                         parentProps,
                         parentInstance,
                         textInstance,
                         textContent, // TODO: Delete this argument when we remove the legacy root API.
-                        isConcurrentMode
+                        _isConcurrentMode2
                       );
                       break;
                     }
@@ -27756,7 +28807,7 @@ object-assign
               hydrationParentFiber = null;
               nextHydratableInstance = null;
               isHydrating = false;
-              didSuspend = false;
+              didSuspendOrErrorDEV = false;
             }
 
             function upgradeHydrationErrorsToRecoverable() {
@@ -28278,11 +29329,9 @@ object-assign
                     }
 
                     case REACT_LAZY_TYPE: {
-                      {
-                        var payload = newChild._payload;
-                        var init = newChild._init;
-                        return createChild(returnFiber, init(payload), lanes);
-                      }
+                      var payload = newChild._payload;
+                      var init = newChild._init;
+                      return createChild(returnFiber, init(payload), lanes);
                     }
                   }
 
@@ -28362,16 +29411,14 @@ object-assign
                     }
 
                     case REACT_LAZY_TYPE: {
-                      {
-                        var payload = newChild._payload;
-                        var init = newChild._init;
-                        return updateSlot(
-                          returnFiber,
-                          oldFiber,
-                          init(payload),
-                          lanes
-                        );
-                      }
+                      var payload = newChild._payload;
+                      var init = newChild._init;
+                      return updateSlot(
+                        returnFiber,
+                        oldFiber,
+                        init(payload),
+                        lanes
+                      );
                     }
                   }
 
@@ -28453,7 +29500,7 @@ object-assign
                       );
                     }
 
-                    case REACT_LAZY_TYPE: {
+                    case REACT_LAZY_TYPE:
                       var payload = newChild._payload;
                       var init = newChild._init;
                       return updateFromMap(
@@ -28463,7 +29510,6 @@ object-assign
                         init(payload),
                         lanes
                       );
-                    }
                   }
 
                   if (isArray(newChild) || getIteratorFn(newChild)) {
@@ -28531,12 +29577,11 @@ object-assign
 
                       break;
 
-                    case REACT_LAZY_TYPE: {
+                    case REACT_LAZY_TYPE:
                       var payload = child._payload;
                       var init = child._init;
                       warnOnInvalidKey(init(payload), knownKeys, returnFiber);
                       break;
-                    }
                   }
                 }
 
@@ -29214,7 +30259,7 @@ object-assign
                         )
                       );
 
-                    case REACT_LAZY_TYPE: {
+                    case REACT_LAZY_TYPE:
                       var payload = newChild._payload;
                       var init = newChild._init; // TODO: This function is supposed to be non-recursive.
 
@@ -29224,7 +30269,6 @@ object-assign
                         init(payload),
                         lanes
                       );
-                    }
                   }
 
                   if (isArray(newChild)) {
@@ -30908,66 +31952,72 @@ object-assign
             }
 
             function mountDeferredValue(value) {
-              var _mountState = mountState(value),
-                prevValue = _mountState[0],
-                setValue = _mountState[1];
-
-              mountEffect(
-                function () {
-                  var prevTransition = ReactCurrentBatchConfig$2.transition;
-                  ReactCurrentBatchConfig$2.transition = {};
-
-                  try {
-                    setValue(value);
-                  } finally {
-                    ReactCurrentBatchConfig$2.transition = prevTransition;
-                  }
-                },
-                [value]
-              );
-              return prevValue;
+              var hook = mountWorkInProgressHook();
+              hook.memoizedState = value;
+              return value;
             }
 
             function updateDeferredValue(value) {
-              var _updateState = updateState(),
-                prevValue = _updateState[0],
-                setValue = _updateState[1];
-
-              updateEffect(
-                function () {
-                  var prevTransition = ReactCurrentBatchConfig$2.transition;
-                  ReactCurrentBatchConfig$2.transition = {};
-
-                  try {
-                    setValue(value);
-                  } finally {
-                    ReactCurrentBatchConfig$2.transition = prevTransition;
-                  }
-                },
-                [value]
-              );
-              return prevValue;
+              var hook = updateWorkInProgressHook();
+              var resolvedCurrentHook = currentHook;
+              var prevValue = resolvedCurrentHook.memoizedState;
+              return updateDeferredValueImpl(hook, prevValue, value);
             }
 
             function rerenderDeferredValue(value) {
-              var _rerenderState = rerenderState(),
-                prevValue = _rerenderState[0],
-                setValue = _rerenderState[1];
+              var hook = updateWorkInProgressHook();
 
-              updateEffect(
-                function () {
-                  var prevTransition = ReactCurrentBatchConfig$2.transition;
-                  ReactCurrentBatchConfig$2.transition = {};
+              if (currentHook === null) {
+                // This is a rerender during a mount.
+                hook.memoizedState = value;
+                return value;
+              } else {
+                // This is a rerender during an update.
+                var prevValue = currentHook.memoizedState;
+                return updateDeferredValueImpl(hook, prevValue, value);
+              }
+            }
 
-                  try {
-                    setValue(value);
-                  } finally {
-                    ReactCurrentBatchConfig$2.transition = prevTransition;
-                  }
-                },
-                [value]
-              );
-              return prevValue;
+            function updateDeferredValueImpl(hook, prevValue, value) {
+              var shouldDeferValue = !includesOnlyNonUrgentLanes(renderLanes);
+
+              if (shouldDeferValue) {
+                // This is an urgent update. If the value has changed, keep using the
+                // previous value and spawn a deferred render to update it later.
+                if (!objectIs(value, prevValue)) {
+                  // Schedule a deferred render
+                  var deferredLane = claimNextTransitionLane();
+                  currentlyRenderingFiber$1.lanes = mergeLanes(
+                    currentlyRenderingFiber$1.lanes,
+                    deferredLane
+                  );
+                  markSkippedUpdateLanes(deferredLane); // Set this to true to indicate that the rendered value is inconsistent
+                  // from the latest value. The name "baseState" doesn't really match how we
+                  // use it because we're reusing a state hook field instead of creating a
+                  // new one.
+
+                  hook.baseState = true;
+                } // Reuse the previous value
+
+                return prevValue;
+              } else {
+                // This is not an urgent update, so we can use the latest value regardless
+                // of what it is. No need to defer it.
+                // However, if we're currently inside a spawned render, then we need to mark
+                // this as an update to prevent the fiber from bailing out.
+                //
+                // `baseState` is true when the current value is different from the rendered
+                // value. The name doesn't really match how we use it because we're reusing
+                // a state hook field instead of creating a new one.
+                if (hook.baseState) {
+                  // Flip this back to false.
+                  hook.baseState = false;
+                  markWorkInProgressReceivedUpdate();
+                }
+
+                hook.memoizedState = value;
+                return value;
+              }
             }
 
             function startTransition(setPending, callback, options) {
@@ -31014,9 +32064,9 @@ object-assign
             }
 
             function mountTransition() {
-              var _mountState2 = mountState(false),
-                isPending = _mountState2[0],
-                setPending = _mountState2[1]; // The `start` method never changes.
+              var _mountState = mountState(false),
+                isPending = _mountState[0],
+                setPending = _mountState[1]; // The `start` method never changes.
 
               var start = startTransition.bind(null, setPending);
               var hook = mountWorkInProgressHook();
@@ -31025,8 +32075,8 @@ object-assign
             }
 
             function updateTransition() {
-              var _updateState2 = updateState(),
-                isPending = _updateState2[0];
+              var _updateState = updateState(),
+                isPending = _updateState[0];
 
               var hook = updateWorkInProgressHook();
               var start = hook.memoizedState;
@@ -31034,8 +32084,8 @@ object-assign
             }
 
             function rerenderTransition() {
-              var _rerenderState2 = rerenderState(),
-                isPending = _rerenderState2[0];
+              var _rerenderState = rerenderState(),
+                isPending = _rerenderState[0];
 
               var hook = updateWorkInProgressHook();
               var start = hook.memoizedState;
@@ -32833,6 +33883,12 @@ object-assign
                 var wakeable = value;
                 resetSuspendedComponent(sourceFiber);
 
+                {
+                  if (getIsHydrating() && sourceFiber.mode & ConcurrentMode) {
+                    markDidThrowWhileHydratingDEV();
+                  }
+                }
+
                 var suspenseBoundary =
                   getNearestSuspenseBoundaryToCapture(returnFiber);
 
@@ -32884,7 +33940,7 @@ object-assign
               } else {
                 // This is a regular error, not a Suspense wakeable.
                 if (getIsHydrating() && sourceFiber.mode & ConcurrentMode) {
-                  markDidSuspendWhileHydratingDEV();
+                  markDidThrowWhileHydratingDEV();
 
                   var _suspenseBoundary =
                     getNearestSuspenseBoundaryToCapture(returnFiber); // If the error was thrown during hydration, we may be able to recover by
@@ -33327,7 +34383,6 @@ object-assign
 
                 case HostRoot: {
                   var fiberRoot = workInProgress.stateNode;
-
                   popHostContainer(workInProgress);
                   popTopLevelContextObject(workInProgress);
                   resetWorkInProgressVersions();
@@ -33373,6 +34428,7 @@ object-assign
 
                   updateHostContainer(current, workInProgress);
                   bubbleProperties(workInProgress);
+
                   return null;
                 }
 
@@ -33508,96 +34564,94 @@ object-assign
                   popSuspenseContext(workInProgress);
                   var nextState = workInProgress.memoizedState;
 
-                  {
-                    if (
-                      hasUnhydratedTailNodes() &&
-                      (workInProgress.mode & ConcurrentMode) !== NoMode &&
-                      (workInProgress.flags & DidCapture) === NoFlags
-                    ) {
-                      warnIfUnhydratedTailNodes(workInProgress);
-                      resetHydrationState();
-                      workInProgress.flags |=
-                        ForceClientRender | Incomplete | ShouldCapture;
-                      return workInProgress;
-                    }
-
-                    if (nextState !== null && nextState.dehydrated !== null) {
-                      // We might be inside a hydration state the first time we're picking up this
-                      // Suspense boundary, and also after we've reentered it for further hydration.
-                      var _wasHydrated3 = popHydrationState(workInProgress);
-
-                      if (current === null) {
-                        if (!_wasHydrated3) {
-                          throw new Error(
-                            'A dehydrated suspense component was completed without a hydrated node. ' +
-                              'This is probably a bug in React.'
-                          );
-                        }
-
-                        prepareToHydrateHostSuspenseInstance(workInProgress);
-                        bubbleProperties(workInProgress);
-
-                        {
-                          if ((workInProgress.mode & ProfileMode) !== NoMode) {
-                            var isTimedOutSuspense = nextState !== null;
-
-                            if (isTimedOutSuspense) {
-                              // Don't count time spent in a timed out Suspense subtree as part of the base duration.
-                              var primaryChildFragment = workInProgress.child;
-
-                              if (primaryChildFragment !== null) {
-                                // $FlowFixMe Flow doesn't support type casting in combination with the -= operator
-                                workInProgress.treeBaseDuration -=
-                                  primaryChildFragment.treeBaseDuration;
-                              }
-                            }
-                          }
-                        }
-
-                        return null;
-                      } else {
-                        // We might have reentered this boundary to hydrate it. If so, we need to reset the hydration
-                        // state since we're now exiting out of it. popHydrationState doesn't do that for us.
-                        resetHydrationState();
-
-                        if ((workInProgress.flags & DidCapture) === NoFlags) {
-                          // This boundary did not suspend so it's now hydrated and unsuspended.
-                          workInProgress.memoizedState = null;
-                        } // If nothing suspended, we need to schedule an effect to mark this boundary
-                        // as having hydrated so events know that they're free to be invoked.
-                        // It's also a signal to replay events and the suspense callback.
-                        // If something suspended, schedule an effect to attach retry listeners.
-                        // So we might as well always mark this.
-
-                        workInProgress.flags |= Update;
-                        bubbleProperties(workInProgress);
-
-                        {
-                          if ((workInProgress.mode & ProfileMode) !== NoMode) {
-                            var _isTimedOutSuspense = nextState !== null;
-
-                            if (_isTimedOutSuspense) {
-                              // Don't count time spent in a timed out Suspense subtree as part of the base duration.
-                              var _primaryChildFragment = workInProgress.child;
-
-                              if (_primaryChildFragment !== null) {
-                                // $FlowFixMe Flow doesn't support type casting in combination with the -= operator
-                                workInProgress.treeBaseDuration -=
-                                  _primaryChildFragment.treeBaseDuration;
-                              }
-                            }
-                          }
-                        }
-
-                        return null;
-                      }
-                    } // Successfully completed this tree. If this was a forced client render,
-                    // there may have been recoverable errors during first hydration
-                    // attempt. If so, add them to a queue so we can log them in the
-                    // commit phase.
-
-                    upgradeHydrationErrorsToRecoverable();
+                  if (
+                    hasUnhydratedTailNodes() &&
+                    (workInProgress.mode & ConcurrentMode) !== NoMode &&
+                    (workInProgress.flags & DidCapture) === NoFlags
+                  ) {
+                    warnIfUnhydratedTailNodes(workInProgress);
+                    resetHydrationState();
+                    workInProgress.flags |=
+                      ForceClientRender | Incomplete | ShouldCapture;
+                    return workInProgress;
                   }
+
+                  if (nextState !== null && nextState.dehydrated !== null) {
+                    // We might be inside a hydration state the first time we're picking up this
+                    // Suspense boundary, and also after we've reentered it for further hydration.
+                    var _wasHydrated3 = popHydrationState(workInProgress);
+
+                    if (current === null) {
+                      if (!_wasHydrated3) {
+                        throw new Error(
+                          'A dehydrated suspense component was completed without a hydrated node. ' +
+                            'This is probably a bug in React.'
+                        );
+                      }
+
+                      prepareToHydrateHostSuspenseInstance(workInProgress);
+                      bubbleProperties(workInProgress);
+
+                      {
+                        if ((workInProgress.mode & ProfileMode) !== NoMode) {
+                          var isTimedOutSuspense = nextState !== null;
+
+                          if (isTimedOutSuspense) {
+                            // Don't count time spent in a timed out Suspense subtree as part of the base duration.
+                            var primaryChildFragment = workInProgress.child;
+
+                            if (primaryChildFragment !== null) {
+                              // $FlowFixMe Flow doesn't support type casting in combination with the -= operator
+                              workInProgress.treeBaseDuration -=
+                                primaryChildFragment.treeBaseDuration;
+                            }
+                          }
+                        }
+                      }
+
+                      return null;
+                    } else {
+                      // We might have reentered this boundary to hydrate it. If so, we need to reset the hydration
+                      // state since we're now exiting out of it. popHydrationState doesn't do that for us.
+                      resetHydrationState();
+
+                      if ((workInProgress.flags & DidCapture) === NoFlags) {
+                        // This boundary did not suspend so it's now hydrated and unsuspended.
+                        workInProgress.memoizedState = null;
+                      } // If nothing suspended, we need to schedule an effect to mark this boundary
+                      // as having hydrated so events know that they're free to be invoked.
+                      // It's also a signal to replay events and the suspense callback.
+                      // If something suspended, schedule an effect to attach retry listeners.
+                      // So we might as well always mark this.
+
+                      workInProgress.flags |= Update;
+                      bubbleProperties(workInProgress);
+
+                      {
+                        if ((workInProgress.mode & ProfileMode) !== NoMode) {
+                          var _isTimedOutSuspense = nextState !== null;
+
+                          if (_isTimedOutSuspense) {
+                            // Don't count time spent in a timed out Suspense subtree as part of the base duration.
+                            var _primaryChildFragment = workInProgress.child;
+
+                            if (_primaryChildFragment !== null) {
+                              // $FlowFixMe Flow doesn't support type casting in combination with the -= operator
+                              workInProgress.treeBaseDuration -=
+                                _primaryChildFragment.treeBaseDuration;
+                            }
+                          }
+                        }
+                      }
+
+                      return null;
+                    }
+                  } // Successfully completed this tree. If this was a forced client render,
+                  // there may have been recoverable errors during first hydration
+                  // attempt. If so, add them to a queue so we can log them in the
+                  // commit phase.
+
+                  upgradeHydrationErrorsToRecoverable();
 
                   if ((workInProgress.flags & DidCapture) !== NoFlags) {
                     // Something suspended. Re-render with the fallback children.
@@ -33619,51 +34673,55 @@ object-assign
                     var _prevState = current.memoizedState;
                     prevDidTimeout = _prevState !== null;
                   }
-                  // an effect to toggle the subtree's visibility. When we switch from
-                  // fallback -> primary, the inner Offscreen fiber schedules this effect
-                  // as part of its normal complete phase. But when we switch from
-                  // primary -> fallback, the inner Offscreen fiber does not have a complete
-                  // phase. So we need to schedule its effect here.
-                  //
-                  // We also use this flag to connect/disconnect the effects, but the same
-                  // logic applies: when re-connecting, the Offscreen fiber's complete
-                  // phase will handle scheduling the effect. It's only when the fallback
-                  // is active that we have to do anything special.
+                  // a passive effect, which is when we process the transitions
 
-                  if (nextDidTimeout && !prevDidTimeout) {
-                    var _offscreenFiber = workInProgress.child;
-                    _offscreenFiber.flags |= Visibility; // TODO: This will still suspend a synchronous tree if anything
-                    // in the concurrent tree already suspended during this render.
-                    // This is a known bug.
+                  if (nextDidTimeout !== prevDidTimeout) {
+                    // an effect to toggle the subtree's visibility. When we switch from
+                    // fallback -> primary, the inner Offscreen fiber schedules this effect
+                    // as part of its normal complete phase. But when we switch from
+                    // primary -> fallback, the inner Offscreen fiber does not have a complete
+                    // phase. So we need to schedule its effect here.
+                    //
+                    // We also use this flag to connect/disconnect the effects, but the same
+                    // logic applies: when re-connecting, the Offscreen fiber's complete
+                    // phase will handle scheduling the effect. It's only when the fallback
+                    // is active that we have to do anything special.
 
-                    if ((workInProgress.mode & ConcurrentMode) !== NoMode) {
-                      // TODO: Move this back to throwException because this is too late
-                      // if this is a large tree which is common for initial loads. We
-                      // don't know if we should restart a render or not until we get
-                      // this marker, and this is too late.
-                      // If this render already had a ping or lower pri updates,
-                      // and this is the first time we know we're going to suspend we
-                      // should be able to immediately restart from within throwException.
-                      var hasInvisibleChildContext =
-                        current === null &&
-                        (workInProgress.memoizedProps
-                          .unstable_avoidThisFallback !== true ||
-                          !enableSuspenseAvoidThisFallback);
+                    if (nextDidTimeout) {
+                      var _offscreenFiber2 = workInProgress.child;
+                      _offscreenFiber2.flags |= Visibility; // TODO: This will still suspend a synchronous tree if anything
+                      // in the concurrent tree already suspended during this render.
+                      // This is a known bug.
 
-                      if (
-                        hasInvisibleChildContext ||
-                        hasSuspenseContext(
-                          suspenseStackCursor.current,
-                          InvisibleParentSuspenseContext
-                        )
-                      ) {
-                        // If this was in an invisible tree or a new render, then showing
-                        // this boundary is ok.
-                        renderDidSuspend();
-                      } else {
-                        // Otherwise, we're going to have to hide content so we should
-                        // suspend for longer if possible.
-                        renderDidSuspendDelayIfPossible();
+                      if ((workInProgress.mode & ConcurrentMode) !== NoMode) {
+                        // TODO: Move this back to throwException because this is too late
+                        // if this is a large tree which is common for initial loads. We
+                        // don't know if we should restart a render or not until we get
+                        // this marker, and this is too late.
+                        // If this render already had a ping or lower pri updates,
+                        // and this is the first time we know we're going to suspend we
+                        // should be able to immediately restart from within throwException.
+                        var hasInvisibleChildContext =
+                          current === null &&
+                          (workInProgress.memoizedProps
+                            .unstable_avoidThisFallback !== true ||
+                            !enableSuspenseAvoidThisFallback);
+
+                        if (
+                          hasInvisibleChildContext ||
+                          hasSuspenseContext(
+                            suspenseStackCursor.current,
+                            InvisibleParentSuspenseContext
+                          )
+                        ) {
+                          // If this was in an invisible tree or a new render, then showing
+                          // this boundary is ok.
+                          renderDidSuspend();
+                        } else {
+                          // Otherwise, we're going to have to hide content so we should
+                          // suspend for longer if possible.
+                          renderDidSuspendDelayIfPossible();
+                        }
                       }
                     }
                   }
@@ -33988,7 +35046,6 @@ object-assign
                       }
                     }
                   }
-
                   return null;
                 }
 
@@ -34366,7 +35423,23 @@ object-assign
                   current.ref === workInProgress.ref && // Prevent bailout if the implementation changed due to hot reload.
                   workInProgress.type === current.type
                 ) {
-                  didReceiveUpdate = false;
+                  didReceiveUpdate = false; // The props are shallowly equal. Reuse the previous props object, like we
+                  // would during a normal fiber bailout.
+                  //
+                  // We don't have strong guarantees that the props object is referentially
+                  // equal during updates where we can't bail out anyway — like if the props
+                  // are shallowly equal, but there's a local state or context update in the
+                  // same batch.
+                  //
+                  // However, as a principle, we should aim to make the behavior consistent
+                  // across different ways of memoizing a component. For example, React.memo
+                  // has a different internal Fiber layout if you pass a normal function
+                  // component (SimpleMemoComponent) versus if you pass a different type
+                  // like forwardRef (MemoComponent). But this is an implementation detail.
+                  // Wrapping a component in forwardRef (or React.lazy, etc) shouldn't
+                  // affect whether the props object is reused during a bailout.
+
+                  workInProgress.pendingProps = nextProps = prevProps;
 
                   if (!checkScheduledUpdateOrContext(current, renderLanes)) {
                     // The pending lanes were cleared at the beginning of beginWork. We're
@@ -34421,9 +35494,11 @@ object-assign
                 // Rendering a hidden tree.
                 if ((workInProgress.mode & ConcurrentMode) === NoMode) {
                   // In legacy sync mode, don't defer the subtree. Render it now.
+                  // TODO: Consider how Offscreen should work with transitions in the future
                   var nextState = {
                     baseLanes: NoLanes,
                     cachePool: null,
+                    transitions: null,
                   };
                   workInProgress.memoizedState = nextState;
 
@@ -34446,6 +35521,7 @@ object-assign
                   var _nextState = {
                     baseLanes: nextBaseLanes,
                     cachePool: spawnedCachePool,
+                    transitions: null,
                   };
                   workInProgress.memoizedState = _nextState;
                   workInProgress.updateQueue = null;
@@ -34461,6 +35537,7 @@ object-assign
                   var _nextState2 = {
                     baseLanes: NoLanes,
                     cachePool: null,
+                    transitions: null,
                   };
                   workInProgress.memoizedState = _nextState2; // Push the lanes that were skipped when we bailed out.
 
@@ -34964,6 +36041,8 @@ object-assign
                   element: nextChildren,
                   isDehydrated: false,
                   cache: nextState.cache,
+                  pendingSuspenseBoundaries:
+                    nextState.pendingSuspenseBoundaries,
                   transitions: nextState.transitions,
                 };
                 var updateQueue = workInProgress.updateQueue; // `baseState` can always be the last state because the root doesn't
@@ -35607,6 +36686,7 @@ object-assign
               return {
                 baseLanes: renderLanes,
                 cachePool: getSuspendedCache(),
+                transitions: null,
               };
             }
 
@@ -35622,6 +36702,7 @@ object-assign
                   renderLanes
                 ),
                 cachePool: cachePool,
+                transitions: prevOffscreenState.transitions,
               };
             } // TODO: Probably should inline this back
 
@@ -35725,18 +36806,16 @@ object-assign
                 // If we're currently hydrating, try to hydrate this boundary.
                 tryToClaimNextHydratableInstance(workInProgress); // This could've been a dehydrated suspense component.
 
-                {
-                  var suspenseState = workInProgress.memoizedState;
+                var suspenseState = workInProgress.memoizedState;
 
-                  if (suspenseState !== null) {
-                    var dehydrated = suspenseState.dehydrated;
+                if (suspenseState !== null) {
+                  var dehydrated = suspenseState.dehydrated;
 
-                    if (dehydrated !== null) {
-                      return mountDehydratedSuspenseComponent(
-                        workInProgress,
-                        dehydrated
-                      );
-                    }
+                  if (dehydrated !== null) {
+                    return mountDehydratedSuspenseComponent(
+                      workInProgress,
+                      dehydrated
+                    );
                   }
                 }
 
@@ -35754,6 +36833,7 @@ object-assign
                   primaryChildFragment.memoizedState =
                     mountSuspenseOffscreenState(renderLanes);
                   workInProgress.memoizedState = SUSPENDED_MARKER;
+
                   return fallbackFragment;
                 } else {
                   return mountSuspensePrimaryChildren(
@@ -35770,57 +36850,55 @@ object-assign
                 if (prevState !== null) {
                   // The current tree is already showing a fallback
                   // Special path for hydration
-                  {
-                    var _dehydrated = prevState.dehydrated;
+                  var _dehydrated = prevState.dehydrated;
 
-                    if (_dehydrated !== null) {
-                      if (!didSuspend) {
-                        return updateDehydratedSuspenseComponent(
+                  if (_dehydrated !== null) {
+                    if (!didSuspend) {
+                      return updateDehydratedSuspenseComponent(
+                        current,
+                        workInProgress,
+                        _dehydrated,
+                        prevState,
+                        renderLanes
+                      );
+                    } else if (workInProgress.flags & ForceClientRender) {
+                      // Something errored during hydration. Try again without hydrating.
+                      workInProgress.flags &= ~ForceClientRender;
+                      return retrySuspenseComponentWithoutHydrating(
+                        current,
+                        workInProgress,
+                        renderLanes,
+                        new Error(
+                          'There was an error while hydrating this Suspense boundary. ' +
+                            'Switched to client rendering.'
+                        )
+                      );
+                    } else if (workInProgress.memoizedState !== null) {
+                      // Something suspended and we should still be in dehydrated mode.
+                      // Leave the existing child in place.
+                      workInProgress.child = current.child; // The dehydrated completion pass expects this flag to be there
+                      // but the normal suspense pass doesn't.
+
+                      workInProgress.flags |= DidCapture;
+                      return null;
+                    } else {
+                      // Suspended but we should no longer be in dehydrated mode.
+                      // Therefore we now have to render the fallback.
+                      var _nextPrimaryChildren = nextProps.children;
+                      var _nextFallbackChildren = nextProps.fallback;
+                      var fallbackChildFragment =
+                        mountSuspenseFallbackAfterRetryWithoutHydrating(
                           current,
                           workInProgress,
-                          _dehydrated,
-                          prevState,
+                          _nextPrimaryChildren,
+                          _nextFallbackChildren,
                           renderLanes
                         );
-                      } else if (workInProgress.flags & ForceClientRender) {
-                        // Something errored during hydration. Try again without hydrating.
-                        workInProgress.flags &= ~ForceClientRender;
-                        return retrySuspenseComponentWithoutHydrating(
-                          current,
-                          workInProgress,
-                          renderLanes,
-                          new Error(
-                            'There was an error while hydrating this Suspense boundary. ' +
-                              'Switched to client rendering.'
-                          )
-                        );
-                      } else if (workInProgress.memoizedState !== null) {
-                        // Something suspended and we should still be in dehydrated mode.
-                        // Leave the existing child in place.
-                        workInProgress.child = current.child; // The dehydrated completion pass expects this flag to be there
-                        // but the normal suspense pass doesn't.
-
-                        workInProgress.flags |= DidCapture;
-                        return null;
-                      } else {
-                        // Suspended but we should no longer be in dehydrated mode.
-                        // Therefore we now have to render the fallback.
-                        var _nextPrimaryChildren = nextProps.children;
-                        var _nextFallbackChildren = nextProps.fallback;
-                        var fallbackChildFragment =
-                          mountSuspenseFallbackAfterRetryWithoutHydrating(
-                            current,
-                            workInProgress,
-                            _nextPrimaryChildren,
-                            _nextFallbackChildren,
-                            renderLanes
-                          );
-                        var _primaryChildFragment2 = workInProgress.child;
-                        _primaryChildFragment2.memoizedState =
-                          mountSuspenseOffscreenState(renderLanes);
-                        workInProgress.memoizedState = SUSPENDED_MARKER;
-                        return fallbackChildFragment;
-                      }
+                      var _primaryChildFragment2 = workInProgress.child;
+                      _primaryChildFragment2.memoizedState =
+                        mountSuspenseOffscreenState(renderLanes);
+                      workInProgress.memoizedState = SUSPENDED_MARKER;
+                      return fallbackChildFragment;
                     }
                   }
 
@@ -35845,6 +36923,7 @@ object-assign
                             prevOffscreenState,
                             renderLanes
                           );
+
                     _primaryChildFragment3.childLanes =
                       getRemainingWorkInPrimaryTree(current, renderLanes);
                     workInProgress.memoizedState = SUSPENDED_MARKER;
@@ -35888,7 +36967,7 @@ object-assign
                             renderLanes
                           );
                     _primaryChildFragment5.childLanes =
-                      getRemainingWorkInPrimaryTree(current, renderLanes); // Skip the primary children, and continue working on the
+                      getRemainingWorkInPrimaryTree(current, renderLanes);
                     // fallback children.
 
                     workInProgress.memoizedState = SUSPENDED_MARKER;
@@ -37209,22 +38288,20 @@ object-assign
                   var state = workInProgress.memoizedState;
 
                   if (state !== null) {
-                    {
-                      if (state.dehydrated !== null) {
-                        pushSuspenseContext(
-                          workInProgress,
-                          setDefaultShallowSuspenseContext(
-                            suspenseStackCursor.current
-                          )
-                        ); // We know that this component will suspend again because if it has
-                        // been unsuspended it has committed as a resolved Suspense component.
-                        // If it needs to be retried, it should have work scheduled on it.
+                    if (state.dehydrated !== null) {
+                      pushSuspenseContext(
+                        workInProgress,
+                        setDefaultShallowSuspenseContext(
+                          suspenseStackCursor.current
+                        )
+                      ); // We know that this component will suspend again because if it has
+                      // been unsuspended it has committed as a resolved Suspense component.
+                      // If it needs to be retried, it should have work scheduled on it.
 
-                        workInProgress.flags |= DidCapture; // We should never render the children of a dehydrated boundary until we
-                        // upgrade it. We return null instead of bailoutOnAlreadyFinishedWork.
+                      workInProgress.flags |= DidCapture; // We should never render the children of a dehydrated boundary until we
+                      // upgrade it. We return null instead of bailoutOnAlreadyFinishedWork.
 
-                        return null;
-                      }
+                      return null;
                     } // If this boundary is currently timed out, we need to decide
                     // whether to retry the primary children, or to skip over it and
                     // go straight to the fallback. Check the priority of the primary
@@ -37701,6 +38778,7 @@ object-assign
                 }
 
                 case HostRoot: {
+                  var root = workInProgress.stateNode;
                   popHostContainer(workInProgress);
                   popTopLevelContextObject(workInProgress);
                   resetWorkInProgressVersions();
@@ -37728,23 +38806,20 @@ object-assign
 
                 case SuspenseComponent: {
                   popSuspenseContext(workInProgress);
+                  var suspenseState = workInProgress.memoizedState;
 
-                  {
-                    var suspenseState = workInProgress.memoizedState;
-
-                    if (
-                      suspenseState !== null &&
-                      suspenseState.dehydrated !== null
-                    ) {
-                      if (workInProgress.alternate === null) {
-                        throw new Error(
-                          'Threw in newly mounted dehydrated component. This is likely a bug in ' +
-                            'React. Please file an issue.'
-                        );
-                      }
-
-                      resetHydrationState();
+                  if (
+                    suspenseState !== null &&
+                    suspenseState.dehydrated !== null
+                  ) {
+                    if (workInProgress.alternate === null) {
+                      throw new Error(
+                        'Threw in newly mounted dehydrated component. This is likely a bug in ' +
+                          'React. Please file an issue.'
+                      );
                     }
+
+                    resetHydrationState();
                   }
 
                   var _flags2 = workInProgress.flags;
@@ -37782,7 +38857,6 @@ object-assign
                 case OffscreenComponent:
                 case LegacyHiddenComponent:
                   popRenderLanes(workInProgress);
-
                   return null;
 
                 case CacheComponent:
@@ -37820,6 +38894,7 @@ object-assign
                 }
 
                 case HostRoot: {
+                  var root = interruptedWork.stateNode;
                   popHostContainer(interruptedWork);
                   popTopLevelContextObject(interruptedWork);
                   resetWorkInProgressVersions();
@@ -37851,7 +38926,6 @@ object-assign
                 case OffscreenComponent:
                 case LegacyHiddenComponent:
                   popRenderLanes(interruptedWork);
-
                   break;
               }
             }
@@ -37871,7 +38945,6 @@ object-assign
 
             var inProgressLanes = null;
             var inProgressRoot = null;
-
             function reportUncaughtErrorInDEV(error) {
               // Wrapping each small part of the commit phase into a guarded
               // callback is a bit too slow (https://github.com/facebook/react/pull/21666).
@@ -37912,7 +38985,6 @@ object-assign
               try {
                 commitHookEffectListMount(Layout, current);
               } catch (error) {
-                reportUncaughtErrorInDEV(error);
                 captureCommitPhaseError(current, nearestMountedAncestor, error);
               }
             } // Capture errors so they don't interrupt unmounting.
@@ -37925,7 +38997,6 @@ object-assign
               try {
                 callComponentWillUnmountWithTimer(current, instance);
               } catch (error) {
-                reportUncaughtErrorInDEV(error);
                 captureCommitPhaseError(current, nearestMountedAncestor, error);
               }
             } // Capture errors so they don't interrupt mounting.
@@ -37938,7 +39009,6 @@ object-assign
               try {
                 instance.componentDidMount();
               } catch (error) {
-                reportUncaughtErrorInDEV(error);
                 captureCommitPhaseError(current, nearestMountedAncestor, error);
               }
             } // Capture errors so they don't interrupt mounting.
@@ -37947,7 +39017,6 @@ object-assign
               try {
                 commitAttachRef(current);
               } catch (error) {
-                reportUncaughtErrorInDEV(error);
                 captureCommitPhaseError(current, nearestMountedAncestor, error);
               }
             }
@@ -37975,7 +39044,6 @@ object-assign
                       retVal = ref(null);
                     }
                   } catch (error) {
-                    reportUncaughtErrorInDEV(error);
                     captureCommitPhaseError(
                       current,
                       nearestMountedAncestor,
@@ -38006,7 +39074,6 @@ object-assign
               try {
                 destroy();
               } catch (error) {
-                reportUncaughtErrorInDEV(error);
                 captureCommitPhaseError(current, nearestMountedAncestor, error);
               }
             }
@@ -38034,7 +39101,7 @@ object-assign
                   (fiber.subtreeFlags & BeforeMutationMask) !== NoFlags &&
                   child !== null
                 ) {
-                  ensureCorrectReturnPointer(child, fiber);
+                  child.return = fiber;
                   nextEffect = child;
                 } else {
                   commitBeforeMutationEffects_complete();
@@ -38050,7 +39117,6 @@ object-assign
                 try {
                   commitBeforeMutationEffectsOnFiber(fiber);
                 } catch (error) {
-                  reportUncaughtErrorInDEV(error);
                   captureCommitPhaseError(fiber, fiber.return, error);
                 }
 
@@ -38058,7 +39124,7 @@ object-assign
                 var sibling = fiber.sibling;
 
                 if (sibling !== null) {
-                  ensureCorrectReturnPointer(sibling, fiber.return);
+                  sibling.return = fiber.return;
                   nextEffect = sibling;
                   return;
                 }
@@ -38209,11 +39275,23 @@ object-assign
                         }
                       }
 
+                      {
+                        if ((flags & Insertion) !== NoFlags$1) {
+                          setIsRunningInsertionEffect(true);
+                        }
+                      }
+
                       safelyCallDestroy(
                         finishedWork,
                         nearestMountedAncestor,
                         destroy
                       );
+
+                      {
+                        if ((flags & Insertion) !== NoFlags$1) {
+                          setIsRunningInsertionEffect(false);
+                        }
+                      }
 
                       {
                         if ((flags & Passive$1) !== NoFlags$1) {
@@ -38250,7 +39328,20 @@ object-assign
                     } // Mount
 
                     var create = effect.create;
+
+                    {
+                      if ((flags & Insertion) !== NoFlags$1) {
+                        setIsRunningInsertionEffect(true);
+                      }
+                    }
+
                     effect.destroy = create();
+
+                    {
+                      if ((flags & Insertion) !== NoFlags$1) {
+                        setIsRunningInsertionEffect(false);
+                      }
+                    }
 
                     {
                       if ((flags & Passive$1) !== NoFlags$1) {
@@ -38790,22 +39881,39 @@ object-assign
                   if (node.tag === HostComponent) {
                     if (hostSubtreeRoot === null) {
                       hostSubtreeRoot = node;
-                      var instance = node.stateNode;
 
-                      if (isHidden) {
-                        hideInstance(instance);
-                      } else {
-                        unhideInstance(node.stateNode, node.memoizedProps);
+                      try {
+                        var instance = node.stateNode;
+
+                        if (isHidden) {
+                          hideInstance(instance);
+                        } else {
+                          unhideInstance(node.stateNode, node.memoizedProps);
+                        }
+                      } catch (error) {
+                        captureCommitPhaseError(
+                          finishedWork,
+                          finishedWork.return,
+                          error
+                        );
                       }
                     }
                   } else if (node.tag === HostText) {
                     if (hostSubtreeRoot === null) {
-                      var _instance3 = node.stateNode;
+                      try {
+                        var _instance3 = node.stateNode;
 
-                      if (isHidden) {
-                        hideTextInstance(_instance3);
-                      } else {
-                        unhideTextInstance(_instance3, node.memoizedProps);
+                        if (isHidden) {
+                          hideTextInstance(_instance3);
+                        } else {
+                          unhideTextInstance(_instance3, node.memoizedProps);
+                        }
+                      } catch (error) {
+                        captureCommitPhaseError(
+                          finishedWork,
+                          finishedWork.return,
+                          error
+                        );
                       }
                     }
                   } else if (
@@ -38898,185 +40006,6 @@ object-assign
 
                   ref.current = instanceToUse;
                 }
-              }
-            }
-
-            function commitDetachRef(current) {
-              var currentRef = current.ref;
-
-              if (currentRef !== null) {
-                if (typeof currentRef === 'function') {
-                  if (current.mode & ProfileMode) {
-                    try {
-                      startLayoutEffectTimer();
-                      currentRef(null);
-                    } finally {
-                      recordLayoutEffectDuration(current);
-                    }
-                  } else {
-                    currentRef(null);
-                  }
-                } else {
-                  currentRef.current = null;
-                }
-              }
-            } // User-originating errors (lifecycles and refs) should not interrupt
-            // deletion, so don't let them throw. Host-originating errors should
-            // interrupt deletion, so it's okay
-
-            function commitUnmount(
-              finishedRoot,
-              current,
-              nearestMountedAncestor
-            ) {
-              onCommitUnmount(current);
-
-              switch (current.tag) {
-                case FunctionComponent:
-                case ForwardRef:
-                case MemoComponent:
-                case SimpleMemoComponent: {
-                  var updateQueue = current.updateQueue;
-
-                  if (updateQueue !== null) {
-                    var lastEffect = updateQueue.lastEffect;
-
-                    if (lastEffect !== null) {
-                      var firstEffect = lastEffect.next;
-                      var effect = firstEffect;
-
-                      do {
-                        var _effect = effect,
-                          destroy = _effect.destroy,
-                          tag = _effect.tag;
-
-                        if (destroy !== undefined) {
-                          if ((tag & Insertion) !== NoFlags$1) {
-                            safelyCallDestroy(
-                              current,
-                              nearestMountedAncestor,
-                              destroy
-                            );
-                          } else if ((tag & Layout) !== NoFlags$1) {
-                            {
-                              markComponentLayoutEffectUnmountStarted(current);
-                            }
-
-                            if (current.mode & ProfileMode) {
-                              startLayoutEffectTimer();
-                              safelyCallDestroy(
-                                current,
-                                nearestMountedAncestor,
-                                destroy
-                              );
-                              recordLayoutEffectDuration(current);
-                            } else {
-                              safelyCallDestroy(
-                                current,
-                                nearestMountedAncestor,
-                                destroy
-                              );
-                            }
-
-                            {
-                              markComponentLayoutEffectUnmountStopped();
-                            }
-                          }
-                        }
-
-                        effect = effect.next;
-                      } while (effect !== firstEffect);
-                    }
-                  }
-
-                  return;
-                }
-
-                case ClassComponent: {
-                  safelyDetachRef(current, nearestMountedAncestor);
-                  var instance = current.stateNode;
-
-                  if (typeof instance.componentWillUnmount === 'function') {
-                    safelyCallComponentWillUnmount(
-                      current,
-                      nearestMountedAncestor,
-                      instance
-                    );
-                  }
-
-                  return;
-                }
-
-                case HostComponent: {
-                  safelyDetachRef(current, nearestMountedAncestor);
-                  return;
-                }
-
-                case HostPortal: {
-                  // TODO: this is recursive.
-                  // We are also not using this parent because
-                  // the portal will get pushed immediately.
-                  {
-                    unmountHostComponents(
-                      finishedRoot,
-                      current,
-                      nearestMountedAncestor
-                    );
-                  }
-
-                  return;
-                }
-
-                case DehydratedFragment: {
-                  return;
-                }
-
-                case ScopeComponent: {
-                  return;
-                }
-              }
-            }
-
-            function commitNestedUnmounts(
-              finishedRoot,
-              root,
-              nearestMountedAncestor
-            ) {
-              // While we're inside a removed host node we don't want to call
-              // removeChild on the inner nodes because they're removed by the top
-              // call anyway. We also want to call componentWillUnmount on all
-              // composites before this host node is removed from the tree. Therefore
-              // we do an inner loop while we're still inside the host node.
-              var node = root;
-
-              while (true) {
-                commitUnmount(finishedRoot, node, nearestMountedAncestor); // Visit children because they may contain more composite or host nodes.
-                // Skip portals because commitUnmount() currently visits them recursively.
-
-                if (
-                  node.child !== null && // If we use mutation we drill down into portals using commitUnmount above.
-                  // If we don't use mutation we drill down into portals here instead.
-                  node.tag !== HostPortal
-                ) {
-                  node.child.return = node;
-                  node = node.child;
-                  continue;
-                }
-
-                if (node === root) {
-                  return;
-                }
-
-                while (node.sibling === null) {
-                  if (node.return === null || node.return === root) {
-                    return;
-                  }
-
-                  node = node.return;
-                }
-
-                node.sibling.return = node.return;
-                node = node.sibling;
               }
             }
 
@@ -39352,247 +40281,133 @@ object-assign
                   }
                 }
               }
-            }
+            } // These are tracked on the stack as we recursively traverse a
+            // deleted subtree.
+            // TODO: Update these during the whole mutation phase, not just during
+            // a deletion.
 
-            function unmountHostComponents(
-              finishedRoot,
-              current,
-              nearestMountedAncestor
-            ) {
-              // We only have the top Fiber that was deleted but we need to recurse down its
-              // children to find all the terminal nodes.
-              var node = current; // Each iteration, currentParent is populated with node's host parent if not
-              // currentParentIsValid.
+            var hostParent = null;
+            var hostParentIsContainer = false;
 
-              var currentParentIsValid = false; // Note: these two variables *must* always be updated together.
-
-              var currentParent;
-              var currentParentIsContainer;
-
-              while (true) {
-                if (!currentParentIsValid) {
-                  var parent = node.return;
-
-                  findParent: while (true) {
-                    if (parent === null) {
-                      throw new Error(
-                        'Expected to find a host parent. This error is likely caused by ' +
-                          'a bug in React. Please file an issue.'
-                      );
-                    }
-
-                    var parentStateNode = parent.stateNode;
-
-                    switch (parent.tag) {
-                      case HostComponent:
-                        currentParent = parentStateNode;
-                        currentParentIsContainer = false;
-                        break findParent;
-
-                      case HostRoot:
-                        currentParent = parentStateNode.containerInfo;
-                        currentParentIsContainer = true;
-                        break findParent;
-
-                      case HostPortal:
-                        currentParent = parentStateNode.containerInfo;
-                        currentParentIsContainer = true;
-                        break findParent;
-                    }
-
-                    parent = parent.return;
-                  }
-
-                  currentParentIsValid = true;
-                }
-
-                if (node.tag === HostComponent || node.tag === HostText) {
-                  commitNestedUnmounts(
-                    finishedRoot,
-                    node,
-                    nearestMountedAncestor
-                  ); // After all the children have unmounted, it is now safe to remove the
-                  // node from the tree.
-
-                  if (currentParentIsContainer) {
-                    removeChildFromContainer(currentParent, node.stateNode);
-                  } else {
-                    removeChild(currentParent, node.stateNode);
-                  } // Don't visit children because we already visited them.
-                } else if (node.tag === DehydratedFragment) {
-                  if (currentParentIsContainer) {
-                    clearSuspenseBoundaryFromContainer(
-                      currentParent,
-                      node.stateNode
-                    );
-                  } else {
-                    clearSuspenseBoundary(currentParent, node.stateNode);
-                  }
-                } else if (node.tag === HostPortal) {
-                  if (node.child !== null) {
-                    // When we go into a portal, it becomes the parent to remove from.
-                    // We will reassign it back when we pop the portal on the way up.
-                    currentParent = node.stateNode.containerInfo;
-                    currentParentIsContainer = true; // Visit children because portals might contain host components.
-
-                    node.child.return = node;
-                    node = node.child;
-                    continue;
-                  }
-                } else {
-                  commitUnmount(finishedRoot, node, nearestMountedAncestor); // Visit children because we may find more host components below.
-
-                  if (node.child !== null) {
-                    node.child.return = node;
-                    node = node.child;
-                    continue;
-                  }
-                }
-
-                if (node === current) {
-                  return;
-                }
-
-                while (node.sibling === null) {
-                  if (node.return === null || node.return === current) {
-                    return;
-                  }
-
-                  node = node.return;
-
-                  if (node.tag === HostPortal) {
-                    // When we go out of the portal, we need to restore the parent.
-                    // Since we don't keep a stack of them, we will search for it.
-                    currentParentIsValid = false;
-                  }
-                }
-
-                node.sibling.return = node.return;
-                node = node.sibling;
-              }
-            }
-
-            function commitDeletion(
-              finishedRoot,
-              current,
-              nearestMountedAncestor
-            ) {
+            function commitDeletionEffects(root, returnFiber, deletedFiber) {
               {
-                // Recursively delete all host nodes from the parent.
-                // Detach refs and call componentWillUnmount() on the whole subtree.
-                unmountHostComponents(
-                  finishedRoot,
-                  current,
-                  nearestMountedAncestor
-                );
+                // We only have the top Fiber that was deleted but we need to recurse down its
+                // children to find all the terminal nodes.
+                // Recursively delete all host nodes from the parent, detach refs, clean
+                // up mounted layout effects, and call componentWillUnmount.
+                // We only need to remove the topmost host child in each branch. But then we
+                // still need to keep traversing to unmount effects, refs, and cWU. TODO: We
+                // could split this into two separate traversals functions, where the second
+                // one doesn't include any removeChild logic. This is maybe the same
+                // function as "disappearLayoutEffects" (or whatever that turns into after
+                // the layout phase is refactored to use recursion).
+                // Before starting, find the nearest host parent on the stack so we know
+                // which instance/container to remove the children from.
+                // TODO: Instead of searching up the fiber return path on every deletion, we
+                // can track the nearest host component on the JS stack as we traverse the
+                // tree during the commit phase. This would make insertions faster, too.
+                var parent = returnFiber;
+
+                findParent: while (parent !== null) {
+                  switch (parent.tag) {
+                    case HostComponent: {
+                      hostParent = parent.stateNode;
+                      hostParentIsContainer = false;
+                      break findParent;
+                    }
+
+                    case HostRoot: {
+                      hostParent = parent.stateNode.containerInfo;
+                      hostParentIsContainer = true;
+                      break findParent;
+                    }
+
+                    case HostPortal: {
+                      hostParent = parent.stateNode.containerInfo;
+                      hostParentIsContainer = true;
+                      break findParent;
+                    }
+                  }
+
+                  parent = parent.return;
+                }
+
+                if (hostParent === null) {
+                  throw new Error(
+                    'Expected to find a host parent. This error is likely caused by ' +
+                      'a bug in React. Please file an issue.'
+                  );
+                }
+
+                commitDeletionEffectsOnFiber(root, returnFiber, deletedFiber);
+                hostParent = null;
+                hostParentIsContainer = false;
               }
 
-              detachFiberMutation(current);
+              detachFiberMutation(deletedFiber);
             }
 
-            function commitWork(current, finishedWork) {
-              switch (finishedWork.tag) {
-                case FunctionComponent:
-                case ForwardRef:
-                case MemoComponent:
-                case SimpleMemoComponent: {
-                  commitHookEffectListUnmount(
-                    Insertion | HasEffect,
-                    finishedWork,
-                    finishedWork.return
-                  );
-                  commitHookEffectListMount(
-                    Insertion | HasEffect,
-                    finishedWork
-                  ); // Layout effects are destroyed during the mutation phase so that all
-                  // destroy functions for all fibers are called before any create functions.
-                  // This prevents sibling component effects from interfering with each other,
-                  // e.g. a destroy function in one component should never override a ref set
-                  // by a create function in another component during the same commit.
+            function recursivelyTraverseDeletionEffects(
+              finishedRoot,
+              nearestMountedAncestor,
+              parent
+            ) {
+              // TODO: Use a static flag to skip trees that don't have unmount effects
+              var child = parent.child;
 
-                  if (finishedWork.mode & ProfileMode) {
-                    try {
-                      startLayoutEffectTimer();
-                      commitHookEffectListUnmount(
-                        Layout | HasEffect,
-                        finishedWork,
-                        finishedWork.return
-                      );
-                    } finally {
-                      recordLayoutEffectDuration(finishedWork);
-                    }
-                  } else {
-                    commitHookEffectListUnmount(
-                      Layout | HasEffect,
-                      finishedWork,
-                      finishedWork.return
-                    );
-                  }
+              while (child !== null) {
+                commitDeletionEffectsOnFiber(
+                  finishedRoot,
+                  nearestMountedAncestor,
+                  child
+                );
+                child = child.sibling;
+              }
+            }
 
-                  return;
-                }
+            function commitDeletionEffectsOnFiber(
+              finishedRoot,
+              nearestMountedAncestor,
+              deletedFiber
+            ) {
+              onCommitUnmount(deletedFiber); // The cases in this outer switch modify the stack before they traverse
+              // into their subtree. There are simpler cases in the inner switch
+              // that don't modify the stack.
 
-                case ClassComponent: {
-                  return;
-                }
-
+              switch (deletedFiber.tag) {
                 case HostComponent: {
-                  var instance = finishedWork.stateNode;
-
-                  if (instance != null) {
-                    // Commit the work prepared earlier.
-                    var newProps = finishedWork.memoizedProps; // For hydration we reuse the update path but we treat the oldProps
-                    // as the newProps. The updatePayload will contain the real change in
-                    // this case.
-
-                    var oldProps =
-                      current !== null ? current.memoizedProps : newProps;
-                    var type = finishedWork.type; // TODO: Type the updateQueue to be specific to host components.
-
-                    var updatePayload = finishedWork.updateQueue;
-                    finishedWork.updateQueue = null;
-
-                    if (updatePayload !== null) {
-                      commitUpdate(
-                        instance,
-                        updatePayload,
-                        type,
-                        oldProps,
-                        newProps
-                      );
-                    }
-                  }
-
-                  return;
+                  if (!offscreenSubtreeWasHidden) {
+                    safelyDetachRef(deletedFiber, nearestMountedAncestor);
+                  } // Intentional fallthrough to next branch
                 }
+                // eslint-disable-next-line-no-fallthrough
 
                 case HostText: {
-                  if (finishedWork.stateNode === null) {
-                    throw new Error(
-                      'This should have a text node initialized. This error is likely ' +
-                        'caused by a bug in React. Please file an issue.'
-                    );
-                  }
-
-                  var textInstance = finishedWork.stateNode;
-                  var newText = finishedWork.memoizedProps; // For hydration we reuse the update path but we treat the oldProps
-                  // as the newProps. The updatePayload will contain the real change in
-                  // this case.
-
-                  var oldText =
-                    current !== null ? current.memoizedProps : newText;
-                  commitTextUpdate(textInstance, oldText, newText);
-                  return;
-                }
-
-                case HostRoot: {
+                  // We only need to remove the nearest host child. Set the host parent
+                  // to `null` on the stack to indicate that nested children don't
+                  // need to be removed.
                   {
-                    if (current !== null) {
-                      var _prevRootState = current.memoizedState;
+                    var prevHostParent = hostParent;
+                    var prevHostParentIsContainer = hostParentIsContainer;
+                    hostParent = null;
+                    recursivelyTraverseDeletionEffects(
+                      finishedRoot,
+                      nearestMountedAncestor,
+                      deletedFiber
+                    );
+                    hostParent = prevHostParent;
+                    hostParentIsContainer = prevHostParentIsContainer;
 
-                      if (_prevRootState.isDehydrated) {
-                        var _root = finishedWork.stateNode;
-                        commitHydratedContainer(_root.containerInfo);
+                    if (hostParent !== null) {
+                      // Now that all the child effects have unmounted, we can remove the
+                      // node from the tree.
+                      if (hostParentIsContainer) {
+                        removeChildFromContainer(
+                          hostParent,
+                          deletedFiber.stateNode
+                        );
+                      } else {
+                        removeChild(hostParent, deletedFiber.stateNode);
                       }
                     }
                   }
@@ -39600,30 +40415,192 @@ object-assign
                   return;
                 }
 
-                case Profiler: {
+                case DehydratedFragment: {
+                  // Delete the dehydrated suspense boundary and all of its content.
+
+                  {
+                    if (hostParent !== null) {
+                      if (hostParentIsContainer) {
+                        clearSuspenseBoundaryFromContainer(
+                          hostParent,
+                          deletedFiber.stateNode
+                        );
+                      } else {
+                        clearSuspenseBoundary(
+                          hostParent,
+                          deletedFiber.stateNode
+                        );
+                      }
+                    }
+                  }
+
                   return;
                 }
 
-                case SuspenseComponent: {
-                  commitSuspenseCallback(finishedWork);
-                  attachSuspenseRetryListeners(finishedWork);
+                case HostPortal: {
+                  {
+                    // When we go into a portal, it becomes the parent to remove from.
+                    var _prevHostParent = hostParent;
+                    var _prevHostParentIsContainer = hostParentIsContainer;
+                    hostParent = deletedFiber.stateNode.containerInfo;
+                    hostParentIsContainer = true;
+                    recursivelyTraverseDeletionEffects(
+                      finishedRoot,
+                      nearestMountedAncestor,
+                      deletedFiber
+                    );
+                    hostParent = _prevHostParent;
+                    hostParentIsContainer = _prevHostParentIsContainer;
+                  }
+
                   return;
                 }
 
-                case SuspenseListComponent: {
-                  attachSuspenseRetryListeners(finishedWork);
+                case FunctionComponent:
+                case ForwardRef:
+                case MemoComponent:
+                case SimpleMemoComponent: {
+                  if (!offscreenSubtreeWasHidden) {
+                    var updateQueue = deletedFiber.updateQueue;
+
+                    if (updateQueue !== null) {
+                      var lastEffect = updateQueue.lastEffect;
+
+                      if (lastEffect !== null) {
+                        var firstEffect = lastEffect.next;
+                        var effect = firstEffect;
+
+                        do {
+                          var _effect = effect,
+                            destroy = _effect.destroy,
+                            tag = _effect.tag;
+
+                          if (destroy !== undefined) {
+                            if ((tag & Insertion) !== NoFlags$1) {
+                              safelyCallDestroy(
+                                deletedFiber,
+                                nearestMountedAncestor,
+                                destroy
+                              );
+                            } else if ((tag & Layout) !== NoFlags$1) {
+                              {
+                                markComponentLayoutEffectUnmountStarted(
+                                  deletedFiber
+                                );
+                              }
+
+                              if (deletedFiber.mode & ProfileMode) {
+                                startLayoutEffectTimer();
+                                safelyCallDestroy(
+                                  deletedFiber,
+                                  nearestMountedAncestor,
+                                  destroy
+                                );
+                                recordLayoutEffectDuration(deletedFiber);
+                              } else {
+                                safelyCallDestroy(
+                                  deletedFiber,
+                                  nearestMountedAncestor,
+                                  destroy
+                                );
+                              }
+
+                              {
+                                markComponentLayoutEffectUnmountStopped();
+                              }
+                            }
+                          }
+
+                          effect = effect.next;
+                        } while (effect !== firstEffect);
+                      }
+                    }
+                  }
+
+                  recursivelyTraverseDeletionEffects(
+                    finishedRoot,
+                    nearestMountedAncestor,
+                    deletedFiber
+                  );
                   return;
                 }
 
-                case IncompleteClassComponent: {
+                case ClassComponent: {
+                  if (!offscreenSubtreeWasHidden) {
+                    safelyDetachRef(deletedFiber, nearestMountedAncestor);
+                    var instance = deletedFiber.stateNode;
+
+                    if (typeof instance.componentWillUnmount === 'function') {
+                      safelyCallComponentWillUnmount(
+                        deletedFiber,
+                        nearestMountedAncestor,
+                        instance
+                      );
+                    }
+                  }
+
+                  recursivelyTraverseDeletionEffects(
+                    finishedRoot,
+                    nearestMountedAncestor,
+                    deletedFiber
+                  );
+                  return;
+                }
+
+                case ScopeComponent: {
+                  recursivelyTraverseDeletionEffects(
+                    finishedRoot,
+                    nearestMountedAncestor,
+                    deletedFiber
+                  );
+                  return;
+                }
+
+                case OffscreenComponent: {
+                  if (
+                    // TODO: Remove this dead flag
+                    deletedFiber.mode & ConcurrentMode
+                  ) {
+                    // If this offscreen component is hidden, we already unmounted it. Before
+                    // deleting the children, track that it's already unmounted so that we
+                    // don't attempt to unmount the effects again.
+                    // TODO: If the tree is hidden, in most cases we should be able to skip
+                    // over the nested children entirely. An exception is we haven't yet found
+                    // the topmost host node to delete, which we already track on the stack.
+                    // But the other case is portals, which need to be detached no matter how
+                    // deeply they are nested. We should use a subtree flag to track whether a
+                    // subtree includes a nested portal.
+                    var prevOffscreenSubtreeWasHidden =
+                      offscreenSubtreeWasHidden;
+                    offscreenSubtreeWasHidden =
+                      prevOffscreenSubtreeWasHidden ||
+                      deletedFiber.memoizedState !== null;
+                    recursivelyTraverseDeletionEffects(
+                      finishedRoot,
+                      nearestMountedAncestor,
+                      deletedFiber
+                    );
+                    offscreenSubtreeWasHidden = prevOffscreenSubtreeWasHidden;
+                  } else {
+                    recursivelyTraverseDeletionEffects(
+                      finishedRoot,
+                      nearestMountedAncestor,
+                      deletedFiber
+                    );
+                  }
+
+                  break;
+                }
+
+                default: {
+                  recursivelyTraverseDeletionEffects(
+                    finishedRoot,
+                    nearestMountedAncestor,
+                    deletedFiber
+                  );
                   return;
                 }
               }
-
-              throw new Error(
-                'This unit of work tag should not have side-effects. This error is ' +
-                  'likely caused by a bug in React. Please file an issue.'
-              );
             }
 
             function commitSuspenseCallback(finishedWork) {
@@ -39703,126 +40680,346 @@ object-assign
                 });
               }
             } // This function detects when a Suspense boundary goes from visible to hidden.
-
-            function commitResetTextContent(current) {
-              resetTextContent(current.stateNode);
-            }
-
-            function commitMutationEffects(root, firstChild, committedLanes) {
+            function commitMutationEffects(root, finishedWork, committedLanes) {
               inProgressLanes = committedLanes;
               inProgressRoot = root;
-              nextEffect = firstChild;
-              commitMutationEffects_begin(root, committedLanes);
+              setCurrentFiber(finishedWork);
+              commitMutationEffectsOnFiber(finishedWork, root);
+              setCurrentFiber(finishedWork);
               inProgressLanes = null;
               inProgressRoot = null;
             }
 
-            function commitMutationEffects_begin(root, lanes) {
-              while (nextEffect !== null) {
-                var fiber = nextEffect; // TODO: Should wrap this in flags check, too, as optimization
+            function recursivelyTraverseMutationEffects(
+              root,
+              parentFiber,
+              lanes
+            ) {
+              // Deletions effects can be scheduled on any fiber type. They need to happen
+              // before the children effects hae fired.
+              var deletions = parentFiber.deletions;
 
-                var deletions = fiber.deletions;
+              if (deletions !== null) {
+                for (var i = 0; i < deletions.length; i++) {
+                  var childToDelete = deletions[i];
 
-                if (deletions !== null) {
-                  for (var i = 0; i < deletions.length; i++) {
-                    var childToDelete = deletions[i];
-
-                    try {
-                      commitDeletion(root, childToDelete, fiber);
-                    } catch (error) {
-                      reportUncaughtErrorInDEV(error);
-                      captureCommitPhaseError(childToDelete, fiber, error);
-                    }
+                  try {
+                    commitDeletionEffects(root, parentFiber, childToDelete);
+                  } catch (error) {
+                    captureCommitPhaseError(childToDelete, parentFiber, error);
                   }
                 }
+              }
 
-                var child = fiber.child;
+              var prevDebugFiber = getCurrentFiber();
 
-                if (
-                  (fiber.subtreeFlags & MutationMask) !== NoFlags &&
-                  child !== null
-                ) {
-                  ensureCorrectReturnPointer(child, fiber);
-                  nextEffect = child;
-                } else {
-                  commitMutationEffects_complete(root, lanes);
+              if (parentFiber.subtreeFlags & MutationMask) {
+                var child = parentFiber.child;
+
+                while (child !== null) {
+                  setCurrentFiber(child);
+                  commitMutationEffectsOnFiber(child, root);
+                  child = child.sibling;
                 }
               }
-            }
 
-            function commitMutationEffects_complete(root, lanes) {
-              while (nextEffect !== null) {
-                var fiber = nextEffect;
-                setCurrentFiber(fiber);
-
-                try {
-                  commitMutationEffectsOnFiber(fiber, root, lanes);
-                } catch (error) {
-                  reportUncaughtErrorInDEV(error);
-                  captureCommitPhaseError(fiber, fiber.return, error);
-                }
-
-                resetCurrentFiber();
-                var sibling = fiber.sibling;
-
-                if (sibling !== null) {
-                  ensureCorrectReturnPointer(sibling, fiber.return);
-                  nextEffect = sibling;
-                  return;
-                }
-
-                nextEffect = fiber.return;
-              }
+              setCurrentFiber(prevDebugFiber);
             }
 
             function commitMutationEffectsOnFiber(finishedWork, root, lanes) {
-              // TODO: The factoring of this phase could probably be improved. Consider
-              // switching on the type of work before checking the flags. That's what
-              // we do in all the other phases. I think this one is only different
-              // because of the shared reconciliation logic below.
-              var flags = finishedWork.flags;
+              var current = finishedWork.alternate;
+              var flags = finishedWork.flags; // The effect flag should be checked *after* we refine the type of fiber,
+              // because the fiber tag is more specific. An exception is any flag related
+              // to reconcilation, because those can be set on all fiber types.
 
-              if (flags & ContentReset) {
-                commitResetTextContent(finishedWork);
-              }
+              switch (finishedWork.tag) {
+                case FunctionComponent:
+                case ForwardRef:
+                case MemoComponent:
+                case SimpleMemoComponent: {
+                  recursivelyTraverseMutationEffects(root, finishedWork);
+                  commitReconciliationEffects(finishedWork);
 
-              if (flags & Ref) {
-                var current = finishedWork.alternate;
+                  if (flags & Update) {
+                    try {
+                      commitHookEffectListUnmount(
+                        Insertion | HasEffect,
+                        finishedWork,
+                        finishedWork.return
+                      );
+                      commitHookEffectListMount(
+                        Insertion | HasEffect,
+                        finishedWork
+                      );
+                    } catch (error) {
+                      captureCommitPhaseError(
+                        finishedWork,
+                        finishedWork.return,
+                        error
+                      );
+                    } // Layout effects are destroyed during the mutation phase so that all
+                    // destroy functions for all fibers are called before any create functions.
+                    // This prevents sibling component effects from interfering with each other,
+                    // e.g. a destroy function in one component should never override a ref set
+                    // by a create function in another component during the same commit.
 
-                if (current !== null) {
-                  commitDetachRef(current);
+                    if (finishedWork.mode & ProfileMode) {
+                      try {
+                        startLayoutEffectTimer();
+                        commitHookEffectListUnmount(
+                          Layout | HasEffect,
+                          finishedWork,
+                          finishedWork.return
+                        );
+                      } catch (error) {
+                        captureCommitPhaseError(
+                          finishedWork,
+                          finishedWork.return,
+                          error
+                        );
+                      }
+
+                      recordLayoutEffectDuration(finishedWork);
+                    } else {
+                      try {
+                        commitHookEffectListUnmount(
+                          Layout | HasEffect,
+                          finishedWork,
+                          finishedWork.return
+                        );
+                      } catch (error) {
+                        captureCommitPhaseError(
+                          finishedWork,
+                          finishedWork.return,
+                          error
+                        );
+                      }
+                    }
+                  }
+
+                  return;
                 }
-              }
 
-              if (flags & Visibility) {
-                switch (finishedWork.tag) {
-                  case SuspenseComponent: {
-                    var newState = finishedWork.memoizedState;
+                case ClassComponent: {
+                  recursivelyTraverseMutationEffects(root, finishedWork);
+                  commitReconciliationEffects(finishedWork);
+
+                  if (flags & Ref) {
+                    if (current !== null) {
+                      safelyDetachRef(current, current.return);
+                    }
+                  }
+
+                  return;
+                }
+
+                case HostComponent: {
+                  recursivelyTraverseMutationEffects(root, finishedWork);
+                  commitReconciliationEffects(finishedWork);
+
+                  if (flags & Ref) {
+                    if (current !== null) {
+                      safelyDetachRef(current, current.return);
+                    }
+                  }
+
+                  {
+                    // TODO: ContentReset gets cleared by the children during the commit
+                    // phase. This is a refactor hazard because it means we must read
+                    // flags the flags after `commitReconciliationEffects` has already run;
+                    // the order matters. We should refactor so that ContentReset does not
+                    // rely on mutating the flag during commit. Like by setting a flag
+                    // during the render phase instead.
+                    if (finishedWork.flags & ContentReset) {
+                      var instance = finishedWork.stateNode;
+
+                      try {
+                        resetTextContent(instance);
+                      } catch (error) {
+                        captureCommitPhaseError(
+                          finishedWork,
+                          finishedWork.return,
+                          error
+                        );
+                      }
+                    }
+
+                    if (flags & Update) {
+                      var _instance4 = finishedWork.stateNode;
+
+                      if (_instance4 != null) {
+                        // Commit the work prepared earlier.
+                        var newProps = finishedWork.memoizedProps; // For hydration we reuse the update path but we treat the oldProps
+                        // as the newProps. The updatePayload will contain the real change in
+                        // this case.
+
+                        var oldProps =
+                          current !== null ? current.memoizedProps : newProps;
+                        var type = finishedWork.type; // TODO: Type the updateQueue to be specific to host components.
+
+                        var updatePayload = finishedWork.updateQueue;
+                        finishedWork.updateQueue = null;
+
+                        if (updatePayload !== null) {
+                          try {
+                            commitUpdate(
+                              _instance4,
+                              updatePayload,
+                              type,
+                              oldProps,
+                              newProps,
+                              finishedWork
+                            );
+                          } catch (error) {
+                            captureCommitPhaseError(
+                              finishedWork,
+                              finishedWork.return,
+                              error
+                            );
+                          }
+                        }
+                      }
+                    }
+                  }
+
+                  return;
+                }
+
+                case HostText: {
+                  recursivelyTraverseMutationEffects(root, finishedWork);
+                  commitReconciliationEffects(finishedWork);
+
+                  if (flags & Update) {
+                    {
+                      if (finishedWork.stateNode === null) {
+                        throw new Error(
+                          'This should have a text node initialized. This error is likely ' +
+                            'caused by a bug in React. Please file an issue.'
+                        );
+                      }
+
+                      var textInstance = finishedWork.stateNode;
+                      var newText = finishedWork.memoizedProps; // For hydration we reuse the update path but we treat the oldProps
+                      // as the newProps. The updatePayload will contain the real change in
+                      // this case.
+
+                      var oldText =
+                        current !== null ? current.memoizedProps : newText;
+
+                      try {
+                        commitTextUpdate(textInstance, oldText, newText);
+                      } catch (error) {
+                        captureCommitPhaseError(
+                          finishedWork,
+                          finishedWork.return,
+                          error
+                        );
+                      }
+                    }
+                  }
+
+                  return;
+                }
+
+                case HostRoot: {
+                  recursivelyTraverseMutationEffects(root, finishedWork);
+                  commitReconciliationEffects(finishedWork);
+
+                  if (flags & Update) {
+                    {
+                      if (current !== null) {
+                        var prevRootState = current.memoizedState;
+
+                        if (prevRootState.isDehydrated) {
+                          try {
+                            commitHydratedContainer(root.containerInfo);
+                          } catch (error) {
+                            captureCommitPhaseError(
+                              finishedWork,
+                              finishedWork.return,
+                              error
+                            );
+                          }
+                        }
+                      }
+                    }
+                  }
+
+                  return;
+                }
+
+                case HostPortal: {
+                  recursivelyTraverseMutationEffects(root, finishedWork);
+                  commitReconciliationEffects(finishedWork);
+
+                  return;
+                }
+
+                case SuspenseComponent: {
+                  recursivelyTraverseMutationEffects(root, finishedWork);
+                  commitReconciliationEffects(finishedWork);
+                  var offscreenFiber = finishedWork.child;
+
+                  if (offscreenFiber.flags & Visibility) {
+                    var newState = offscreenFiber.memoizedState;
                     var isHidden = newState !== null;
 
                     if (isHidden) {
-                      var _current = finishedWork.alternate;
                       var wasHidden =
-                        _current !== null && _current.memoizedState !== null;
+                        offscreenFiber.alternate !== null &&
+                        offscreenFiber.alternate.memoizedState !== null;
 
                       if (!wasHidden) {
                         // TODO: Move to passive phase
                         markCommitTimeOfFallback();
                       }
                     }
-
-                    break;
                   }
 
-                  case OffscreenComponent: {
+                  if (flags & Update) {
+                    try {
+                      commitSuspenseCallback(finishedWork);
+                    } catch (error) {
+                      captureCommitPhaseError(
+                        finishedWork,
+                        finishedWork.return,
+                        error
+                      );
+                    }
+
+                    attachSuspenseRetryListeners(finishedWork);
+                  }
+
+                  return;
+                }
+
+                case OffscreenComponent: {
+                  var _wasHidden =
+                    current !== null && current.memoizedState !== null;
+
+                  if (
+                    // TODO: Remove this dead flag
+                    finishedWork.mode & ConcurrentMode
+                  ) {
+                    // Before committing the children, track on the stack whether this
+                    // offscreen subtree was already hidden, so that we don't unmount the
+                    // effects again.
+                    var prevOffscreenSubtreeWasHidden =
+                      offscreenSubtreeWasHidden;
+                    offscreenSubtreeWasHidden =
+                      prevOffscreenSubtreeWasHidden || _wasHidden;
+                    recursivelyTraverseMutationEffects(root, finishedWork);
+                    offscreenSubtreeWasHidden = prevOffscreenSubtreeWasHidden;
+                  } else {
+                    recursivelyTraverseMutationEffects(root, finishedWork);
+                  }
+
+                  commitReconciliationEffects(finishedWork);
+
+                  if (flags & Visibility) {
                     var _newState = finishedWork.memoizedState;
 
                     var _isHidden = _newState !== null;
-
-                    var _current2 = finishedWork.alternate;
-
-                    var _wasHidden =
-                      _current2 !== null && _current2.memoizedState !== null;
 
                     var offscreenBoundary = finishedWork;
 
@@ -39850,59 +41047,60 @@ object-assign
                           }
                         }
                       }
-
-                      break;
                     }
                   }
-                }
-              } // The following switch statement is only concerned about placement,
-              // updates, and deletions. To avoid needing to add a case for every possible
-              // bitmap value, we remove the secondary effects from the effect tag and
-              // switch on that value.
 
-              var primaryFlags = flags & (Placement | Update | Hydrating);
-
-              switch (primaryFlags) {
-                case Placement: {
-                  commitPlacement(finishedWork); // Clear the "placement" from effect tag so that we know that this is
-                  // inserted, before any life-cycles like componentDidMount gets called.
-                  // TODO: findDOMNode doesn't rely on this any more but isMounted does
-                  // and isMounted is deprecated anyway so we should be able to kill this.
-
-                  finishedWork.flags &= ~Placement;
-                  break;
+                  return;
                 }
 
-                case PlacementAndUpdate: {
-                  // Placement
-                  commitPlacement(finishedWork); // Clear the "placement" from effect tag so that we know that this is
-                  // inserted, before any life-cycles like componentDidMount gets called.
+                case SuspenseListComponent: {
+                  recursivelyTraverseMutationEffects(root, finishedWork);
+                  commitReconciliationEffects(finishedWork);
 
-                  finishedWork.flags &= ~Placement; // Update
+                  if (flags & Update) {
+                    attachSuspenseRetryListeners(finishedWork);
+                  }
 
-                  var _current3 = finishedWork.alternate;
-                  commitWork(_current3, finishedWork);
-                  break;
+                  return;
                 }
 
-                case Hydrating: {
-                  finishedWork.flags &= ~Hydrating;
-                  break;
+                case ScopeComponent: {
+                  return;
                 }
 
-                case HydratingAndUpdate: {
-                  finishedWork.flags &= ~Hydrating; // Update
-
-                  var _current4 = finishedWork.alternate;
-                  commitWork(_current4, finishedWork);
-                  break;
+                default: {
+                  recursivelyTraverseMutationEffects(root, finishedWork);
+                  commitReconciliationEffects(finishedWork);
+                  return;
                 }
+              }
+            }
 
-                case Update: {
-                  var _current5 = finishedWork.alternate;
-                  commitWork(_current5, finishedWork);
-                  break;
-                }
+            function commitReconciliationEffects(finishedWork) {
+              // Placement effects (insertions, reorders) can be scheduled on any fiber
+              // type. They needs to happen after the children effects have fired, but
+              // before the effects on this fiber have fired.
+              var flags = finishedWork.flags;
+
+              if (flags & Placement) {
+                try {
+                  commitPlacement(finishedWork);
+                } catch (error) {
+                  captureCommitPhaseError(
+                    finishedWork,
+                    finishedWork.return,
+                    error
+                  );
+                } // Clear the "placement" from effect tag so that we know that this is
+                // inserted, before any life-cycles like componentDidMount gets called.
+                // TODO: findDOMNode doesn't rely on this any more but isMounted does
+                // and isMounted is deprecated anyway so we should be able to kill this.
+
+                finishedWork.flags &= ~Placement;
+              }
+
+              if (flags & Hydrating) {
+                finishedWork.flags &= ~Hydrating;
               }
             }
 
@@ -39993,7 +41191,7 @@ object-assign
                   (fiber.subtreeFlags & LayoutMask) !== NoFlags &&
                   firstChild !== null
                 ) {
-                  ensureCorrectReturnPointer(firstChild, fiber);
+                  firstChild.return = fiber;
                   nextEffect = firstChild;
                 } else {
                   commitLayoutMountEffects_complete(
@@ -40025,7 +41223,6 @@ object-assign
                       committedLanes
                     );
                   } catch (error) {
-                    reportUncaughtErrorInDEV(error);
                     captureCommitPhaseError(fiber, fiber.return, error);
                   }
 
@@ -40040,7 +41237,7 @@ object-assign
                 var sibling = fiber.sibling;
 
                 if (sibling !== null) {
-                  ensureCorrectReturnPointer(sibling, fiber.return);
+                  sibling.return = fiber.return;
                   nextEffect = sibling;
                   return;
                 }
@@ -40178,7 +41375,6 @@ object-assign
                 try {
                   reappearLayoutEffectsOnFiber(fiber);
                 } catch (error) {
-                  reportUncaughtErrorInDEV(error);
                   captureCommitPhaseError(fiber, fiber.return, error);
                 }
 
@@ -40203,12 +41399,27 @@ object-assign
               }
             }
 
-            function commitPassiveMountEffects(root, finishedWork) {
+            function commitPassiveMountEffects(
+              root,
+              finishedWork,
+              committedLanes,
+              committedTransitions
+            ) {
               nextEffect = finishedWork;
-              commitPassiveMountEffects_begin(finishedWork, root);
+              commitPassiveMountEffects_begin(
+                finishedWork,
+                root,
+                committedLanes,
+                committedTransitions
+              );
             }
 
-            function commitPassiveMountEffects_begin(subtreeRoot, root) {
+            function commitPassiveMountEffects_begin(
+              subtreeRoot,
+              root,
+              committedLanes,
+              committedTransitions
+            ) {
               while (nextEffect !== null) {
                 var fiber = nextEffect;
                 var firstChild = fiber.child;
@@ -40217,15 +41428,25 @@ object-assign
                   (fiber.subtreeFlags & PassiveMask) !== NoFlags &&
                   firstChild !== null
                 ) {
-                  ensureCorrectReturnPointer(firstChild, fiber);
+                  firstChild.return = fiber;
                   nextEffect = firstChild;
                 } else {
-                  commitPassiveMountEffects_complete(subtreeRoot, root);
+                  commitPassiveMountEffects_complete(
+                    subtreeRoot,
+                    root,
+                    committedLanes,
+                    committedTransitions
+                  );
                 }
               }
             }
 
-            function commitPassiveMountEffects_complete(subtreeRoot, root) {
+            function commitPassiveMountEffects_complete(
+              subtreeRoot,
+              root,
+              committedLanes,
+              committedTransitions
+            ) {
               while (nextEffect !== null) {
                 var fiber = nextEffect;
 
@@ -40233,9 +41454,13 @@ object-assign
                   setCurrentFiber(fiber);
 
                   try {
-                    commitPassiveMountOnFiber(root, fiber);
+                    commitPassiveMountOnFiber(
+                      root,
+                      fiber,
+                      committedLanes,
+                      committedTransitions
+                    );
                   } catch (error) {
-                    reportUncaughtErrorInDEV(error);
                     captureCommitPhaseError(fiber, fiber.return, error);
                   }
 
@@ -40250,7 +41475,7 @@ object-assign
                 var sibling = fiber.sibling;
 
                 if (sibling !== null) {
-                  ensureCorrectReturnPointer(sibling, fiber.return);
+                  sibling.return = fiber.return;
                   nextEffect = sibling;
                   return;
                 }
@@ -40259,7 +41484,12 @@ object-assign
               }
             }
 
-            function commitPassiveMountOnFiber(finishedRoot, finishedWork) {
+            function commitPassiveMountOnFiber(
+              finishedRoot,
+              finishedWork,
+              committedLanes,
+              committedTransitions
+            ) {
               switch (finishedWork.tag) {
                 case FunctionComponent:
                 case ForwardRef:
@@ -40347,7 +41577,7 @@ object-assign
                   (fiber.subtreeFlags & PassiveMask) !== NoFlags &&
                   child !== null
                 ) {
-                  ensureCorrectReturnPointer(child, fiber);
+                  child.return = fiber;
                   nextEffect = child;
                 } else {
                   commitPassiveUnmountEffects_complete();
@@ -40368,7 +41598,7 @@ object-assign
                 var sibling = fiber.sibling;
 
                 if (sibling !== null) {
-                  ensureCorrectReturnPointer(sibling, fiber.return);
+                  sibling.return = fiber.return;
                   nextEffect = sibling;
                   return;
                 }
@@ -40421,7 +41651,7 @@ object-assign
                 // do this, still need to handle `deletedTreeCleanUpLevel` correctly.)
 
                 if (child !== null) {
-                  ensureCorrectReturnPointer(child, fiber);
+                  child.return = fiber;
                   nextEffect = child;
                 } else {
                   commitPassiveUnmountEffectsInsideOfDeletedTree_complete(
@@ -40452,7 +41682,7 @@ object-assign
                 }
 
                 if (sibling !== null) {
-                  ensureCorrectReturnPointer(sibling, returnFiber);
+                  sibling.return = returnFiber;
                   nextEffect = sibling;
                   return;
                 }
@@ -40488,27 +41718,6 @@ object-assign
                   break;
                 }
               }
-            }
-
-            var didWarnWrongReturnPointer = false;
-
-            function ensureCorrectReturnPointer(fiber, expectedReturnFiber) {
-              {
-                if (
-                  !didWarnWrongReturnPointer &&
-                  fiber.return !== expectedReturnFiber
-                ) {
-                  didWarnWrongReturnPointer = true;
-
-                  error(
-                    'Internal React error: Return pointer is inconsistent ' +
-                      'with parent.'
-                  );
-                }
-              } // TODO: Remove this assignment once we're confident that it won't break
-              // anything, by checking the warning logs for the above invariant
-
-              fiber.return = expectedReturnFiber;
             } // TODO: Reuse reappearLayoutEffects traversal here?
 
             function invokeLayoutEffectMountInDEV(fiber) {
@@ -40522,7 +41731,6 @@ object-assign
                     try {
                       commitHookEffectListMount(Layout | HasEffect, fiber);
                     } catch (error) {
-                      reportUncaughtErrorInDEV(error);
                       captureCommitPhaseError(fiber, fiber.return, error);
                     }
 
@@ -40535,7 +41743,6 @@ object-assign
                     try {
                       instance.componentDidMount();
                     } catch (error) {
-                      reportUncaughtErrorInDEV(error);
                       captureCommitPhaseError(fiber, fiber.return, error);
                     }
 
@@ -40556,7 +41763,6 @@ object-assign
                     try {
                       commitHookEffectListMount(Passive$1 | HasEffect, fiber);
                     } catch (error) {
-                      reportUncaughtErrorInDEV(error);
                       captureCommitPhaseError(fiber, fiber.return, error);
                     }
 
@@ -40581,7 +41787,6 @@ object-assign
                         fiber.return
                       );
                     } catch (error) {
-                      reportUncaughtErrorInDEV(error);
                       captureCommitPhaseError(fiber, fiber.return, error);
                     }
 
@@ -40620,7 +41825,6 @@ object-assign
                         fiber.return
                       );
                     } catch (error) {
-                      reportUncaughtErrorInDEV(error);
                       captureCommitPhaseError(fiber, fiber.return, error);
                     }
                   }
@@ -40766,6 +41970,7 @@ object-assign
             // suspense heuristics and opt out of rendering more content.
 
             var RENDER_TIMEOUT_MS = 500;
+            var workInProgressTransitions = null;
 
             function resetRenderTimer() {
               workInProgressRootRenderTargetTime = now() + RENDER_TIMEOUT_MS;
@@ -40781,17 +41986,22 @@ object-assign
             var rootWithPendingPassiveEffects = null;
             var pendingPassiveEffectsLanes = NoLanes;
             var pendingPassiveProfilerEffects = [];
+            var pendingPassiveTransitions = null; // Use these to prevent an infinite loop of nested updates
 
             var NESTED_UPDATE_LIMIT = 50;
             var nestedUpdateCount = 0;
             var rootWithNestedUpdates = null;
+            var isFlushingPassiveEffects = false;
+            var didScheduleUpdateDuringPassiveEffects = false;
             var NESTED_PASSIVE_UPDATE_LIMIT = 50;
-            var nestedPassiveUpdateCount = 0; // If two updates are scheduled within the same event, we should treat their
+            var nestedPassiveUpdateCount = 0;
+            var rootWithPassiveNestedUpdates = null; // If two updates are scheduled within the same event, we should treat their
             // event times as simultaneous, even if the actual clock time has advanced
             // between the first and second call.
 
             var currentEventTime = NoTimestamp;
             var currentEventTransitionLane = NoLanes;
+            var isRunningInsertionEffect = false;
             function getWorkInProgressRoot() {
               return workInProgressRoot;
             }
@@ -40897,10 +42107,23 @@ object-assign
 
             function scheduleUpdateOnFiber(fiber, lane, eventTime) {
               checkForNestedUpdates();
+
+              {
+                if (isRunningInsertionEffect) {
+                  error('useInsertionEffect must not schedule updates.');
+                }
+              }
+
               var root = markUpdateLaneFromFiberToRoot(fiber, lane);
 
               if (root === null) {
                 return null;
+              }
+
+              {
+                if (isFlushingPassiveEffects) {
+                  didScheduleUpdateDuringPassiveEffects = true;
+                }
               } // Mark that the root has a pending update.
 
               markRootUpdated(root, lane, eventTime);
@@ -41042,7 +42265,12 @@ object-assign
                 // TODO: Optimize slightly by comparing to root that fiber belongs to.
                 // Requires some refactoring. Not a big deal though since it's rare for
                 // concurrent apps to have more than a single root.
-                workInProgressRoot !== null &&
+                (workInProgressRoot !== null || // If the interleaved updates queue hasn't been cleared yet, then
+                  // we should treat this as an interleaved update, too. This is also a
+                  // defensive coding measure in case a new update comes in between when
+                  // rendering has finished and when the interleaved updates are transferred
+                  // to the main queue.
+                  hasInterleavedUpdates()) &&
                 (fiber.mode & ConcurrentMode) !== NoMode && // If this is a render phase update (i.e. UNSAFE_componentWillReceiveProps),
                 // then don't treat this as an interleaved update. This pattern is
                 // accompanied by a warning but we haven't fully deprecated it yet. We can
@@ -41416,7 +42644,11 @@ object-assign
                 case RootErrored: {
                   // We should have already attempted to retry this tree. If we reached
                   // this point, it errored again. Commit it.
-                  commitRoot(root, workInProgressRootRecoverableErrors);
+                  commitRoot(
+                    root,
+                    workInProgressRootRecoverableErrors,
+                    workInProgressTransitions
+                  );
                   break;
                 }
 
@@ -41461,7 +42693,8 @@ object-assign
                         commitRoot.bind(
                           null,
                           root,
-                          workInProgressRootRecoverableErrors
+                          workInProgressRootRecoverableErrors,
+                          workInProgressTransitions
                         ),
                         msUntilTimeout
                       );
@@ -41469,7 +42702,11 @@ object-assign
                     }
                   } // The work expired. Commit immediately.
 
-                  commitRoot(root, workInProgressRootRecoverableErrors);
+                  commitRoot(
+                    root,
+                    workInProgressRootRecoverableErrors,
+                    workInProgressTransitions
+                  );
                   break;
                 }
 
@@ -41506,7 +42743,8 @@ object-assign
                         commitRoot.bind(
                           null,
                           root,
-                          workInProgressRootRecoverableErrors
+                          workInProgressRootRecoverableErrors,
+                          workInProgressTransitions
                         ),
                         _msUntilTimeout
                       );
@@ -41514,13 +42752,21 @@ object-assign
                     }
                   } // Commit the placeholder.
 
-                  commitRoot(root, workInProgressRootRecoverableErrors);
+                  commitRoot(
+                    root,
+                    workInProgressRootRecoverableErrors,
+                    workInProgressTransitions
+                  );
                   break;
                 }
 
                 case RootCompleted: {
                   // The work completed. Ready to commit.
-                  commitRoot(root, workInProgressRootRecoverableErrors);
+                  commitRoot(
+                    root,
+                    workInProgressRootRecoverableErrors,
+                    workInProgressTransitions
+                  );
                   break;
                 }
 
@@ -41666,7 +42912,11 @@ object-assign
               var finishedWork = root.current.alternate;
               root.finishedWork = finishedWork;
               root.finishedLanes = lanes;
-              commitRoot(root, workInProgressRootRecoverableErrors); // Before exiting, make sure there's a callback scheduled for the next
+              commitRoot(
+                root,
+                workInProgressRootRecoverableErrors,
+                workInProgressTransitions
+              ); // Before exiting, make sure there's a callback scheduled for the next
               // pending level.
 
               ensureRootIsScheduled(root, now());
@@ -42031,6 +43281,8 @@ object-assign
                     movePendingFibersToMemoized(root, lanes);
                   }
                 }
+
+                workInProgressTransitions = getTransitionsForLanes();
                 prepareFreshStack(root, lanes);
               }
 
@@ -42105,6 +43357,8 @@ object-assign
                     movePendingFibersToMemoized(root, lanes);
                   }
                 }
+
+                workInProgressTransitions = getTransitionsForLanes();
                 resetRenderTimer();
                 prepareFreshStack(root, lanes);
               }
@@ -42291,7 +43545,7 @@ object-assign
               }
             }
 
-            function commitRoot(root, recoverableErrors) {
+            function commitRoot(root, recoverableErrors, transitions) {
               // TODO: This no longer makes any sense. We already wrap the mutation and
               // layout phases. Should be able to remove.
               var previousUpdateLanePriority = getCurrentUpdatePriority();
@@ -42303,6 +43557,7 @@ object-assign
                 commitRootImpl(
                   root,
                   recoverableErrors,
+                  transitions,
                   previousUpdateLanePriority
                 );
               } finally {
@@ -42316,6 +43571,7 @@ object-assign
             function commitRootImpl(
               root,
               recoverableErrors,
+              transitions,
               renderPriorityLevel
             ) {
               do {
@@ -42399,6 +43655,13 @@ object-assign
               ) {
                 if (!rootDoesHavePassiveEffects) {
                   rootDoesHavePassiveEffects = true;
+                  // to store it in pendingPassiveTransitions until they get processed
+                  // We need to pass this through as an argument to commitRoot
+                  // because workInProgressTransitions might have changed between
+                  // the previous render and commit if we throttle the commit
+                  // with setTimeout
+
+                  pendingPassiveTransitions = transitions;
                   scheduleCallback$1(NormalPriority, function () {
                     flushPassiveEffects(); // This render triggered passive effects: release the root cache pool
                     // *after* passive effects fire to avoid freeing a cache pool that may
@@ -42496,6 +43759,11 @@ object-assign
                 rootDoesHavePassiveEffects = false;
                 rootWithPendingPassiveEffects = root;
                 pendingPassiveEffectsLanes = lanes;
+              } else {
+                {
+                  nestedPassiveUpdateCount = 0;
+                  rootWithPassiveNestedUpdates = null;
+                }
               } // Read this again, since an effect might have updated it
 
               remainingLanes = root.pendingLanes; // Check if there's remaining work on this root
@@ -42642,8 +43910,10 @@ object-assign
             function flushPassiveEffectsImpl() {
               if (rootWithPendingPassiveEffects === null) {
                 return false;
-              }
+              } // Cache and clear the transitions flag
 
+              var transitions = pendingPassiveTransitions;
+              pendingPassiveTransitions = null;
               var root = rootWithPendingPassiveEffects;
               var lanes = pendingPassiveEffectsLanes;
               rootWithPendingPassiveEffects = null; // TODO: This is sometimes out of sync with rootWithPendingPassiveEffects.
@@ -42662,13 +43932,18 @@ object-assign
               }
 
               {
+                isFlushingPassiveEffects = true;
+                didScheduleUpdateDuringPassiveEffects = false;
+              }
+
+              {
                 markPassiveEffectsStarted(lanes);
               }
 
               var prevExecutionContext = executionContext;
               executionContext |= CommitContext;
               commitPassiveUnmountEffects(root.current);
-              commitPassiveMountEffects(root, root.current); // TODO: Move to commitPassiveMountEffects
+              commitPassiveMountEffects(root, root.current, lanes, transitions); // TODO: Move to commitPassiveMountEffects
 
               {
                 var profilerEffects = pendingPassiveProfilerEffects;
@@ -42689,13 +43964,25 @@ object-assign
               }
 
               executionContext = prevExecutionContext;
-              flushSyncCallbacks(); // If additional passive effects were scheduled, increment a counter. If this
-              // exceeds the limit, we'll fire a warning.
+              flushSyncCallbacks();
 
-              nestedPassiveUpdateCount =
-                rootWithPendingPassiveEffects === null
-                  ? 0
-                  : nestedPassiveUpdateCount + 1; // TODO: Move to commitPassiveMountEffects
+              {
+                // If additional passive effects were scheduled, increment a counter. If this
+                // exceeds the limit, we'll fire a warning.
+                if (didScheduleUpdateDuringPassiveEffects) {
+                  if (root === rootWithPassiveNestedUpdates) {
+                    nestedPassiveUpdateCount++;
+                  } else {
+                    nestedPassiveUpdateCount = 0;
+                    rootWithPassiveNestedUpdates = root;
+                  }
+                } else {
+                  nestedPassiveUpdateCount = 0;
+                }
+
+                isFlushingPassiveEffects = false;
+                didScheduleUpdateDuringPassiveEffects = false;
+              } // TODO: Move to commitPassiveMountEffects
 
               onPostCommitRoot(root);
 
@@ -42757,6 +44044,11 @@ object-assign
               nearestMountedAncestor,
               error$1
             ) {
+              {
+                reportUncaughtErrorInDEV(error$1);
+                setIsRunningInsertionEffect(false);
+              }
+
               if (sourceFiber.tag === HostRoot) {
                 // Error was thrown at the root. There is no parent, so the root
                 // itself should capture it.
@@ -42908,28 +44200,26 @@ object-assign
 
               var retryCache;
 
-              {
-                switch (boundaryFiber.tag) {
-                  case SuspenseComponent:
-                    retryCache = boundaryFiber.stateNode;
-                    var suspenseState = boundaryFiber.memoizedState;
+              switch (boundaryFiber.tag) {
+                case SuspenseComponent:
+                  retryCache = boundaryFiber.stateNode;
+                  var suspenseState = boundaryFiber.memoizedState;
 
-                    if (suspenseState !== null) {
-                      retryLane = suspenseState.retryLane;
-                    }
+                  if (suspenseState !== null) {
+                    retryLane = suspenseState.retryLane;
+                  }
 
-                    break;
+                  break;
 
-                  case SuspenseListComponent:
-                    retryCache = boundaryFiber.stateNode;
-                    break;
+                case SuspenseListComponent:
+                  retryCache = boundaryFiber.stateNode;
+                  break;
 
-                  default:
-                    throw new Error(
-                      'Pinged unknown suspense boundary type. ' +
-                        'This is probably a bug in React.'
-                    );
-                }
+                default:
+                  throw new Error(
+                    'Pinged unknown suspense boundary type. ' +
+                      'This is probably a bug in React.'
+                  );
               }
 
               if (retryCache !== null) {
@@ -42980,6 +44270,7 @@ object-assign
               {
                 if (nestedPassiveUpdateCount > NESTED_PASSIVE_UPDATE_LIMIT) {
                   nestedPassiveUpdateCount = 0;
+                  rootWithPassiveNestedUpdates = null;
 
                   error(
                     'Maximum update depth exceeded. This can happen when a component ' +
@@ -43412,6 +44703,12 @@ object-assign
                       ' Learn more at https://reactjs.org/link/wrap-tests-with-act'
                   );
                 }
+              }
+            }
+
+            function setIsRunningInsertionEffect(isRunning) {
+              {
+                isRunningInsertionEffect = isRunning;
               }
             }
 
@@ -44662,6 +45959,7 @@ object-assign
                   cache: null,
                   // not enabled yet
                   transitions: null,
+                  pendingSuspenseBoundaries: null,
                 };
                 uninitializedFiber.memoizedState = _initialState;
               }
@@ -44670,7 +45968,7 @@ object-assign
               return root;
             }
 
-            var ReactVersion = '18.0.0-fc46dba67-20220329';
+            var ReactVersion = '18.1.0';
 
             function createPortal(
               children,
@@ -44999,7 +46297,6 @@ object-assign
                 markRetryLaneImpl(alternate, retryLane);
               }
             }
-
             function attemptContinuousHydration$1(fiber) {
               if (fiber.tag !== SuspenseComponent) {
                 // We ignore HostRoots here because we can't increase
@@ -46152,7 +47449,7 @@ object-assign
 
             function createRoot$1(container, options) {
               {
-                if (!Internals.usingClientEntryPoint) {
+                if (!Internals.usingClientEntryPoint && !false) {
                   error(
                     'You are importing createRoot from "react-dom" which is not supported. ' +
                       'You should instead import it from "react-dom/client".'
@@ -46165,7 +47462,7 @@ object-assign
 
             function hydrateRoot$1(container, initialChildren, options) {
               {
-                if (!Internals.usingClientEntryPoint) {
+                if (!Internals.usingClientEntryPoint && !false) {
                   error(
                     'You are importing hydrateRoot from "react-dom" which is not supported. ' +
                       'You should instead import it from "react-dom/client".'
@@ -55792,6 +57089,17 @@ object-assign
         /***/
       },
 
+    /***/ './src/assets/right-arrow.svg':
+      /*!************************************!*\
+  !*** ./src/assets/right-arrow.svg ***!
+  \************************************/
+      /***/ (module, __unused_webpack_exports, __webpack_require__) => {
+        'use strict';
+        module.exports = __webpack_require__.p + 'assets/right-arrow.svg';
+
+        /***/
+      },
+
     /***/ './node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js':
       /*!*********************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js ***!
@@ -56295,7 +57603,7 @@ object-assign
   /******/
   /******/ /* webpack/runtime/jsonp chunk loading */
   /******/ (() => {
-    /******/ // no baseURI
+    /******/ __webpack_require__.b = document.baseURI || self.location.href;
     /******/
     /******/ // object to store loaded and loading chunks
     /******/ // undefined = chunk not loaded, null = chunk preloaded/prefetched
@@ -56474,4 +57782,4 @@ object-assign
 
   /******/
 })();
-//# sourceMappingURL=bundle.c0e27600c3ae95f29de5.js.map
+//# sourceMappingURL=bundle.753dd6a0d15f8a221bdc.js.map

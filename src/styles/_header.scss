@@ -1,35 +1,34 @@
-
 $width: 10%;
 
 .header {
-	display: flex;
-	box-shadow: $flashWhite 0px 2px 4px;
+  display: flex;
+  box-shadow: $flashWhite 0px 2px 4px;
 
-	&__icon,
-	&__button {
-		width: $width;
-	}
-	
-	&__nav {
+  &__icon,
+  &__button {
+    width: $width;
+  }
+
+  &__nav {
     display: flex;
     justify-content: end;
-		width: calc(100% - $width * 2);
-	}
+    width: calc(100% - $width * 2);
+  }
 
-	@include respond(ipad) {
-		&__nav {
-			display: none;
-		}
-	}
+  @include respond(ipad) {
+    &__nav {
+      display: none;
+    }
+  }
 }
 // TODO: MOVE TO FORM COMPONENT LATER
-form {
-    @extend .spaceBetween;
-	input {
-		padding: 10px;
-		border: none;
-		border-radius: 4px;
-		flex-grow: 2;
-		flex-shrink: 2;
-	}
+form :not(.login) {
+  @extend .spaceBetween;
+  input {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    flex-grow: 2;
+    flex-shrink: 2;
+  }
 }

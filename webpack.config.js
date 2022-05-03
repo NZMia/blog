@@ -66,6 +66,6 @@ module.exports = {
     new DefinePlugin({
       process: { env: {} },
     }),
-    // new BundleAnalyzerPlugin(),
+    new BundleAnalyzerPlugin(),
   ],
 };

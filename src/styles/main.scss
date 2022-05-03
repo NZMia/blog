@@ -14,33 +14,36 @@
 @import 'category';
 @import 'articles';
 @import 'card';
+@import 'login';
 
 #root {
-    max-width: $global-max-width;
-
+  max-width: $global-max-width;
+  width: 100%;
+  height: 100%;
 }
 
 .bg--grey {
-    background-color: $flashWhite;
+  background-color: $flashWhite;
 }
 
 .bg--white {
-    background-color: $lotion;
+  background-color: $lotion;
 }
 
-.bg--white, 
+.bg--white,
 .bg--grey {
-    color: $gunmetal;
-    padding: calc(($global-max-width - $xlarge) / 4);;
+  color: $gunmetal;
+  padding: calc(($global-max-width - $xlarge) / 4);
 
-    @include respond(tablet) {
-        padding: $global-padding * 2.5;
-    }
+  @include respond(tablet) {
+    padding: $global-padding * 2.5;
+  }
 }
 
 a {
-	color: $gunmetal;
-	&:hover, &:active {
-		color: $lightTaupe;
-	}
+  color: $gunmetal;
+  &:hover,
+  &:active {
+    color: $lightTaupe;
+  }
 }

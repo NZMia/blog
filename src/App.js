@@ -1,15 +1,16 @@
 import React from 'react';
-
+import { AppProviders } from './AppProviders';
 import { Provider } from 'react-redux';
 import store from './stores/index';
+import AuthenticatedApp from './layout/AuthenticatedApp';
 
-import MainLayout from './layout/MainLayout';
-import AdminLayout from './layout/AdminLayout';
 export const App = () => {
   return (
     <Provider store={store}>
-      {/* <MainLayout /> */}
-      <AdminLayout />
+      <AuthenticatedApp />
+      {/* <AppProviders 
+        children={<AdminLayout />} 
+        user={}/> */}
     </Provider>
   );
 };
