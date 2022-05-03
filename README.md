@@ -2,7 +2,7 @@
 [![code compile: webpack](https://img.shields.io/badge/code_compile-webpack-ff69b4.svg?style=plastic)](https://github.com/webpack/webpack)  
 [![code commit rule: commitlint](https://img.shields.io/badge/code_commite-commitlint-ff69b4.svg?style=plastic)](https://github.com/conventional-changelog/commitlint)  
 
-# Portfolio  
+# Blog
 ![development: working](https://img.shields.io/badge/development-working-informational.svg?style=plastic)  
 
 ### Front-end:  
@@ -40,14 +40,17 @@ Home page ( branch of feature : TDD)
 
 ```
 
-### Back-end:(todo)  
+### Back-end:( branch of backend)  
 
-![development: not yet](https://img.shields.io/badge/development-HOLD-inactive.svg?style=plastic)
+![development: working](https://img.shields.io/badge/development-working-informational.svg?style=plastic)  
 
 ----
-Mongo, 
-Express or Koa, 
-nodejs 
+```
+ [x] Express  
+ [x] Redis
+ [x] xss
+ [x] mysql 
 
+```
  
 
